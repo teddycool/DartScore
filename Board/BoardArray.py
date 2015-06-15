@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import pygame
 
-# Class to creat an array defining 'the perfect board'
+# Class to create an array defining 'the perfect board' and a 'normalized' board used later on..
 
 
 class BoardArray(object):
@@ -23,8 +23,17 @@ class BoardArray(object):
         cv2.circle(img,(250,250),16,(0,0,0),1) #25
         cv2.circle(img,(250,250),6,(0,0,0),1) #Bulls eye
 
+        #20 sectors, 18 degress per sector, first sector
+        cv2.line(img,(250,250),(472,285),(0,0,0),1)
+        cv2.line(img,(250,250),(472,215),(0,0,0),1)
+
         return img
 
+
+    def getScore(self, hit):
+
+        score = 0
+        return score
 
 
 
