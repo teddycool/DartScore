@@ -1,0 +1,3 @@
+# DartScore
+Counting scores for dart with image recognition
+Raspberry pi cam...
