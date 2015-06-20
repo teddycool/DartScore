@@ -1,4 +1,4 @@
-__author__ = 'psk'
+__author__ = 'teddycool'
 import pygame
 
 class Cam(object):
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     #Set to webcam ID, std is 0. Networkedcam is probably 1
     camid=1
     #Set to resolution of your webcam 1280x 720
-    width= 1280
-    height=720
+    width= 640
+    height= 480
     gl=MainLoop(width,height, camid)
     gl.run()

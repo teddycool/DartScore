@@ -1,4 +1,4 @@
-__author__ = 'psk'
+__author__ = 'teddycool'
 
 # Put up the camera, run calibrate
 # Start to play...

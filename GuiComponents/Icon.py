@@ -1,4 +1,4 @@
-__author__ = 'psk'
+__author__ = 'teddycool'
 # Icon is a very simple bitmap class, just associates a name and a pygame
 # image (PNG loaded from icons directory) for each.
 # There isn't a globally-declared fixed list of Icons.  Instead, the list

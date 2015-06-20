@@ -1,4 +1,4 @@
-__author__ = 'psk'
+__author__ = 'teddycool'
 import Main
 import pygame
 import sys
@@ -64,6 +64,12 @@ class Inputs(object):
     def draw(self, screen):
         for button in self.Buttons:
             self.Buttons[button].draw(screen)
+        myfont = pygame.font.SysFont("Arial", 20)
+        boardlabel = myfont.render("DartBoard" , 1, (255,255,255))
+        activeLabel = myfont.render("Active player:", 1, (255,255,255))
+        screen.blit(boardlabel, (5,5))
+        screen.blit(activeLabel, (645, 50))
+
         return screen
 
 

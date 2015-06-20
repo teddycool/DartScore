@@ -1,8 +1,9 @@
-__author__ = 'psk'
+__author__ = 'teddycool'
 
 import cv2
 import numpy as np
 import pygame
+import math
 
 # Class to create an array defining 'the perfect board' and a 'normalized' board used later on..
 
@@ -14,7 +15,6 @@ class BoardArray(object):
         self._circles = []
 
     def create(self, img):
-
         cv2.circle(img,(250,250),225,(0,0,0),1) #outer
         cv2.circle(img,(250,250),170,(0,0,0),1) #outside double
         cv2.circle(img,(250,250),162,(0,0,0),1) #inside double
@@ -23,10 +23,12 @@ class BoardArray(object):
         cv2.circle(img,(250,250),16,(0,0,0),1) #25
         cv2.circle(img,(250,250),6,(0,0,0),1) #Bulls eye
 
-        #20 sectors, 18 degress per sector, first sector
-        cv2.line(img,(250,250),(472,285),(0,0,0),1)
-        cv2.line(img,(250,250),(472,215),(0,0,0),1)
-
+        #20 sectors...
+        sectorangle = 2*math.pi/20
+        i=0
+        while ( i<20):
+            cv2.line(img,(250,250), (int(250+225*math.cos((0.5+i)*sectorangle)), int(250+225*math.sin((0.5+i)*sectorangle))), (0,0,0), 1)
+            i=i+1
         return img
 
 
@@ -34,10 +36,6 @@ class BoardArray(object):
 
         score = 0
         return score
-
-
-
-
 
 
 

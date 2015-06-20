@@ -1,4 +1,4 @@
-__author__ = 'psk'
+__author__ = 'teddycool'
 
 import pygame
 import time

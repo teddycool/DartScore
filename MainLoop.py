@@ -1,19 +1,22 @@
-__author__ = 'psk'
+__author__ = 'teddycool'
 #State-switching and handling of general rendering
 from Inputs import Inputs
 import pygame
 from Board import Board
 from Cam import Cam
 import time
-from  StateLoops import CamCalibrateLoop
+from  StateLoops import CamCalibrateLoop, CamMoutningLoop, PlayStateLoop
 
 class MainLoop(object):
     def __init__(self):
         self._inputs=Inputs.Inputs(self)
         self._board = Board.Board()
         self._cam=Cam.Cam()
-        self._currentStateLoop = CamCalibrateLoop.CamCalibrateLoop()
-        self._state = {0:"InitState", 1: "PlayState", 2: "MountCamState"}
+        self._calibrateState = CamCalibrateLoop.CamCalibrateLoop()
+        self._mountingState = CamMoutningLoop.CamMountingLoop()
+        self._playState = PlayStateLoop.PlayStateLoop()
+        self._state = {"MountState": self._mountingState, "CalState": self._calibrateState, "PlayState": self._playState}
+        self._currentStateLoop = self._state["MountState"]
 
     def initialize(self):
         print "Main init..."
@@ -21,25 +24,25 @@ class MainLoop(object):
         self._cam.initialize()
         self._board.initialize((self._cam.width, self._cam.height))
         self.time=time.time()
+        #Init all states
+        for key in self._state.keys():
+            self._state[key].initialize()
         print "Game started at ", self.time
 
     def update(self,screen):
         self._cam.update()
         pos = self._inputs.update()
 
+
+
         return pos
 
     def draw(self, screen):
         #Move partly to StateLoops
-
         self._inputs.draw(screen)
-        myfont = pygame.font.SysFont("Arial", 20)
-        boardlabel = myfont.render("DartBoard" , 1, (255,255,255))
-        activeLabel = myfont.render("Active player:", 1, (255,255,255))
 
-        screen.blit(self._cam.csnapshot, (0,0))
-        screen.blit(boardlabel, (5,5))
-        screen.blit(activeLabel, (645, 50))
+        cam = self._currentStateLoop.draw(self._cam.csnapshot)
+        screen.blit(cam, (0,0))
         return screen
 
     def changeState(self, newstate):

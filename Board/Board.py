@@ -1,4 +1,4 @@
-__author__ = 'psk'
+__author__ = 'teddycool'
 import cv2
 import numpy as np
 import pygame
@@ -54,10 +54,10 @@ class Board(object):
 
     def _findSectorLines(self, img):
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-        edges = cv2.Canny(gray,100,200,apertureSize = 3)
-        cv2.imshow('gray',gray)
+        edges = cv2.Canny(img,100,200,apertureSize = 3)
+        #cv2.imshow('gray',img)
 
-        lines = cv2.HoughLines(gray,1,np.pi/180,200)
+        lines = cv2.HoughLines(img,1,np.pi/180,200)
         pLines = []
         for rho,theta in lines[0]:
             a = np.cos(theta)
@@ -114,9 +114,9 @@ class Board(object):
 if __name__ == "__main__":
 
     #snapshot = cv2.imread("images\\_K3_5730.png")
-    snapshot = cv2.imread("images\\dartboard.jpg")
+    snapshot = cv2.imread("images\\seq138.jpg")
     bf = Board()
-    bf.initialize((811,796))
+    bf.initialize((640,480))
     #bf=Board((640,480))
     img = bf._findSectorLines(snapshot)
     #img = bf._findCircleLines(snapshot)
