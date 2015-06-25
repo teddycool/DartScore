@@ -15,12 +15,11 @@ import MainLoop
 
 class Main(object):
 
-    def __init__(self, width, height):
+    def __init__(self):
         print "Init Main object..."
-
-        self.dwidth = width
-        self.dheight = height
-        #self.camId=camid
+        #Size of application window
+        self.dwidth = 800
+        self.dheight = 600
         self._mainLoop=MainLoop.MainLoop()
 
 
@@ -52,9 +51,8 @@ class Main(object):
 #
 if __name__ == "__main__":
     #Set to webcam ID, std is 0. Networkedcam is probably 1
-    camid=1
+    #camid=1
     #Set size of screen/window
-    width= 800
-    height=600
-    gl=Main(width,height)
+
+    gl=Main()
     gl.run()

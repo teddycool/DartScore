@@ -1,35 +1,21 @@
 __author__ = 'teddycool'
 import cv2
 import numpy as np
-import pygame
 import BoardArray
-import math
-
-
-# Class for dartboard. Besides handling update/draw for board it also
-# finds sectors in a picture of a dartboard and calibrate it.
-#
-# Allways calibrate board at start/init
-# Tactics:
-# 1 find crossing lines and save them in a list
-# 2 Calculate centerpoint of board and save it
-# 3 Find circlesegments and save them
-# 4 Calculate missing lines
-# 5 Calculate missing circle segments
-# 6 Calculate and define each sector and its score, save as ??
-
+import DartScoreConfig
 
 class Board(object):
 
     def __init__(self):
         self._lines = []
         self._circles = []
+        self.imageX, self.imageY = self.width, self.height= DartScoreConfig.config['cam']['res']
+        self._bullseye=(0,0)
 
-    def initialize(self, imgsize):
-        self.imageX = imgsize[0]
-        self.imageY=imgsize[1]
-        self._bullseye=(336,230)
-        #Run self calibration
+
+    def initialize(self):
+       #Run self calibration
+        return
 
 
     def update(self):
@@ -104,7 +90,6 @@ class Board(object):
         gray = cv2.GaussianBlur(gray, (5, 5), 0)
         edges = cv2.Canny(gray, 50, 200)
         contours,h = cv2.findContours(edges,1,2)
-        #circles = cv2.HoughCircles(gray,cv2.cv.CV_HOUGH_GRADIENT,1,150, param1=10,param2=15,minRadius=50,maxRadius=500)
 
         for cnt in contours:
             approx = cv2.approxPolyDP(cnt,0.1*cv2.arcLength(cnt,True),True)
@@ -119,19 +104,30 @@ class Board(object):
         return sectors
 
 if __name__ == "__main__":
+    import pygame
     from Cam import Cam
     cam=Cam.Cam()
     cam.initialize()
-    snapshot = cam.update()
-
+    t=0
+    while t < 100:
+        snapshot = cam.update()
+        t= t+1
     print type(snapshot)
-    #snapshot = cv2.imread("board1.jpg")
+    snapshot = pygame.transform.rotate(snapshot,90)
+    snapshot = pygame.transform.flip(snapshot, 0, 1)
+
+    snapshot=pygame.surfarray.array3d(snapshot)
+    print type(snapshot)
+    #snapshot = cv2.imdecode(snapshot,0)
+    print type(snapshot)
+
+
     bf = Board()
-    bf.initialize((640,480))
+    bf.initialize()
     snapshot = bf._findSectorLines(snapshot)
     snapshot = bf._findCircleLines(snapshot)
     ba=BoardArray.BoardArray(bf._bullseye)
     ba.create(snapshot)
-    cv2.imshow('img',cv2.im(snapshot))
+    cv2.imshow('img',snapshot)
     cv2.waitKey(0)
     cv2.destroyAllWindows()

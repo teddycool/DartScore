@@ -22,7 +22,7 @@ class MainLoop(object):
         print "Main init..."
         self._inputs.initialize()
         self._cam.initialize()
-        self._board.initialize((self._cam.width, self._cam.height))
+        self._board.initialize()
         self.time=time.time()
         #Init all states
         for key in self._state.keys():

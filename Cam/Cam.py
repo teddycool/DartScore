@@ -1,13 +1,13 @@
 __author__ = 'teddycool'
 import pygame
 import pygame.camera
+import DartScoreConfig
 
 class Cam(object):
     def __init__(self):
         print "Cam __init__"
-        self.camid=0
-        self.width= 640
-        self.height=480
+        self.camid= DartScoreConfig.config['cam']['id']
+        self.width, self.height= DartScoreConfig.config['cam']['res']
 
 
     def initialize(self):
