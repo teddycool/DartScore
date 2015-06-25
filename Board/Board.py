@@ -2,6 +2,9 @@ __author__ = 'teddycool'
 import cv2
 import numpy as np
 import pygame
+import BoardArray
+import math
+
 
 # Class for dartboard. Besides handling update/draw for board it also
 # finds sectors in a picture of a dartboard and calibrate it.
@@ -25,6 +28,7 @@ class Board(object):
     def initialize(self, imgsize):
         self.imageX = imgsize[0]
         self.imageY=imgsize[1]
+        self._bullseye=(336,230)
         #Run self calibration
 
 
@@ -53,11 +57,11 @@ class Board(object):
 
 
     def _findSectorLines(self, img):
-        gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-        edges = cv2.Canny(img,100,200,apertureSize = 3)
-        #cv2.imshow('gray',img)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray = cv2.GaussianBlur(gray, (5, 5), 0)
+        edges = cv2.Canny(gray, 50, 200)
 
-        lines = cv2.HoughLines(img,1,np.pi/180,200)
+        lines = cv2.HoughLines(edges,1,np.pi/180,130)
         pLines = []
         for rho,theta in lines[0]:
             a = np.cos(theta)
@@ -73,6 +77,8 @@ class Board(object):
         noLines=len(pLines)
         iLines = []
         xpoint=[]
+        ypoint =[]
+        crosspoint = []
         for i in range(noLines):
             for j in range(noLines):
                 if i != j:
@@ -82,26 +88,28 @@ class Board(object):
                             if cross[1] < self.imageY/2+0.20*self.imageY and cross[1] > self.imageY/2 -0.20*self.imageY :
                                 iLines.append(pLines[i])
                                 cv2.line(img,pLines[i][0],pLines[i][1],(0,0,255),2)
-                                xpoint.append(cross)
+                                crosspoint.append(cross)
+                                xpoint.append(cross[0])
+                                ypoint.append(cross[1])
                     except:
                         pass
-        print xpoint
+
+        self._bullseye = (int(np.median(xpoint)),int(np.median(ypoint)))
+        print crosspoint
+        print "Bullseye: ", self._bullseye
         return img
 
     def _findCircleLines(self, img):
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-        #img = cv2.medianBlur(img,5)
-        #cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
+        gray = cv2.GaussianBlur(gray, (5, 5), 0)
+        edges = cv2.Canny(gray, 50, 200)
+        contours,h = cv2.findContours(edges,1,2)
+        #circles = cv2.HoughCircles(gray,cv2.cv.CV_HOUGH_GRADIENT,1,150, param1=10,param2=15,minRadius=50,maxRadius=500)
 
-        circles = cv2.HoughCircles(gray,cv2.cv.CV_HOUGH_GRADIENT,1,150, param1=10,param2=15,minRadius=300,maxRadius=500)
-
-        circles = np.uint16(np.around(circles))
-        for i in circles[0,:]:
-            # draw the outer circle
-            cv2.circle(img,(i[0],i[1]),i[2],(0,255,0),2)
-            # draw the center of the circle
-            cv2.circle(img,(i[0],i[1]),2,(0,0,255),3)
-
+        for cnt in contours:
+            approx = cv2.approxPolyDP(cnt,0.1*cv2.arcLength(cnt,True),True)
+            if len(approx) > 5:
+                cv2.drawContours(img,[cnt],0,(0,0,255),2)
         return img
 
 
@@ -110,16 +118,20 @@ class Board(object):
         #----
         return sectors
 
-
 if __name__ == "__main__":
+    from Cam import Cam
+    cam=Cam.Cam()
+    cam.initialize()
+    snapshot = cam.update()
 
-    #snapshot = cv2.imread("images\\_K3_5730.png")
-    snapshot = cv2.imread("images\\seq138.jpg")
+    print type(snapshot)
+    #snapshot = cv2.imread("board1.jpg")
     bf = Board()
     bf.initialize((640,480))
-    #bf=Board((640,480))
-    img = bf._findSectorLines(snapshot)
-    #img = bf._findCircleLines(snapshot)
-    cv2.imshow('img',img)
+    snapshot = bf._findSectorLines(snapshot)
+    snapshot = bf._findCircleLines(snapshot)
+    ba=BoardArray.BoardArray(bf._bullseye)
+    ba.create(snapshot)
+    cv2.imshow('img',cv2.im(snapshot))
     cv2.waitKey(0)
     cv2.destroyAllWindows()

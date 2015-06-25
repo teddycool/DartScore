@@ -1,18 +1,17 @@
 __author__ = 'teddycool'
 
+#Parent-class for state-loops
 
-from  StateLoop import StateLoop
+class StateLoop(object):
 
-class PlayStateLoop(StateLoop):
     def __init__(self):
-        super(PlayStateLoop, self).__init__()
         return
 
     def initialize(self):
         return
 
     def update(self, screen):
-        return screen
+        return
 
     def draw(self, snapshot):
-        return snapshot
+        return

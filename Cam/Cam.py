@@ -1,10 +1,11 @@
 __author__ = 'teddycool'
 import pygame
+import pygame.camera
 
 class Cam(object):
     def __init__(self):
         print "Cam __init__"
-        self.camid=1
+        self.camid=0
         self.width= 640
         self.height=480
 
@@ -16,7 +17,6 @@ class Cam(object):
         self.csnapshot = pygame.surface.Surface((self.width,self.height),0) #current frame
         self.psnapshot = pygame.surface.Surface((self.width,self.height),0) #previous frame
         self.cam = pygame.camera.Camera(self.camid,(self.width,self.height),"RGB")
-
 
     def update(self):
         #update each loop
@@ -30,10 +30,21 @@ class Cam(object):
         return
 
 if __name__ == "__main__":
-    #Set to webcam ID, std is 0. Networkedcam is probably 1
-    camid=1
-    #Set to resolution of your webcam 1280x 720
-    width= 640
-    height= 480
-    gl=MainLoop(width,height, camid)
-    gl.run()
+
+    print pygame.surfarray.get_arraytype()
+    import cv2
+    import time
+    cam=Cam()
+    cam.initialize()
+    snapshot = cam.update()
+    #time.sleep(5)
+    img=pygame.surface.Surface((cam.width,cam.height),0)
+    t=0
+    while t < 100:
+        snapshot = cam.update()
+        t= t+1
+    snapshot = pygame.transform.rotate(snapshot,90)
+    snapshot = pygame.transform.flip(snapshot, 0, 1)
+    cv2.imshow('img',pygame.surfarray.pixels3d(snapshot))
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()

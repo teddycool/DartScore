@@ -1,8 +1,13 @@
 __author__ = 'teddycool'
 import pygame
+from Board import Board
+from Board import BoardArray
+from  StateLoop import StateLoop
 
-class CamCalibrateLoop(object):
+
+class CamCalibrateLoop(StateLoop):
     def __init__(self):
+        super(CamCalibrateLoop, self).__init__()
         return
 
     def initialize(self):

@@ -1,12 +1,14 @@
 _author__ = 'teddycool'
 import pygame
+from  StateLoop import StateLoop
 
-class CamMountingLoop(object):
+class CamMountingLoop(StateLoop):
     def __init__(self):
+        super(CamMountingLoop, self).__init__()
         return
 
     def initialize(self):
-        self._centerRect = pygame.Rect(295, 215, 50, 50)
+        self._centerRect = pygame.Rect(245, 215, 150, 50)
         return
 
     def update(self, screen):

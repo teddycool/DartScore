@@ -20,7 +20,7 @@ class Main(object):
 
         self.dwidth = width
         self.dheight = height
-        self.camId=camid
+        #self.camId=camid
         self._mainLoop=MainLoop.MainLoop()
 
 
