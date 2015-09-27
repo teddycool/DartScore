@@ -7,6 +7,7 @@ import math
 import DartScoreConfig
 
 # Class to create an array defining 'the perfect board' and a 'normalized' board used later on..
+# Actual board is 450 mm in diameter,  1 pixel per mm
 
 
 class BoardArray(object):
@@ -37,7 +38,7 @@ class BoardArray(object):
         return img
 
 
-    def getScore(self, hit):
+    def getScore(self, hitrect):
 
         score = 0
         return score

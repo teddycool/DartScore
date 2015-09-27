@@ -22,7 +22,7 @@ class MainLoop(object):
         print "Main init..."
         self._inputs.initialize()
         self._cam.initialize()
-        self._board.initialize()
+        self._board.initialize(self._cam.csnapshot)
         self.time=time.time()
         #Init all states
         for key in self._state.keys():
@@ -40,6 +40,7 @@ class MainLoop(object):
     def draw(self, screen):
         #Move partly to StateLoops
         self._inputs.draw(screen)
+        self._board.draw(screen)
 
         cam = self._currentStateLoop.draw(self._cam.csnapshot)
         screen.blit(cam, (0,0))

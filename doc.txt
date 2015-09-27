@@ -19,6 +19,6 @@ Streams the camera images to the screen with an overlay indicationg where to hav
 
 
 MainLoop is engine and master for changing states
-inputs decides what plaer/user wants to do
+inputs decides what player/user wants to do
 the stateloops handles rendering of each type-screen
 
