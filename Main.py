@@ -18,8 +18,8 @@ class Main(object):
     def __init__(self):
         print "Init Main object..."
         #Size of application window
-        self.dwidth = 800
-        self.dheight = 600
+        self.dwidth = 1200
+        self.dheight = 900
         self._mainLoop=MainLoop.MainLoop()
 
 

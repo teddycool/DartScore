@@ -3,16 +3,18 @@ __author__ = 'teddycool'
 import cv2
 import numpy as np
 
-class ContourFinder(object):
+class DartFinder(object):
 
     def __init__(self):
         return
 
 
     def initialize(self):
+        #Setup color filter for darts (white or gold)
         return
 
     def update(self, frame):
+        #Find contours but remove if they are outside of the board
         self._cnts= []
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -31,9 +33,9 @@ class ContourFinder(object):
         return frame
 
 if __name__ == '__main__':
-    print "Testcode for ContourFinder"
+    print "Testcode for DartFinder"
     frame = cv2.imread("pic1.jpg")
-    cf = ContourFinder()
+    cf = DartFinder()
     frame = cf.update(frame)
     cf.draw(frame)
     cv2.imshow("Contours", frame)

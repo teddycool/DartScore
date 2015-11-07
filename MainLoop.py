@@ -16,13 +16,13 @@ class MainLoop(object):
         self._mountingState = CamMoutningLoop.CamMountingLoop()
         self._playState = PlayStateLoop.PlayStateLoop()
         self._state = {"MountState": self._mountingState, "CalState": self._calibrateState, "PlayState": self._playState}
-        self._currentStateLoop = self._state["MountState"]
+        self._currentStateLoop = self._state["PlayState"]
 
     def initialize(self):
         print "Main init..."
         self._inputs.initialize()
         self._cam.initialize()
-        self._board.initialize(self._cam.csnapshot)
+        #self._board.initialize(self._cam.csnapshot)
         self.time=time.time()
         #Init all states
         for key in self._state.keys():
@@ -32,15 +32,12 @@ class MainLoop(object):
     def update(self,screen):
         self._cam.update()
         pos = self._inputs.update()
-
-
-
         return pos
 
     def draw(self, screen):
         #Move partly to StateLoops
         self._inputs.draw(screen)
-        self._board.draw(screen)
+        #self._board.draw(screen)
 
         cam = self._currentStateLoop.draw(self._cam.csnapshot)
         screen.blit(cam, (0,0))
