@@ -28,9 +28,6 @@ class DartDetector(object):
             #TODO: move minarea to dartconfig file
             if cv2.contourArea(c) < 40:
                 continue
-
-            # compute the bounding box for the contour, draw it on the frame,
-            # and update the text
             rect = cv2.boundingRect(c)
             self._boundingRects.append(rect)
         return len(cnts)> 0

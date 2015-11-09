@@ -10,8 +10,8 @@ class StateLoop(object):
     def initialize(self):
         return
 
-    def update(self, screen):
+    def update(self, frame):
         return
 
-    def draw(self, snapshot):
+    def draw(self, frame):
         return

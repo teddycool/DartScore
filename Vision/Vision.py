@@ -13,8 +13,9 @@ from DartScoreConfig import dartconfig
 
 class Vision(object):
 
-    def __init__(self, resolution):
+    def __init__(self):
         print "Vision object started..."
+        resolution = dartconfig["cam"]["res"]
         self._cam = picamera.PiCamera()
         self._cam.resolution = resolution
         self._center = (resolution[0]/2, resolution[1]/2)
@@ -22,7 +23,7 @@ class Vision(object):
 
 
     def initialize(self):
-        self._cam.start_preview()
+        print "CAM init..."
 
 
     def update(self):
@@ -31,15 +32,12 @@ class Vision(object):
         self._cam.capture(stream, format='bgr')
         # At this point the image is available as stream.array
         frame = stream.array
-        self._contourFinder.update(frame)
         return frame
 
     def draw(self, frame):
-        frame = self._contourFinder.draw(frame)
         cv2.imwrite(dartconfig["Streamer"]["StreamerImage"],frame)
+        #time.sleep(1/dartconfig['framerate'])
 
-        #TODO: set up a defined framerate
-        time.sleep(0.1)
 
     def __del__(self):
         print "Vision object deleted..."
