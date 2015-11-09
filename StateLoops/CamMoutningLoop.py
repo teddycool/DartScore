@@ -9,18 +9,19 @@ class CamMountingLoop(StateLoop):
         return
 
     def initialize(self):
-        width, height= DartScoreConfig.config['cam']['res']
-        aimx = DartScoreConfig.config['mounting']['aimrectx']
-        aimy = DartScoreConfig.config['mounting']['aimrecty']
+        width, height= DartScoreConfig.dartconfig['cam']['res']
+        aimx = DartScoreConfig.dartconfig['mounting']['aimrectx']
+        aimy = DartScoreConfig.dartconfig['mounting']['aimrecty']
         self._centerRect = pygame.Rect(width/2-aimx/2, height/2-aimy/2, aimx, aimy)
         self._centerBullseye = (width/2,  height/2)
         return
 
     def update(self, screen):
+        #TODO: Add logic to switch state when ready Ie a button on the cam
         return screen
 
     def draw(self, snapshot):
         #draw rect for center of snapshot
-        pygame.draw.rect(snapshot, DartScoreConfig.config['color']['aim'], self._centerRect, 5)
+        pygame.draw.rect(snapshot, DartScoreConfig.dartconfig['color']['aim'], self._centerRect, 5)
         pygame.draw.circle(snapshot, (255,0,0), self._centerBullseye, 3, 0)
         return snapshot

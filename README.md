@@ -8,3 +8,7 @@ Board with a skewed image of the actual dartboard, from upper perspective.
 Make transform matrix to calculate perspective of image to fit BoardArray
 Find where the transformed board-picture is covered when image change
 Calculate score for covered region....
+
+All logic in raspberrypi
+Images sent to jpg-streamer to be picked up by any webbrowser
+

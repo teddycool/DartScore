@@ -9,13 +9,12 @@ import picamera.array
 import cv2
 import sys
 import numpy as np
-import DartFinder
+from DartScoreConfig import dartconfig
 
 class Vision(object):
 
     def __init__(self, resolution):
         print "Vision object started..."
-        self._contourFinder = DartFinder.DartFinder()
         self._cam = picamera.PiCamera()
         self._cam.resolution = resolution
         self._center = (resolution[0]/2, resolution[1]/2)
@@ -37,7 +36,7 @@ class Vision(object):
 
     def draw(self, frame):
         frame = self._contourFinder.draw(frame)
-        cv2.imwrite(roverconfig["Streamer"]["StreamerImage"],frame)
+        cv2.imwrite(dartconfig["Streamer"]["StreamerImage"],frame)
 
         #TODO: set up a defined framerate
         time.sleep(0.1)

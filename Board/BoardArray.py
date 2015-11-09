@@ -19,7 +19,7 @@ class BoardArray(object):
         self._radius = radius
 
     def create(self, img):
-        scolor = DartScoreConfig.config['color']['sector']
+        scolor = DartScoreConfig.dartconfig['color']['sector']
 
         cv2.circle(img,self._center,225,scolor,1) #outer
         cv2.circle(img,self._center,170,scolor,1) #outside double

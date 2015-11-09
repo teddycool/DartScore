@@ -9,9 +9,9 @@ class Board(object):
     def __init__(self):
         self._lines = []
         self._circles = []
-        self.imageX, self.imageY = self.width, self.height= DartScoreConfig.config['cam']['res']
+        self.imageX, self.imageY = self.width, self.height= DartScoreConfig.dartconfig['cam']['res']
         self._bullseye=(0,0)
-        self._scalibrate = DartScoreConfig.config['color']['calibrate']
+        self._scalibrate = DartScoreConfig.dartconfig['color']['calibrate']
 
 
     def initialize(self, img):
@@ -86,8 +86,8 @@ class Board(object):
             for j in range(noLines):
                 if i != j:
                     try:
-                        offsetx = DartScoreConfig.config['mounting']['aimrectx']/2
-                        offsety = DartScoreConfig.config['mounting']['aimrecty']/2
+                        offsetx = DartScoreConfig.dartconfig['mounting']['aimrectx'] / 2
+                        offsety = DartScoreConfig.dartconfig['mounting']['aimrecty'] / 2
                         cross =self._intersect(pLines[i],pLines[j])
                         if cross[0] < self.imageX/2+offsetx and cross[0] > self.imageX/2 -offsety:
                             if cross[1] < self.imageY/2+offsety and cross[1] > self.imageY/2 - offsety :

@@ -11,7 +11,6 @@ class MainLoop(object):
     def __init__(self):
         self._inputs=Inputs.Inputs(self)
         self._board = Board.Board()
-        self._cam=Cam.Cam()
         self._calibrateState = CamCalibrateLoop.CamCalibrateLoop()
         self._mountingState = CamMoutningLoop.CamMountingLoop()
         self._playState = PlayStateLoop.PlayStateLoop()
@@ -21,8 +20,6 @@ class MainLoop(object):
     def initialize(self):
         print "Main init..."
         self._inputs.initialize()
-        self._cam.initialize()
-        #self._board.initialize(self._cam.csnapshot)
         self.time=time.time()
         #Init all states
         for key in self._state.keys():
@@ -30,7 +27,6 @@ class MainLoop(object):
         print "Game started at ", self.time
 
     def update(self,screen):
-        self._cam.update()
         pos = self._inputs.update()
         return pos
 
@@ -39,9 +35,6 @@ class MainLoop(object):
         self._inputs.draw(screen)
         #self._board.draw(screen)
 
-        cam = self._currentStateLoop.draw(self._cam.csnapshot)
-        screen.blit(cam, (0,0))
-        return screen
 
     def changeState(self, newstate):
         if (newstate == 0) or (newstate == "InitState"):

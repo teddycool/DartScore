@@ -7,7 +7,6 @@ working cam with resoloution 640x480pi with correct config (use ipcamconfig for 
 
 Playstate:
 Constantly overlooking board and reacts on changes when dart hits board.
-Depending on selected player the correct player is rewarded
 
 Calibratestate:
 Runs camera calibration and calculate all sectors on dartboard, saves this as a ??? (dictionary, bitmap, array)
@@ -27,5 +26,6 @@ Two different approaches:
 * Mainbranch with pygame on a hostcomputer only recivied+ng cam-stream from RasberryPi
 * DartScorePiCam is completly run on RasberryPi and result/gui can be shown in any webbrowser
 
-Future expansuíons:
+Future expansíons:
 adding a second webcam for better view
+Depending on selected player the correct player is rewarded
