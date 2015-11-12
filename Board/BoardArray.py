@@ -51,5 +51,6 @@ if __name__ == "__main__":
     bf = BoardArray()
     img = bf.create(img)
     cv2.imshow('img',img)
+    cv2.imwrite("perfectboard.jpg",img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()

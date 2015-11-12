@@ -5,6 +5,7 @@ __author__ = 'teddycool'
 
 
 import MainLoop
+import time
 
 
 class Main(object):
@@ -21,8 +22,7 @@ class Main(object):
         while not stopped:
             frame = self._mainLoop.update()
             self._mainLoop.draw(frame)
-            del(frame)
-
+            time.sleep(0.2)
 
 
 #Testcode to run module. Standard Python way of testing modules.

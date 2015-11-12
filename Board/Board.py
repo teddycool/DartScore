@@ -127,10 +127,10 @@ class Board(object):
 
 if __name__ == "__main__":
 
-    snapshot = cv2.imread("C:\Users\psk\Documents\GitHub\DartScore\Board\seq15.jpg")
+    snapshot = cv2.imread("C:\Users\psk\Documents\GitHub\DartScore\Board\seq3.jpg")
 
     bf = Board()
-    bf.initialize()
+    bf.initialize(snapshot)
     original=snapshot.copy()
     snapshot = bf._findSectorLines(snapshot)
     cv2.imshow('sectorlines',snapshot)
@@ -139,6 +139,8 @@ if __name__ == "__main__":
     cv2.imshow('sector and circle lines',snapshot)
     ba.create(snapshot)
     cv2.imshow('orig',original)
+    cv2.imwrite("original.jpg",original)
     cv2.imshow('sector, circle lines and boardarray',snapshot)
+    cv2.imwrite("boardAndArray.jpg",snapshot)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
