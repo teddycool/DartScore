@@ -2,7 +2,6 @@ __author__ = 'teddycool'
 
 import cv2
 import numpy as np
-import pygame
 import math
 import DartScoreConfig
 

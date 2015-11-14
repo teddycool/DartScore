@@ -1,6 +1,6 @@
 __author__ = 'teddycool'
 
-#Parent-class for state-loops
+#Parent-class for all state-loops
 
 class StateLoop(object):
 

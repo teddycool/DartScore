@@ -1,5 +1,8 @@
 _author__ = 'teddycool'
-import pygame
+#State handling mounting of cam showing a square in the videofeed  where to have bulls-eye
+
+
+
 from  StateLoop import StateLoop
 import DartScoreConfig
 import cv2

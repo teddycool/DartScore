@@ -1,5 +1,7 @@
 __author__ = 'teddycool'
-import pygame
+#State handling calibration of cam at startup when mounted correctly
+#Warm-up, set exposure etc, read dartboard and setup the 'score-calculator-engine'
+
 from Board import Board
 from Board import BoardArray
 from  StateLoop import StateLoop

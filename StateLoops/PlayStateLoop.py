@@ -1,4 +1,7 @@
 __author__ = 'teddycool'
+#State handling the actual game, might be separated to several states
+
+
 import cv2
 
 from  StateLoop import StateLoop
