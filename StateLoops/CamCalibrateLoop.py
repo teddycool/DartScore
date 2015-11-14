@@ -5,6 +5,7 @@ __author__ = 'teddycool'
 from Board import Board
 from Board import BoardArray
 from  StateLoop import StateLoop
+import cv2
 
 
 class CamCalibrateLoop(StateLoop):
@@ -13,12 +14,11 @@ class CamCalibrateLoop(StateLoop):
         return
 
     def initialize(self):
-
         return
 
-    def update(self, screen):
-        return screen
+    def update(self, frame):
+        return frame
 
-    def draw(self, snapshot):
-
-        return snapshot
+    def draw(self, frame):
+        cv2.putText(frame,"Calibrate State", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+        return frame

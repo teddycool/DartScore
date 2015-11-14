@@ -47,13 +47,13 @@ class Vision(object):
         frame = stream.array
         return frame
 
-    def draw(self, frame):
+    def draw(self, frame, framerate):
+        if dartconfig["Vision"]["PrintFrameRate"]:
+            cv2.putText(frame, "Framerate: " + str(framerate), (5,450),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
         cv2.imwrite(dartconfig["Streamer"]["StreamerImage"],frame)
-        cv2.imwrite("seq"+str(self._seqno)+".jpg",frame)
-        self._seqno=self._seqno+1
-
-        #time.sleep(1/dartconfig['framerate'])
-        #self._videow.write(frame)
+        if dartconfig["Vision"]["WriteFramesToSeparateFiles"]:
+            cv2.imwrite("seq"+str(self._seqno)+".jpg",frame)
+            self._seqno=self._seqno+1
 
 
     def __del__(self):

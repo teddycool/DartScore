@@ -14,12 +14,14 @@ class PlayStateLoop(StateLoop):
 
     def initialize(self ):
         print "PlayState init..."
+
         self._dartDetectorFrames = 0
         self._init = False
         self._empty = True
         self._warmup = 0
 
     def update(self, frame):
+        #TODO: move to calibrate state
         if self._warmup < 10:
             self._warmup = self._warmup + 1
             return frame

@@ -2,89 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c577571-2f05-4ab2-986d-6c0af0c1b92d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/video-stream-samples.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Inputs/IoInputs.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Board/seq15.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Inputs/Inputs.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/Gatherer.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq10.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq11.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq12.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq13.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq14.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq15.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq16.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq17.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq18.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq19.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq20.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq21.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq22.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq23.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq24.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq25.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq26.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq27.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq28.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq29.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq30.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq31.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq32.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq33.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq34.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq35.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq36.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq37.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq38.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq39.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq40.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq41.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq42.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq43.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq44.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq45.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq46.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq47.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq48.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq49.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq50.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq51.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq52.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq53.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq54.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq55.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq56.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq57.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq58.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq59.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq6.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq60.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq61.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq62.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq63.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq64.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq65.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq66.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq8.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/collected/seq9.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestImageGatherer/stop.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Utils/conversions.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/doc.txt" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Utils/Logger.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Board/BoardArray.py" afterPath="$PROJECT_DIR$/Board/BoardArray.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DartScoreConfig.py" afterPath="$PROJECT_DIR$/DartScoreConfig.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Inputs/IoInputs.py" afterPath="$PROJECT_DIR$/Inputs/IoInputs.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.py" afterPath="$PROJECT_DIR$/Main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MainLoop.py" afterPath="$PROJECT_DIR$/MainLoop.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" afterPath="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" afterPath="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" afterPath="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StateLoops/StateLoop.py" afterPath="$PROJECT_DIR$/StateLoops/StateLoop.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Vision/Vision.py" afterPath="$PROJECT_DIR$/Vision/Vision.py" />
     </list>
     <ignored path="DartScore.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,9 +36,21 @@
         <entry file="file://$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="58" selection-start-line="2" selection-start-column="58" selection-end-line="2" selection-end-column="58" />
+              <caret line="22" column="100" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="100" />
               <folding>
                 <element signature="e#178#201#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CamMoutningLoop.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/StateLoops/CamMoutningLoop.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="32" column="100" selection-start-line="32" selection-start-column="100" selection-end-line="32" selection-end-column="100" />
+              <folding>
+                <element signature="e#118#150#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,7 +60,7 @@
         <entry file="file://$PROJECT_DIR$/StateLoops/PlayStateLoop.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="69" selection-start-line="1" selection-start-column="69" selection-end-line="1" selection-end-column="69" />
+              <caret line="57" column="106" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="106" />
               <folding>
                 <element signature="e#97#107#0" expanded="true" />
               </folding>
@@ -129,74 +68,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StateLoop.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/StateLoops/StateLoop.py">
+      <file leaf-file-name="MainLoop.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MainLoop.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoardArray.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/BoardArray.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Board.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/Board.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="134" column="44" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
+              <caret line="54" column="36" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
               <folding>
-                <element signature="e#25#35#0" expanded="true" />
+                <element signature="e#128#153#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Transform.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/Transform.py">
+      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="boardarraybg.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/boardarraybg.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lineutils.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Utils/lineutils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider editor-type-id="MarkdownPreviewEditor">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.54063606">
-              <caret line="27" column="88" selection-start-line="27" selection-start-column="88" selection-end-line="27" selection-end-column="88" />
-              <folding />
+              <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
+              <folding>
+                <element signature="e#82#97#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -205,8 +96,55 @@
         <entry file="file://$PROJECT_DIR$/DartScoreConfig.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="59" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="59" />
+              <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DartDetector.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Vision/DartDetector.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6519886">
+              <caret line="27" column="88" selection-start-line="27" selection-start-column="88" selection-end-line="27" selection-end-column="88" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IoInputs.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Inputs/IoInputs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="26" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
+              <folding>
+                <element signature="e#249#287#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Vision.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Vision/Vision.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="51" column="60" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="60" />
+              <folding>
+                <element signature="e#271#282#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -257,28 +195,29 @@
         <option value="$USER_HOME$/AppData/Local/Temp/Temp1_basic-motion-detection.zip/basic-motion-detection/motion_detector.py" />
         <option value="$PROJECT_DIR$/Vision/MotionDetector.py" />
         <option value="$PROJECT_DIR$/doc.txt" />
-        <option value="$PROJECT_DIR$/MainLoop.py" />
         <option value="$PROJECT_DIR$/Vision/DartDetector.py" />
         <option value="$PROJECT_DIR$/Vision/DartScoreConfig.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
-        <option value="$PROJECT_DIR$/Vision/Vision.py" />
         <option value="$PROJECT_DIR$/Board/Board.py" />
-        <option value="$PROJECT_DIR$/Inputs/IoInputs.py" />
-        <option value="$PROJECT_DIR$/DartScoreConfig.py" />
-        <option value="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" />
-        <option value="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" />
-        <option value="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" />
         <option value="$PROJECT_DIR$/StateLoops/StateLoop.py" />
         <option value="$PROJECT_DIR$/Board/BoardArray.py" />
         <option value="$PROJECT_DIR$/Utils/conversions.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Utils/Logger.py" />
+        <option value="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" />
+        <option value="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" />
+        <option value="$PROJECT_DIR$/Inputs/IoInputs.py" />
+        <option value="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" />
+        <option value="$PROJECT_DIR$/MainLoop.py" />
+        <option value="$PROJECT_DIR$/DartScoreConfig.py" />
+        <option value="$PROJECT_DIR$/Vision/Vision.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
-    <option name="width" value="1932" />
+    <option name="width" value="1938" />
     <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -681,21 +620,29 @@
       <option name="project" value="LOCAL" />
       <updated>1447361378867</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="More cleanup and removing things not used. Added examples from videostream.">
+      <created>1447489929909</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1447489929909</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1932" height="1048" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24141574" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24065298" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15452538" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15818584" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41721854" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28918323" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40832397" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -703,11 +650,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28918323" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37306842" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40832397" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -753,7 +698,8 @@
     <MESSAGE value="Removed a lot of junk that isn't used in this approach.  State-loops, vision and board are main-components now. Added some support for image-writing to  mjpeg-streamer directly from opencv." />
     <MESSAGE value="Start of working StateLoops" />
     <MESSAGE value="Working playstate and dart recognition" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working playstate and dart recognition" />
+    <MESSAGE value="More cleanup and removing things not used. Added examples from videostream." />
+    <option name="LAST_COMMIT_MESSAGE" value="More cleanup and removing things not used. Added examples from videostream." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -774,98 +720,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Vision/seq48.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/seq10.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/seq34.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/seq20.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/DartScoreConfig.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11617312">
-          <caret line="6" column="133" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="133" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/DartDetector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="44" selection-start-line="38" selection-start-column="44" selection-end-line="38" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MainLoop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="72" selection-start-line="42" selection-start-column="72" selection-end-line="42" selection-end-column="72" />
-          <folding>
-            <element signature="e#128#153#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
-          <folding>
-            <element signature="e#82#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Inputs/IoInputs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="80" selection-start-line="4" selection-start-column="80" selection-end-line="4" selection-end-column="80" />
-          <folding>
-            <element signature="e#250#272#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/Vision.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="8" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="56" />
-          <folding>
-            <element signature="e#271#282#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/StateLoops/CamMoutningLoop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="17" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="17" />
-          <folding>
-            <element signature="e#118#150#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DartScoreConfig.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="59" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -883,6 +737,72 @@
           <folding>
             <element signature="e#97#107#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StateLoops/StateLoop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Board/BoardArray.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Board/Board.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="134" column="44" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
+          <folding>
+            <element signature="e#25#35#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Board/Transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Board/boardarraybg.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/lineutils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DartScoreConfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="59" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="59" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -904,7 +824,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="134" column="44" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
           <folding>
-            <element signature="e#25#35#0" expanded="true" />
+            <element signature="e#25#35#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -933,15 +853,134 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
+    <entry file="file://$PROJECT_DIR$/Vision/seq20.jpg">
+      <provider selected="true" editor-type-id="images">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/seq34.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/seq48.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils/Logger.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54063606">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/seq66.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/seq10.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StateLoops/CamMoutningLoop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="100" selection-start-line="32" selection-start-column="100" selection-end-line="32" selection-end-column="100" />
+          <folding>
+            <element signature="e#118#150#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="100" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="100" />
+          <folding>
+            <element signature="e#178#201#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StateLoops/PlayStateLoop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="57" column="106" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="106" />
+          <folding>
+            <element signature="e#97#107#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DartScoreConfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/DartDetector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MainLoop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="36" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
+          <folding>
+            <element signature="e#128#153#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
+          <folding>
+            <element signature="e#82#97#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Inputs/IoInputs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="26" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
+          <folding>
+            <element signature="e#249#287#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/Vision.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="51" column="60" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="60" />
+          <folding>
+            <element signature="e#271#282#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6519886">
           <caret line="27" column="88" selection-start-line="27" selection-start-column="88" selection-end-line="27" selection-end-column="88" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
       </provider>
     </entry>
   </component>

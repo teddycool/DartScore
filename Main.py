@@ -6,6 +6,7 @@ __author__ = 'teddycool'
 
 import MainLoop
 import time
+from DartScoreConfig import dartconfig
 
 
 class Main(object):
@@ -20,9 +21,11 @@ class Main(object):
         stopped = False
         running=True
         while not stopped:
+            framestarttime = time.time()
             frame = self._mainLoop.update()
             self._mainLoop.draw(frame)
-            time.sleep(0.2)
+            while time.time()-framestarttime < 1/dartconfig["Main"]["MaxFrameRate"]:
+                time.sleep(0.01)
 
 
 #Testcode to run module. Standard Python way of testing modules.

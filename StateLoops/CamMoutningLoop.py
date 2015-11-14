@@ -30,4 +30,5 @@ class CamMountingLoop(StateLoop):
     def draw(self, frame):
         cv2.rectangle(frame, self._startpos, self._centerRect, DartScoreConfig.dartconfig['color']['aim'], 5)
         cv2.circle(frame,self._center,10, DartScoreConfig.dartconfig['color']['bullseye'],2)
+        cv2.putText(frame,"Calibrate State", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
         return frame
