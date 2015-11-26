@@ -41,7 +41,7 @@ class PlayStateLoop(StateLoop):
                     self._previousFrame = frame.copy()
                 else:
                     self._dartDetectorFrames = self._dartDetectorFrames + 1
-                    if self._dartDetectorFrames > 10:
+                    if self._dartDetectorFrames > 2:
                         self._dartDetectorFrames = 0
                         #self._previousFrame = frame.copy()
             else:
@@ -55,12 +55,12 @@ class PlayStateLoop(StateLoop):
     def draw(self, frame):
         if self._init:
             if self._empty:
-                cv2.putText(frame,"Board empty", (200,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+                cv2.putText(frame,"Board empty", (5,50),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
             else:
-                cv2.putText(frame,"Board not empty", (200,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+                cv2.putText(frame,"Board not empty", (5,50),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
                 frame = self._dartDetector.draw(frame)
 
-            cv2.putText(frame,"PlayState", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+            cv2.putText(frame,"Play State", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
         else:
-            cv2.putText(frame,"PlayState - warming up", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+            cv2.putText(frame,"Play State - warming up", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
         return frame

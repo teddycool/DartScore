@@ -16,8 +16,8 @@ class Board(object):
 
     def initialize(self, img):
        #Run self calibration
-       self._findSectorLines(img)
-       self._ba=BoardArray.BoardArray(self._bullseye)
+       self.findSectorLines(img)
+       #self._ba=BoardArray.BoardArray(self._bullseye)
        return
 
 
@@ -58,7 +58,7 @@ class Board(object):
         return x, y
 
     #Find all sectorlines on the actual board and calculate sectors
-    def _findSectorLines(self, img):
+    def findSectorLines(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray.copy(), (3, 3), 0)
         #edges = self._auto_canny(gray)
@@ -105,7 +105,6 @@ class Board(object):
         return img
 
     def _findCircleLines(self, img):
-
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray, (3, 3), 0)
         #edges = self._auto_canny(blurred)
@@ -132,7 +131,7 @@ if __name__ == "__main__":
     bf = Board()
     bf.initialize(snapshot)
     original=snapshot.copy()
-    snapshot = bf._findSectorLines(snapshot)
+    snapshot = bf.findSectorLines(snapshot)
     cv2.imshow('sectorlines',snapshot)
     snapshot = bf._findCircleLines(snapshot)
     ba=BoardArray.BoardArray(bf._bullseye)

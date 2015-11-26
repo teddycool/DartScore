@@ -40,9 +40,9 @@ class PushButton(object):
         return self._state
 
 
-    def draw(self, frame):
-        cv2.putText(frame,"Button: " + str(self._state), (200,50),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
-
+    def draw(self, frame, name, x, y):
+        cv2.putText(frame,"Button " + name + ": " + str(self._state), (x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+        print "Button " + name + ": " + str(self._state)
         return frame
 
 

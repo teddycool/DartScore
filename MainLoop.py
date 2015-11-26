@@ -30,29 +30,35 @@ class MainLoop(object):
         print "Main init..."
         #self._inputs.initialize()
         self.time=time.time()
-        self._vision.initialize()
+        frame = self._vision.initialize()
         self._lastframetime = time.time()
         #Init all states
         for key in self._state.keys():
             self._state[key].initialize()
         self._calButton.initialize()
+        self._gameButton.initialize()
         print "Game started at ", self.time
+        return frame
 
     def update(self):
         frame = self._vision.update()
         self._currentStateLoop.update(frame)
         cal = self._calButton.update()
+        game = self._gameButton.update()
         #TODO: fix better state-machine, move to state-loops
-        print "CalButton: " + cal
         if cal  == "Pressed":
             self.changeState("CalState") #Mounting ready
         if cal == "LongPressed":
+            self.changeState("MountState")  #Reset to playstate
+        if game == "Pressed":
             self.changeState("PlayState")  #Reset to playstate
         return frame
 
     def draw(self, frame):
         frame = self._currentStateLoop.draw(frame)
-        self._calButton.draw(frame )
+        self._calButton.draw(frame,"Cal", 5,80)
+        self._gameButton.draw(frame,"Game", 5,100)
+
         framerate = 1/(time.time()-self._lastframetime)
         self._vision.draw(frame, framerate) #Actually draw frame to mjpeg streamer...
         self._lastframetime= time.time()

@@ -5,18 +5,23 @@ __author__ = 'teddycool'
 from Board import Board
 from Board import BoardArray
 from  StateLoop import StateLoop
+from Board import Board
 import cv2
 
 
 class CamCalibrateLoop(StateLoop):
     def __init__(self):
         super(CamCalibrateLoop, self).__init__()
+        self._board = Board.Board()
         return
 
     def initialize(self):
+        #Calculate sectorlines passing bulls-eye
         return
 
     def update(self, frame):
+        #TODO: Move to init and do only once. Update should visualize different sectors found ant calibration
+        frame = self._board.findSectorLines(frame)
         return frame
 
     def draw(self, frame):

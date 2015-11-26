@@ -37,6 +37,7 @@ class Vision(object):
         g = self._cam.awb_gains
         self._cam.awb_mode = 'off'
         self._cam.awb_gains = g
+        frame =  self.update()
        # self._videow = cv2.VideoWriter(dartconfig["Streamer"]["VideoFile"], cv2.cv.CV_FOURCC('P','I','M','1'), 20, resolution )
 
     def update(self):
@@ -45,14 +46,19 @@ class Vision(object):
         self._cam.capture(stream, format='bgr')
         # At this point the image is available as stream.array
         frame = stream.array
+        if dartconfig["Vision"]["WriteFramesToSeparateFiles"]:
+            cv2.imwrite("camseq"+str(self._seqno)+".jpg",frame)
         return frame
 
     def draw(self, frame, framerate):
         if dartconfig["Vision"]["PrintFrameRate"]:
-            cv2.putText(frame, "Framerate: " + str(framerate), (5,450),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+            cv2.putText(frame, "Framerate: " + str(framerate), (5,150),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+
+        #Write to actual frame for MJPG streamer
         cv2.imwrite(dartconfig["Streamer"]["StreamerImage"],frame)
+
         if dartconfig["Vision"]["WriteFramesToSeparateFiles"]:
-            cv2.imwrite("seq"+str(self._seqno)+".jpg",frame)
+            cv2.imwrite("cv2seq"+str(self._seqno)+".jpg",frame)
             self._seqno=self._seqno+1
 
 
