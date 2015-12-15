@@ -58,6 +58,8 @@ class Board(object):
         return x, y
 
     #Find all sectorlines on the actual board and calculate sectors
+    #TODO: separate finding lines from drawing lines
+    #TODO: find 2 sectorlines per boarder/coard in board. Reduce to fit sectors
     def findSectorLines(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray.copy(), (3, 3), 0)
@@ -100,7 +102,6 @@ class Board(object):
                         pass
 
         self._bullseye = (int(np.median(xpoint)),int(np.median(ypoint)))
-        print crosspoint
         print "Bullseye: ", self._bullseye
         return img
 

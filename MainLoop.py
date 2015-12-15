@@ -41,6 +41,7 @@ class MainLoop(object):
         return frame
 
     def update(self):
+        start = time.time()
         frame = self._vision.update()
         self._currentStateLoop.update(frame)
         cal = self._calButton.update()
@@ -52,16 +53,19 @@ class MainLoop(object):
             self.changeState("MountState")  #Reset to playstate
         if game == "Pressed":
             self.changeState("PlayState")  #Reset to playstate
+        print "Main update time: " + str(time.time()-start)
         return frame
 
     def draw(self, frame):
+        start = time.time()
         frame = self._currentStateLoop.draw(frame)
         self._calButton.draw(frame,"Cal", 5,80)
         self._gameButton.draw(frame,"Game", 5,100)
 
         framerate = 1/(time.time()-self._lastframetime)
-        self._vision.draw(frame, framerate) #Actually draw frame to mjpeg streamer...
         self._lastframetime= time.time()
+        self._vision.draw(frame, framerate) #Actually draw frame to mjpeg streamer...
+        print "Main draw time: " + str(time.time()-start)
 
 
     def changeState(self, newstate):

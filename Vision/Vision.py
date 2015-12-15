@@ -5,7 +5,8 @@ __author__ = 'teddycool'
 # http://blog.miguelgrinberg.com/post/stream-video-from-the-raspberry-pi-camera-to-web-browsers-even-on-ios-and-android
 import time
 import picamera
-import picamera.array
+#import picamera.array
+from picamera.array import PiRGBArray
 import cv2
 import sys
 import numpy as np
@@ -37,15 +38,18 @@ class Vision(object):
         g = self._cam.awb_gains
         self._cam.awb_mode = 'off'
         self._cam.awb_gains = g
-        frame =  self.update()
+        self._lastframetime = time.time()
+        self._rawCapture = PiRGBArray(self._cam, size=resolution)
+        self._imagegenerator = self._cam.capture_continuous(self._rawCapture, format="bgr", use_video_port=True)
+        #frame =  self.update()
        # self._videow = cv2.VideoWriter(dartconfig["Streamer"]["VideoFile"], cv2.cv.CV_FOURCC('P','I','M','1'), 20, resolution )
 
     def update(self):
         #TODO: make threaded in exception catcher
-        stream = picamera.array.PiRGBArray(self._cam)
-        self._cam.capture(stream, format='bgr')
-        # At this point the image is available as stream.array
-        frame = stream.array
+        rawframe = self._imagegenerator.next()
+        self._rawCapture.truncate()
+        self._rawCapture.seek(0)
+        frame = rawframe.array
         if dartconfig["Vision"]["WriteFramesToSeparateFiles"]:
             cv2.imwrite("camseq"+str(self._seqno)+".jpg",frame)
         return frame

@@ -24,8 +24,7 @@ class Main(object):
             framestarttime = time.time()
             frame = self._mainLoop.update()
             self._mainLoop.draw(frame)
-            while time.time()-framestarttime < 1/dartconfig["Main"]["MaxFrameRate"]:
-                time.sleep(0.01)
+            #time.sleep(0.01)
 
 
 #Testcode to run module. Standard Python way of testing modules.

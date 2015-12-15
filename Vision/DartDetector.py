@@ -1,7 +1,11 @@
 __author__ = 'teddycool'
+#Purpose: detect when a dart hits the board and when the board is empty
+#The bounding rect for the new dart is used by DartHit to figure out the coordinates for the hit
 #Ref: http://www.pyimagesearch.com/2015/05/25/basic-motion-detection-and-tracking-with-python-and-opencv/
 
 import cv2
+from DartHit import DartHit
+from DartScoreConfig import dartconfig
 
 class DartDetector(object):
 
@@ -9,6 +13,8 @@ class DartDetector(object):
         self._boundingRects = []
         self._rawCnts = []
         self._boardEmptyFrame = boardemptyframe.copy()
+        self._darthit = DartHit()
+        self._seqno =0
 
     def boardEmpty(self, frame):
         print "Board empty?"
@@ -20,16 +26,25 @@ class DartDetector(object):
         cnts = self._frameDeltaBoundingBoxes(frame1, frame2)
         return len(cnts)> 0
 
-
-    def detectDart(self, frame1, frame2):
+    def detectDart(self, currentframe, previousframe):
         print "Dart detected?"
-        self._boundingRects = self._frameDeltaBoundingBoxes(frame1, frame2)
+        self._boundingRects = self._frameDeltaBoundingBoxes(currentframe, previousframe)
+        if len(self._boundingRects) > 0:
+            rectno=0
+            for rect in self._boundingRects:
+                x,y,w,h = rect
+                x1 = x+w
+                y1 = y+h
+                cropped = currentframe[y:y1, x:x1]
+                self._darthit.initialize(cropped,rect)
+                if dartconfig["DartHit"]["WriteFramesToSeparateFiles"]:
+                    cv2.imwrite("dhframe"+str(self._seqno)+ "_" +str(rectno) +".jpg",cropped)
+                    rectno = rectno +1
+            self._seqno=self._seqno+1
         return len(self._boundingRects)> 0
 
     def draw(self, frame):
         print "Draw dart"
-        #for (x, y, w, h) in self._rawCnts:
-        #    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
         for (x, y, w, h) in self._boundingRects:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
         return frame
@@ -67,14 +82,19 @@ class DartDetector(object):
 
 if __name__ == '__main__':
     print "Testcode for DartFinder"
-    frame1 = cv2.imread("seq10.jpg")
-    frame2 = cv2.imread("seq34.jpg")
-    frame3 = cv2.imread("seq20.jpg")
-    frame4 = cv2.imread("seq66.jpg")
+    frame1 = cv2.imread("camseq58.jpg")
+    frame2 = cv2.imread("camseq64.jpg")
+    frame3 = cv2.imread("camseq67.jpg")
+
     dd = DartDetector(frame1)
-    print dd.detectDart(frame1, frame2)  #True
+    print dd.detectDart(frame2, frame1)  #True
     frame = dd.draw(frame2)  #False
     print dd.boardEmpty(frame3)#True
     print dd.boardChanged(frame1, frame3)
     cv2.imshow("Darts found...", frame)
+    x,y,w,h = dd._boundingRects[0]
+    x1 = x+w
+    y1 = y+h
+    cropped = frame[y:y1, x:x1]
+    cv2.imshow("DartPart",cropped )
     cv2.waitKey(0)

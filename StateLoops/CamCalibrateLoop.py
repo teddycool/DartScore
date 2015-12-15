@@ -13,6 +13,7 @@ class CamCalibrateLoop(StateLoop):
     def __init__(self):
         super(CamCalibrateLoop, self).__init__()
         self._board = Board.Board()
+        self._firstFrame = None
         return
 
     def initialize(self):
@@ -20,8 +21,9 @@ class CamCalibrateLoop(StateLoop):
         return
 
     def update(self, frame):
-        #TODO: Move to init and do only once. Update should visualize different sectors found ant calibration
-        frame = self._board.findSectorLines(frame)
+        if self._firstFrame == None:
+            self._first = frame
+            frame = self._board.findSectorLines(frame)
         return frame
 
     def draw(self, frame):

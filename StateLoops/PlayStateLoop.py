@@ -6,6 +6,7 @@ import cv2
 
 from  StateLoop import StateLoop
 from Vision import DartDetector
+from DartScoreConfig import dartconfig
 
 class PlayStateLoop(StateLoop):
     def __init__(self):
@@ -22,7 +23,7 @@ class PlayStateLoop(StateLoop):
 
     def update(self, frame):
         #TODO: move to calibrate state
-        if self._warmup < 10:
+        if self._warmup < dartconfig["play"]["warmupframes"]:
             self._warmup = self._warmup + 1
             return frame
 
@@ -36,14 +37,15 @@ class PlayStateLoop(StateLoop):
                 print "Detected not empty"
                 self._empty = False
                 if self._dartDetector.detectDart(frame, self._previousFrame):
-                    print "New dart detected in this frame"
+                    print "New dart or change detected in this frame"
+                    #Add calculation of hit-scores here
                     self._dartDetectorFrames = 0
                     self._previousFrame = frame.copy()
                 else:
                     self._dartDetectorFrames = self._dartDetectorFrames + 1
-                    if self._dartDetectorFrames > 2:
+                    if self._dartDetectorFrames > dartconfig["play"]["hitframes"]:
                         self._dartDetectorFrames = 0
-                        #self._previousFrame = frame.copy()
+                        #This was an actual hit, add sum of hit-scores  for player here
             else:
                 print "Detected empty"
                 self._empty = True

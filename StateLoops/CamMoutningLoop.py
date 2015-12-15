@@ -30,10 +30,10 @@ class CamMountingLoop(StateLoop):
     def draw(self, frame):
         cv2.rectangle(frame, self._startpos, self._centerRect, DartScoreConfig.dartconfig['color']['aim'], 5)
         cv2.circle(frame,self._center,10, DartScoreConfig.dartconfig['color']['bullseye'],2)
-        cv2.putText(frame,"Mount to match bullseye here", (self._center[0]+15,self._center[1]),cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2)
+        cv2.putText(frame,"Mount to match bullseye here", (self._center[0]+15,self._center[1]),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
         cv2.line(frame,self._center, (self._center[0],0),DartScoreConfig.dartconfig['color']['bullseye'],2)
-        cv2.putText(frame,"Put this line inside the 20-sector", (self._center[0]-100,100),cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2)
-        cv2.putText(frame,"Mounting State", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
-        cv2.putText(frame,"Press cal-button when ready", (5,40),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+        cv2.putText(frame,"Put this line inside the 20-sector", (self._center[0]-100,100),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
+        cv2.putText(frame,"Mounting State", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
+        cv2.putText(frame,"Press cal-button when ready", (5,40),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
 
         return frame

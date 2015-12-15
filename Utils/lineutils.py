@@ -6,9 +6,10 @@ def lineeq (coord1, coord2):
     b= coord1[1]  - k*coord1[0]
     return k, b
 
-#defining angle for line passing through origo and 'cord'
+#defining angle for line passing through origo and 'coord'
 def angle(coord):
     return math.atan(coord[1]/coord[0])
 
+#defining lenght from origo to 'coord'
 def lenght(coord):
     return math.sqrt(math.pow(coord[0], 2) + math.pow(coord[1],2))
