@@ -71,10 +71,10 @@ class DartDetector(object):
             # if the contour is too small, ignore it
             #TODO: move minarea to dartconfig file
             print "Area = " + str( cv2.contourArea(c))
-            if cv2.contourArea(c) > 500:
+            if cv2.contourArea(c) > dartconfig["DartHit"]["DartHitMinArea"]:
                 rect = cv2.boundingRect(c)
                 boundingRects.append(rect)
-        print "Counts for contours bigger then x: " + str(len(boundingRects))
+        print "Counts for contours bigger then: " + str(len(boundingRects))
         print "Raw counts for contours that differs: " + str(len(cnts))
         self._rawCnts = cnts
         return boundingRects

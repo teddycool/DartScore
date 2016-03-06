@@ -9,6 +9,6 @@ dartconfig = {  "cam": {"res":(640, 480), "id":1, "framerate": 20},             
                 "Button": {"Pressed": 0.5, "LongPressed": 2},
                 "Logger": {"Level": "Verbose", "LogFile": "/tmp/stream/log.log", "SaveDartEvalFrames": False},
                 "Main": {"MaxFrameRate": 10},
-                "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True},
-                "DartHit":{"WriteFramesToSeparateFiles": False},
+                "Vision": {"WriteFramesToSeparateFiles": True, "PrintFrameRate": False},
+                "DartHit":{"WriteFramesToSeparateFiles": False, "DartHitMinArea": 500},
               }

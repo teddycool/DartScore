@@ -26,3 +26,16 @@ Constantly overlooking board and reacts on changes when dart hits board. No othe
 
 MainLoop is engine and master for changing states
 Inputs from push-buttons decides when player is done with mounting etc and ready to play
+
+
+Problem:
+Montering... Bra beslag och inställbart
+konturer i opencv. canny edge
+
+Hitta mitten 
+hita fält av resp färg? grå, svart, grön röd?
+hur definiera en sektor? kolla i opencv...
+hur numreras sektorerna?
+bygg dictionary med sector: points ?
+transformera? 
+

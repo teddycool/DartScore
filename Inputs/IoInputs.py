@@ -45,6 +45,25 @@ class PushButton(object):
         print "Button " + name + ": " + str(self._state)
         return frame
 
+class OnOffSwitch(object):
+    def __init__(self, GPIO, inputpin):
+        self._gpio = GPIO
+        self._inputpin = inputpin
+        self._states = ['ON', 'OFF']
+
+    def initialize(self):
+        self._gpio.setmode(self._gpio.BCM)
+        self._gpio.setup(self._inputpin, self._gpio.IN, pull_up_down=self._gpio.PUD_UP)
+
+    def update(self):
+        return not self._gpio.input(self._inputpin) #When grounded, switch is on, PullUp is released
+
+
+    def draw(self, frame, name, x, y):
+        cv2.putText(frame,"Switch " + name + ": " + str(self._state), (x,y),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
+        print "Switch " + name + ": " + str(self._state)
+        return frame
+
 
 if __name__ == '__main__':
     import RPi.GPIO as GPIO

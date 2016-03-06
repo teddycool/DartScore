@@ -59,8 +59,8 @@ class MainLoop(object):
     def draw(self, frame):
         start = time.time()
         frame = self._currentStateLoop.draw(frame)
-        self._calButton.draw(frame,"Cal", 5,80)
-        self._gameButton.draw(frame,"Game", 5,100)
+        #self._calButton.draw(frame,"Cal", 5,80)
+        #self._gameButton.draw(frame,"Game", 5,100)
 
         framerate = 1/(time.time()-self._lastframetime)
         self._lastframetime= time.time()

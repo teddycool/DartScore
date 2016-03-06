@@ -1,0 +1,42 @@
+Pre reqs:
+
+For the Pi:
+Hardware:
+raspberryPi, raspberrypi cam, wifi-dongle, brackets for mounting, button(s), 
+
+Software:
+install raspian jessie, instructions are found here: https://www.raspberrypi.org/downloads/raspbian/
+Enable the camera module and make apropriate settings for wifi-network, hostsname, keyboard  etc
+
+sudo apt-get install python-dev
+
+sudo apt-get install python-rpi.gpio
+
+
+install MJPG-streamer, instructions are found here: https://www.raspberrypi.org/forums/viewtopic.php?t=48597
+install opencv: sudo apt-get install libopencv-dev python-opencv
+(There are many ways to do this but this works for me and I don't have to wait 10hrs to compile the source)
+
+
+Start streamer:
+
+sudo mkdir /tmp/stream
+cd mjpg-streamer/mjpg-streamer
+LD_LIBRARY_PATH=./ ./mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w ./www" &
+
+
+
+
+For the PC:
+Python development IDE (PyCharm is a good choice)
+Firefox to show the video-stream
+Putty for connecting remotely to the Pi
+WinSCP to syncronize files
+GitHub account to get the source-code
+
+
+Modify ??-file to make streamer-directory and start the streamer automatically at boot
+Copy all source-code to the pi and run Main.py in the DartScore directory (sudo python Main.py) 
+
+Refs:
+http://blog.miguelgrinberg.com/post/stream-video-from-the-raspberry-pi-camera-to-web-browsers-even-on-ios-and-android
