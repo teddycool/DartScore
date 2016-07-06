@@ -19,7 +19,7 @@ except:
      dartconfig ={                   #Config for test-purpose
                 "cam": {"res":(640, 480), "id":1, "framerate": 20},
                 "Streamer": {"StreamerImage": "/tmp/stream/pic.jpg", "StreamerLib": "/tmp/stream", "VideoFile": "/home/pi/DartScore/video.mpg"},
-                "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True}
+                "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": False}
      }
 
 class Vision(object):
@@ -37,7 +37,7 @@ class Vision(object):
         print "Starting streamer..."
 
         print os.system('sudo mkdir /tmp/stream')
-        print os.system('sudo LD_LIBRARY_PATH=/home/pi/mjpg-streamer/mjpg-streamer /home/pi/mjpg-streamer/mjpg-streamer/mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /home/pi/mjpg-streamer/mjpg-streamer/www" &')
+        print os.system('sudo LD_LIBRARY_PATH=/home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer  /home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer/mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer/www" &')
 
         #CAM stettings! exposure, wb etc or try using pygame.cam?
         #https://picamera.readthedocs.org/en/release-1.10/recipes1.html#capturing-consistent-images
@@ -104,8 +104,9 @@ if __name__ == '__main__':
         while 1:
             print "Updating frame..."
             frame = vision.update()
+            print "TypeOfFrame: " + str(type(frame))
             print "Drawing frame..."
-            vision.draw(frame)
+            vision.draw(frame, 2)
             time.sleep(0.2)
     except:
         e = sys.exc_info()[0]

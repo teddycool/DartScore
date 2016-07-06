@@ -19,7 +19,6 @@ class Main(object):
     def run(self):
         self._mainLoop.initialize()
         stopped = False
-        running=True
         while not stopped:
             framestarttime = time.time()
             frame = self._mainLoop.update()
@@ -28,9 +27,7 @@ class Main(object):
 
 
 #Testcode to run module. Standard Python way of testing modules.
-#OBS !! comment out   line 47: "C:\Python27\Lib\site-packages\pygame\_camera_vidcapture.py":
-#       #self.dev.setresolution(width, height) on row 49 in:
-#
+
 if __name__ == "__main__":
     #Set to webcam ID, std is 0. Networkedcam is probably 1
     #camid=1

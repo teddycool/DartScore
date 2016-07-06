@@ -7,21 +7,24 @@ import cv2
 from  StateLoop import StateLoop
 from Vision import DartDetector
 from DartScoreConfig import dartconfig
+from Actuators import LedIndicator
 
 class PlayStateLoop(StateLoop):
     def __init__(self):
         super(PlayStateLoop, self).__init__()
         return
 
-    def initialize(self ):
+    def initialize(self,gpio ):
         print "PlayState init..."
-
+        self._gpio=gpio
         self._dartDetectorFrames = 0
         self._init = False
         self._empty = True
         self._warmup = 0
+        self._hitLed = LedIndicator.LedIndicator(self._gpio, dartconfig["IO"]["HitLed"])
 
     def update(self, frame):
+        self._hitLed.update()
         #TODO: move to calibrate state
         if self._warmup < dartconfig["play"]["warmupframes"]:
             self._warmup = self._warmup + 1
@@ -41,6 +44,7 @@ class PlayStateLoop(StateLoop):
                     #Add calculation of hit-scores here
                     self._dartDetectorFrames = 0
                     self._previousFrame = frame.copy()
+                    self._hitLed.activate(True)
                 else:
                     self._dartDetectorFrames = self._dartDetectorFrames + 1
                     if self._dartDetectorFrames > dartconfig["play"]["hitframes"]:

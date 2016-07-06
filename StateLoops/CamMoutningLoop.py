@@ -12,7 +12,7 @@ class CamMountingLoop(StateLoop):
         super(CamMountingLoop, self).__init__()
         return
 
-    def initialize(self):
+    def initialize(self, gpio):
         width, height= DartScoreConfig.dartconfig['cam']['res']
         aimx = DartScoreConfig.dartconfig['mounting']['aimrectx']
         aimy = DartScoreConfig.dartconfig['mounting']['aimrecty']

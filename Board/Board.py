@@ -110,9 +110,13 @@ class Board(object):
                                 ypoint.append(cross[1])
                     except:
                         pass
+        try:
+            self._bullseye = (int(np.median(xpoint)),int(np.median(ypoint)))
+            print "Bullseye: ", self._bullseye
+        except:
+            print "Camera has to face a dartboard!"
 
-        self._bullseye = (int(np.median(xpoint)),int(np.median(ypoint)))
-        print "Bullseye: ", self._bullseye
+
 
 
     def _findSectorLines(self, img):
@@ -169,6 +173,6 @@ if __name__ == "__main__":
     cv2.imshow('Step 1 Bulls eye',snapshot)
     cv2.rectangle(maxmin, rect1,rect2 , DartScoreConfig.dartconfig['color']['aim'], 2)
     cv2.imshow('Step 2 before transform',sectors)
-  #  cv2.imshow('Step 3 before transform',maxmin)
+    cv2.imshow('Step 3 before transform',maxmin)
     cv2.waitKey(0)
     cv2.destroyAllWindows()

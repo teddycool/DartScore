@@ -2,7 +2,7 @@ Pre reqs:
 
 For the Pi:
 Hardware:
-raspberryPi, raspberrypi cam, wifi-dongle, brackets for mounting, button(s), 
+raspberryPi3, raspberrypi cam,  brackets for mounting, button(s),
 
 Software:
 install raspian jessie, instructions are found here: https://www.raspberrypi.org/downloads/raspbian/
@@ -14,15 +14,17 @@ sudo apt-get install python-rpi.gpio
 
 
 install MJPG-streamer, instructions are found here: https://www.raspberrypi.org/forums/viewtopic.php?t=48597
-install opencv: sudo apt-get install libopencv-dev python-opencv
-(There are many ways to do this but this works for me and I don't have to wait 10hrs to compile the source)
+or here http://blog.miguelgrinberg.com/post/how-to-build-and-run-mjpg-streamer-on-the-raspberry-pi
+
+compile and install opencv for multicore RaspberryPi for best performance.
+Check out http://www.pyimagesearch.com for details but I skipped the virtual environment since I only will use the Pi for this project.
 
 
 Start streamer:
 
 sudo mkdir /tmp/stream
 cd mjpg-streamer/mjpg-streamer
-LD_LIBRARY_PATH=./ ./mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w ./www" &
+LD_LIBRARY_PATH=/your/path /your/path/mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /your/path/www" &
 
 
 

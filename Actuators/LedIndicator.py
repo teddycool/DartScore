@@ -1,10 +1,11 @@
 __author__ = 'teddycool'
 import time
-from WeatherStationConfig import config
+from DartScoreConfig import dartconfig
 
 class LedIndicator(object):
     def __init__(self, GPIO, controlpin):
         self._gpio = GPIO
+        #self._gpio.semode(self._gpio.BCM)
         self._pin = controlpin
         self._gpio.setup(self._pin,self._gpio.OUT, initial=0)
         self._lastActivate = time.time()
@@ -18,7 +19,7 @@ class LedIndicator(object):
 
 
     def update(self):
-        if time.time() - self._lastActivate > config["LedIndicator"]["ActivationTime"]:
+        if time.time() - self._lastActivate > dartconfig["LedIndicator"]["ActivationTime"]:
             self.activate(False)
 
     def __del__(self):
@@ -30,7 +31,6 @@ if __name__ == '__main__':
     print "Testcode for LedIndicators"
     import RPi.GPIO as GPIO
     GPIO.setmode(GPIO.BCM)
-    import time
     led1 = LedIndicator(GPIO, 12)
     led2 = LedIndicator(GPIO, 16)
 
