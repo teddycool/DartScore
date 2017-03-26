@@ -82,7 +82,7 @@ class DartDetector(object):
 
 if __name__ == '__main__':
     print "Testcode for DartFinder"
-    frame1 = cv2.imread("camseq58.jpg")
+    frame1 = cv2.imread(" ")
     frame2 = cv2.imread("camseq64.jpg")
     frame3 = cv2.imread("camseq67.jpg")
 

@@ -15,4 +15,5 @@ dartconfig = {"cam": {"res": (800, 600), "id": 1, "framerate": 20},  # CAM setti
               "Main": {"MaxFrameRate": 10},
               "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True},
               "DartHit": {"WriteFramesToSeparateFiles": False, "DartHitMinArea": 500},
+              "Recorder": {"VideoFileDir": "/home/pi/DartScore/Videos/", "VideoFile":"/home/pi/DartScore/video.avi", "tempfile": "/ram/videos/", "MinSize": 70000, "MaxFrames": 600},
               }
