@@ -61,7 +61,11 @@ class Vision(object):
         self._imagegenerator = self._cam.capture_continuous(self._rawCapture, format="bgr", use_video_port=True)
         #self._contourFinder.initialize()
         #frame =  self.update()
-       # self._videow = cv2.VideoWriter(dartconfig["Streamer"]["VideoFile"], cv2.cv.CV_FOURCC('P','I','M','1'), 20, resolution )
+        filenameraw = "dartscoreRaw_" + time.strftime("%Y%m%d_%H%M%S") + ".avi"
+        filenamecv = "dartscoreCv_" + time.strftime("%Y%m%d_%H%M%S") + ".avi"
+        #Two videowriters...
+        self._videowraw = cv2.VideoWriter(dartconfig["Recorder"]["VideoFileDir"]+filenameraw, cv2.VideoWriter_fourcc(*'XVID'), 2, resolution )
+        self._videowcv = cv2.VideoWriter(dartconfig["Recorder"]["VideoFileDir"] + filenamecv,cv2.VideoWriter_fourcc(*'XVID'), 2, resolution)
 
     def update(self):
         #TODO: make threaded in exception catcher
@@ -69,6 +73,8 @@ class Vision(object):
         self._rawCapture.truncate()
         self._rawCapture.seek(0)
         frame = rawframe.array
+        #Write to 'raw-video* coming directly from cam
+        self._videowraw.write(frame)
         #self._contourFinder.update(frame)
         if dartconfig["Vision"]["WriteFramesToSeparateFiles"]:
             cv2.imwrite("camseq"+str(self._seqno)+".jpg",frame)
@@ -80,16 +86,20 @@ class Vision(object):
             cv2.putText(frame, "Framerate: " + str(framerate), (5,150),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
 
         #Write to actual frame for MJPG streamer
+        #TODO: use a ram-disk for this file
         cv2.imwrite(dartconfig["Streamer"]["StreamerImage"],frame)
 
         if dartconfig["Vision"]["WriteFramesToSeparateFiles"]:
             #pickle.dump(self._contourFinder._cnts,open('cv2cnts' +str(self._seqno),'wb'))
             cv2.imwrite("cv2seq"+str(self._seqno)+".jpg",frame)
             self._seqno=self._seqno+1
-
+        #Writing to opencv managed stream (same as to 'netcam')
+        self._videowcv.write(frame)
 
     def __del__(self):
         print "Vision object deleted..."
+        self._videowcv = None
+        self._videowraw = None
         self._cam.close()
 
 

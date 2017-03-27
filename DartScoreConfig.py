@@ -7,7 +7,7 @@ dartconfig = {"cam": {"res": (800, 600), "id": 1, "framerate": 20},  # CAM setti
               "mounting": {"aimrectx": 80, "aimrecty": 40},  # values for mounting the cam and center bulls-eye
               "play": {"warmupframes": 5, "hitframes": 2},
               "Streamer": {"StreamerImage": "/tmp/stream/pic.jpg", "StreamerLib": "/tmp/stream",
-                           "VideoFile": "/home/pi/DartScore/video.mpg"},
+                           "VideoFile": "/home/pi/DartScore/video.avi"},
               "Button": {"Pressed": 0.1, "LongPressed": 1.5},
               "LedIndicator":{"ActivationTime":1},
               "Logger": {"Level": "Verbose", "LogFile": "/tmp/stream/log.log", "SaveDartEvalFrames": False},

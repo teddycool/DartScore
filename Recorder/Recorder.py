@@ -32,8 +32,6 @@ class Recorder(object):
             elif self._state == "STOP":
                 self._state = "IDLE"
 
-
-        #TODO: Add max recording time
         if not rec:
             if self._videow is not None:
                 print "Stopping recording from " + self._state + " state and closing file"

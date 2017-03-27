@@ -16,7 +16,6 @@ class RecorderLoop(object):
 
     def initialize(self):
         print "Main init..."
-        #self._inputs.initialize()
         self.time=time.time()
         self._rec.initialize()
         self._vision.initialize()
@@ -36,7 +35,7 @@ class RecorderLoop(object):
         self._vision.draw(frame, framerate)
 
 
-
+#Run this file to start recording to a videofile
 if __name__ == "__main__":
     print "Init Main object..."
     recLoop=RecorderLoop()

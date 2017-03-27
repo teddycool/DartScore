@@ -69,7 +69,6 @@ class DartDetector(object):
          # loop over the contours
         for c in cnts:
             # if the contour is too small, ignore it
-            #TODO: move minarea to dartconfig file
             print "Area = " + str( cv2.contourArea(c))
             if cv2.contourArea(c) > dartconfig["DartHit"]["DartHitMinArea"]:
                 rect = cv2.boundingRect(c)
