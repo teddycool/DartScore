@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c577571-2f05-4ab2-986d-6c0af0c1b92d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/description.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DdartScoreStates.png" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dartscorestates.state.violet.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DartScore.iws" />
@@ -63,16 +64,6 @@
               <folding>
                 <element signature="e#26#37#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DartDetector.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Vision/DartDetector.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1156">
-              <caret line="70" column="52" lean-forward="false" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -675,7 +666,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490636547252</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Description and states added in a first version">
+      <created>1491058742103</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1491058742103</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -691,7 +689,7 @@
     <frame x="-7" y="0" width="1932" height="1047" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23600845" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23600845" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18052517" sideWeight="0.4936642" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18052517" sideWeight="0.5063358" order="13" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3693182" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -764,7 +762,8 @@
     <MESSAGE value="Cleaned up and moved around some more things. Added LED indicators and a switch. More use of config..." />
     <MESSAGE value="Added a Recorder-module and also a small testprogram record.py to record a videofile with the componentes in the project that can be used for testing. Also provided an example of such a file." />
     <MESSAGE value="Added Videos-dir and two videofiles. The exact same dartrounds in two versions. 1: (raw) directly from cam 2:(cv) from opencv with findings and statustexts etc&#10;Vision module now updated allways record these videos." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Videos-dir and two videofiles. The exact same dartrounds in two versions. 1: (raw) directly from cam 2:(cv) from opencv with findings and statustexts etc&#10;Vision module now updated allways record these videos." />
+    <MESSAGE value="Description and states added in a first version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Description and states added in a first version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -795,13 +794,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dartscore-install.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="30" column="43" lean-forward="false" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Vision/Vision.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1169,6 +1161,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dartscorestates.state.violet.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
