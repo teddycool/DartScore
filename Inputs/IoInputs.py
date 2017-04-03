@@ -10,7 +10,9 @@ try:
 except:
     dartconfig = {"Button": {"Pressed": 0.1, "LongPressed": 1.5}}
 import time
+
 import cv2
+
 
 #The button is 'on' when holded pressed and IO defined in init is connected to ground
 #Types of signals/states: released, pressed and long-pressed, times for holding are defined in config

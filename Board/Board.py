@@ -2,8 +2,10 @@ __author__ = 'teddycool'
 #TODO: break up this to pieces..
 import cv2
 import numpy as np
+
 import BoardArray
 import DartScoreConfig
+
 
 class Board(object):
 
@@ -173,7 +175,7 @@ if __name__ == "__main__":
 
     cv2.imshow('orig',original)
     cv2.imshow('Step 1 Bulls eye',snapshot)
-    cv2.rectangle(maxmin, rect1,rect2 , DartScoreConfig.dartconfig['color']['aim'], 2)
+    cv2.rectangle(maxmin, rect1, rect2, DartScoreConfig.dartconfig['color']['aim'], 2)
     cv2.imshow('Step 2 before transform',sectors)
     cv2.imshow('Step 3 before transform',maxmin)
     cv2.waitKey(0)

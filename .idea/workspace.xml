@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c577571-2f05-4ab2-986d-6c0af0c1b92d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Vision/Cam.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Vision/PcCam.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Vision/PiCam.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DdartScoreStates.png" afterPath="$PROJECT_DIR$/DartScoreStates.png" />
+    <list default="true" id="8c577571-2f05-4ab2-986d-6c0af0c1b92d" name="Default" comment="Removed dependencies to gpio">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/DartScoreClasses.class.violet.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/DartScoreStates.state.violet.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/DartScoreStates.png" afterPath="$PROJECT_DIR$/Documentation/DartScoreStates.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/dartscore-install.txt" afterPath="$PROJECT_DIR$/Documentation/dartscore-install.txt" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/dartscore_mount.jpg" afterPath="$PROJECT_DIR$/Documentation/dartscore_mount.jpg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/dartscore_parts.jpg" afterPath="$PROJECT_DIR$/Documentation/dartscore_parts.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Actuators/LedIndicator.py" afterPath="$PROJECT_DIR$/Actuators/LedIndicator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Board/Board.py" afterPath="$PROJECT_DIR$/Board/Board.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Board/BoardArray.py" afterPath="$PROJECT_DIR$/Board/BoardArray.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Board/Sector.py" afterPath="$PROJECT_DIR$/Board/Sector.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DartScoreConfig.py" afterPath="$PROJECT_DIR$/DartScoreConfig.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Inputs/IoInputs.py" afterPath="$PROJECT_DIR$/Inputs/IoInputs.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IoTest.py" afterPath="$PROJECT_DIR$/IoTest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.py" afterPath="$PROJECT_DIR$/Main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MainLoop.py" afterPath="$PROJECT_DIR$/MainLoop.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Recorder/Recorder.py" afterPath="$PROJECT_DIR$/Recorder/Recorder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" afterPath="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" afterPath="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" afterPath="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Vision/DartDetector.py" afterPath="$PROJECT_DIR$/Vision/DartDetector.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Vision/DartHit.py" afterPath="$PROJECT_DIR$/Vision/DartHit.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Vision/PiCam.py" afterPath="$PROJECT_DIR$/Vision/PiCam.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Vision/Vision.py" afterPath="$PROJECT_DIR$/Vision/Vision.py" />
     </list>
     <ignored path="DartScore.iws" />
@@ -30,55 +46,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Board.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/Board.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="518">
-              <caret line="179" column="27" lean-forward="true" selection-start-line="177" selection-start-column="4" selection-end-line="179" selection-end-column="27" />
-              <folding>
-                <element signature="e#58#68#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Vision.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Vision/Vision.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="94" column="41" lean-forward="false" selection-start-line="94" selection-start-column="10" selection-end-line="94" selection-end-column="41" />
+            <state relative-caret-position="477">
+              <caret line="32" column="36" lean-forward="true" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
               <folding>
-                <element signature="e#271#282#0" expanded="true" />
+                <element signature="e#271#280#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cam.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Vision/Cam.py">
+      <file leaf-file-name="dartscore-install.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Documentation/dartscore-install.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PcCam.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Vision/PcCam.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="37" lean-forward="false" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PiCam.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Vision/PiCam.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="255">
+              <caret line="15" column="108" lean-forward="true" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="108" />
               <folding />
             </state>
           </provider>
@@ -88,44 +72,47 @@
         <entry file="file://$PROJECT_DIR$/DartScoreConfig.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="141" lean-forward="false" selection-start-line="15" selection-start-column="141" selection-end-line="15" selection-end-column="141" />
+              <caret line="15" column="139" lean-forward="false" selection-start-line="15" selection-start-column="139" selection-end-line="15" selection-end-column="139" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="perfectboard.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/perfectboard.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoardArray.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/BoardArray.py">
+      <file leaf-file-name="MainLoop.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MainLoop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="39" column="8" lean-forward="false" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="8" />
+            <state relative-caret-position="-425">
+              <caret line="29" column="56" lean-forward="false" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Transform.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/Transform.py">
+      <file leaf-file-name="CamCalibrateLoop.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="18" column="25" lean-forward="true" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Sector.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Board/Sector.py">
+      <file leaf-file-name="CamMoutningLoop.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/StateLoops/CamMoutningLoop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="22" column="52" lean-forward="false" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
+            <state relative-caret-position="306">
+              <caret line="21" column="56" lean-forward="true" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayStateLoop.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/StateLoops/PlayStateLoop.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-34">
+              <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -185,12 +172,8 @@
         <option value="$PROJECT_DIR$/Actuators/LedIndicator.py" />
         <option value="$PROJECT_DIR$/IoTest.py" />
         <option value="$PROJECT_DIR$/dartscore-install.txt" />
-        <option value="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" />
-        <option value="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" />
         <option value="$PROJECT_DIR$/Main.py" />
-        <option value="$PROJECT_DIR$/MainLoop.py" />
         <option value="$PROJECT_DIR$/StateLoops/StateLoop.py" />
-        <option value="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" />
         <option value="$PROJECT_DIR$/Recorder/Recorder.py" />
         <option value="$PROJECT_DIR$/Vision/DartDetector.py" />
         <option value="$PROJECT_DIR$/recorder.py" />
@@ -199,9 +182,13 @@
         <option value="$PROJECT_DIR$/Board/Board.py" />
         <option value="$PROJECT_DIR$/PcCam.py" />
         <option value="$PROJECT_DIR$/Vision/PiCam.py" />
+        <option value="$PROJECT_DIR$/Vision/Cam.py" />
+        <option value="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" />
+        <option value="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" />
+        <option value="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" />
+        <option value="$PROJECT_DIR$/MainLoop.py" />
         <option value="$PROJECT_DIR$/DartScoreConfig.py" />
         <option value="$PROJECT_DIR$/Vision/Vision.py" />
-        <option value="$PROJECT_DIR$/Vision/Cam.py" />
       </list>
     </option>
   </component>
@@ -249,34 +236,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Vision" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DartScore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DartScore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Videos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DartScore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DartScore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="StateLoops" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -291,21 +250,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Recorder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DartScore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DartScore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Logger" />
+              <option name="myItemId" value="Documentation" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -321,7 +266,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../USB-PSK01/roboGame" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="ignore_missing_gitignore" value="true" />
     <property name="ToolWindowRun.ShowToolbar" value="false" />
@@ -335,11 +280,11 @@
       <recent name="C:\Users\psk\PycharmProjects\DartScore" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\psk\Documents\GitHub\DartScore\Documentation" />
       <recent name="C:\Users\psk\Documents\GitHub\DartScore\Vision" />
+      <recent name="C:\Users\psk\Documents\GitHub\DartScore" />
+      <recent name="C:\Users\psk\Documents\GitHub\DartScore\Testdata" />
       <recent name="C:\Users\psk\Documents\GitHub\DartScore\Logger" />
-      <recent name="C:\Users\psk\Documents\GitHub\DartScore\TestImageGatherer" />
-      <recent name="C:\Users\psk\PycharmProjects\DartScore\Board" />
-      <recent name="C:\Users\psk\PycharmProjects\DartScore\Inputs" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -762,7 +707,21 @@
       <option name="project" value="LOCAL" />
       <updated>1491058851259</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Separated cam (frame-generation) from vision. Two cam-classes, one for pi and one for pc. Both returning a frame. Which cam to use is set in DartScoreConfig.">
+      <created>1491240410107</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1491240410107</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Removed dependencies to gpio">
+      <created>1491245168300</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1491245168300</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -777,11 +736,12 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23614073" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23614073" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2155361" sideWeight="0.49155226" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25135428" sideWeight="0.52238804" order="13" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25135428" sideWeight="0.47761193" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2439825" sideWeight="0.48996833" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37486458" sideWeight="0.5143923" order="13" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36836404" sideWeight="0.4978678" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25135428" sideWeight="0.47761193" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37486458" sideWeight="0.48560768" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15864332" sideWeight="0.49577615" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973601" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822758" sideWeight="0.49577615" order="12" side_tool="false" content_ui="tabs" />
@@ -796,7 +756,6 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3693182" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -852,7 +811,10 @@
     <MESSAGE value="Added a Recorder-module and also a small testprogram record.py to record a videofile with the componentes in the project that can be used for testing. Also provided an example of such a file." />
     <MESSAGE value="Added Videos-dir and two videofiles. The exact same dartrounds in two versions. 1: (raw) directly from cam 2:(cv) from opencv with findings and statustexts etc&#10;Vision module now updated allways record these videos." />
     <MESSAGE value="Description and states added in a first version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Description and states added in a first version" />
+    <MESSAGE value="Separated cam (frame-generation) from vision. Two cam-classes, one for pi and one for pc. Both returning a frame. Which cam to use is set in DartScoreConfig." />
+    <MESSAGE value="Moved documantation and testdata to their own directories" />
+    <MESSAGE value="Removed dependencies to gpio" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed dependencies to gpio" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -874,37 +836,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/Actuators/LedIndicator.py</url>
-          <line>32</line>
+          <line>34</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="18" />
+      <option name="time" value="20" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Vision/SectorFinder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="36" column="20" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/StateLoops/StateLoop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils/lineutils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DartScoreConfig.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -919,7 +859,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dartscore-install.txt">
+    <entry file="file://$PROJECT_DIR$/Documentation/dartscore-install.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="30" column="43" lean-forward="false" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
@@ -1000,7 +940,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dartscore_parts.jpg">
+    <entry file="file://$PROJECT_DIR$/Documentation/dartscore_parts.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1012,7 +952,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dartscore_mount.jpg">
+    <entry file="file://$PROJECT_DIR$/Documentation/dartscore_mount.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1087,42 +1027,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DartScoreStates.state.violet.html" />
-    <entry file="file://$PROJECT_DIR$/StateLoops/PlayStateLoop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-93">
-          <caret line="16" column="31" lean-forward="false" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/StateLoops/CamMoutningLoop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="21" selection-start-column="41" selection-end-line="22" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MainLoop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="50" column="51" lean-forward="true" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dartscore-install.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Documentation/DartScoreStates.state.violet.html" />
     <entry file="file://C:/Python27/Lib/site-packages/numpy/core/_methods.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="436">
@@ -1149,11 +1054,6 @@
         <state relative-caret-position="519">
           <caret line="53" column="18" lean-forward="true" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/camseq300.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Board/boardarraybg.jpg">
@@ -1193,25 +1093,35 @@
     <entry file="file://$PROJECT_DIR$/Board/Board.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="518">
-          <caret line="179" column="27" lean-forward="true" selection-start-line="177" selection-start-column="4" selection-end-line="179" selection-end-column="27" />
-          <folding>
-            <element signature="e#58#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DartScoreConfig.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="141" lean-forward="false" selection-start-line="15" selection-start-column="141" selection-end-line="15" selection-end-column="141" />
+          <caret line="179" column="27" lean-forward="false" selection-start-line="177" selection-start-column="4" selection-end-line="179" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/PiCam.py">
+    <entry file="file://$PROJECT_DIR$/Vision/camseq58.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/camseq64.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/camseq67.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/camseq300.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/Cam.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="374">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1224,20 +1134,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Vision/PiCam.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StateLoops/CamMoutningLoop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="21" column="56" lean-forward="true" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DartScoreConfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="139" lean-forward="false" selection-start-line="15" selection-start-column="139" selection-end-line="15" selection-end-column="139" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Documentation/dartscore-install.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="108" lean-forward="true" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="108" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Vision/Vision.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="94" column="41" lean-forward="false" selection-start-line="94" selection-start-column="10" selection-end-line="94" selection-end-column="41" />
+        <state relative-caret-position="477">
+          <caret line="32" column="36" lean-forward="true" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
           <folding>
-            <element signature="e#271#282#0" expanded="true" />
+            <element signature="e#271#280#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Vision/Cam.py">
+    <entry file="file://$PROJECT_DIR$/MainLoop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="-425">
+          <caret line="29" column="56" lean-forward="false" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="18" column="25" lean-forward="true" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StateLoops/PlayStateLoop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
           <folding />
         </state>
       </provider>

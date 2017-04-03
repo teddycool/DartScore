@@ -1,9 +1,11 @@
 __author__ = 'teddycool'
 
 import time
+
 import cv2
-import os
+
 from DartScoreConfig import dartconfig
+
 
 class Recorder(object):
 

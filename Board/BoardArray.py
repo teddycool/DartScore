@@ -1,9 +1,11 @@
 __author__ = 'teddycool'
 
-import cv2
-import numpy as np
 import math
+
+import cv2
+
 import DartScoreConfig
+
 
 # Class to create an array defining 'the perfect board' and a 'normalized' board used later on..
 # Actual board is 450 mm in diameter,  1 pixel per mm

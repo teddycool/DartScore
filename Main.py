@@ -4,9 +4,9 @@ __author__ = 'teddycool'
 # Start to play...
 
 
-import MainLoop
 import time
-from DartScoreConfig import dartconfig
+
+import MainLoop
 
 
 class Main(object):

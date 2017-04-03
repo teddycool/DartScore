@@ -1,7 +1,9 @@
 __author__ = 'teddycool'
 import time
+
 import picamera
 from picamera.array import PiRGBArray
+
 try:
     from DartScoreConfig import dartconfig
 except:

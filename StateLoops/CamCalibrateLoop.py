@@ -16,7 +16,7 @@ class CamCalibrateLoop(StateLoop):
         self._firstFrame = None
         return
 
-    def initialize(self,gpio):
+    def initialize(self):
         #Calculate sectorlines passing bulls-eye
         return
 

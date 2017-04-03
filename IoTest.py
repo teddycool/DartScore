@@ -1,11 +1,10 @@
-
-from DartScoreConfig import dartconfig
-from Actuators import LedIndicator
-from Inputs import IoInputs
-
+import time
 
 import RPi.GPIO as GPIO
-import time
+
+from Actuators import LedIndicator
+from DartScoreConfig import dartconfig
+from Inputs import IoInputs
 
 #Start...
 

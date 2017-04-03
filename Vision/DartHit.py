@@ -1,5 +1,8 @@
 import cv2
+
 from DartScoreConfig import dartconfig
+
+
 class DartHit(object):
 
     def __init__(self):

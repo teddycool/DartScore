@@ -13,7 +13,7 @@ dartconfig = {"cam": {"res": (800, 600), "id": 1, "framerate": 20},  # CAM setti
               "Logger": {"Level": "Verbose", "LogFile": "/tmp/stream/log.log", "SaveDartEvalFrames": False},
               "IO": {"CalButton": 23, "GameButton": 24, "OnLed": 25, "CalLed": 8, "GameLed":7, "HitLed":18, "GameSwitch1":9, "GameSwitch2":10},
               "Main": {"MaxFrameRate": 10},
-              "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True, "RecordRaw": False, "RecordCv": False, "CamType": "PC"},
+              "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True, "RecordRaw": False, "RecordCv": False, "CamType": "PI"},
               "DartHit": {"WriteFramesToSeparateFiles": False, "DartHitMinArea": 500},
               "Recorder": {"VideoFileDir": "/home/pi/DartScore/Videos/", "VideoFile":"/home/pi/DartScore/video.avi", "tempfile": "/ram/videos/", "MinSize": 70000, "MaxFrames": 600},
               }

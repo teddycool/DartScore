@@ -3,15 +3,14 @@ __author__ = 'teddycool'
 #
 #Webinfo used for this part of project:
 # http://blog.miguelgrinberg.com/post/stream-video-from-the-raspberry-pi-camera-to-web-browsers-even-on-ios-and-android
+import os
+import sys
 import time
 
 import cv2
-import sys
-import numpy as np
-import os
-import ContourFinder
-import pickle
+
 import Cam
+
 try:
     from DartScoreConfig import dartconfig
 except: #Used when unittesting...
@@ -34,7 +33,7 @@ class Vision(object):
         print "Starting streamer..."
 
         print os.system('sudo mkdir /tmp/stream')
-        print os.system('sudo LD_LIBRARY_PATH=/home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer  /home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer/mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer/www" &')
+        print os.system('sudo LD_LIBRARY_PATH=/home/pi/DartScore/mjpg-streamer/mjpg-streamer  /home/pi/DartScore/mjpg-streamer/mjpg-streamer/mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /home/pi/DartScore/mjpg-streamer/mjpg-streamer/www" &')
 
         self._cam.initialize()
 

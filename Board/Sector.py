@@ -2,9 +2,7 @@ __author__ = 'teddycool'
 #Purpose: finding sector circles on dartboard image
 
 import cv2
-import numpy as np
-import BoardArray
-import DartScoreConfig
+
 
 class Sector(object):
 

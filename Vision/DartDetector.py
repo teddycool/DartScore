@@ -4,8 +4,10 @@ __author__ = 'teddycool'
 #Ref: http://www.pyimagesearch.com/2015/05/25/basic-motion-detection-and-tracking-with-python-and-opencv/
 
 import cv2
+
 from DartHit import DartHit
 from DartScoreConfig import dartconfig
+
 
 class DartDetector(object):
 
