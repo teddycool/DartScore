@@ -16,7 +16,6 @@ class Sector(object):
 
 
     def initialize(self, img):
-
        return
 
     def _findSectorCircles(self, img):

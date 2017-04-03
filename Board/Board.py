@@ -1,4 +1,5 @@
 __author__ = 'teddycool'
+#TODO: break up this to pieces..
 import cv2
 import numpy as np
 import BoardArray
@@ -20,7 +21,7 @@ class Board(object):
     def initialize(self, img):
        #Run self calibration
        self.findSectorLines(img)
-       #self._ba=BoardArray.BoardArray(self._bullseye)
+       self._ba=BoardArray.BoardArray(self._bullseye)
        return
 
 
@@ -34,7 +35,7 @@ class Board(object):
         return img
 
 
-    def _auto_canny(image, sigma=0.33):
+    def _auto_canny(self, image, sigma=0.33):
         # compute the median of the single channel pixel intensities
         v = np.median(image)
 
@@ -67,11 +68,12 @@ class Board(object):
     #TODO: separate finding lines from drawing lines
     #TODO: find the 2 sectorlines with highest positive and negative 'k' (Enclosing center sectors)
     #TODO: Find corresponding X-coordinates for +/- 96 on Y (perfect board has a rectangle (96,-15),(-96,15)) use these for transform.
+    #TODO: Try with several settings until enough lines have been found? (or timeout)
     def findSectorLines(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray.copy(), (3, 3), 0)
-        #edges = self._auto_canny(gray)
-        edges = cv2.Canny(img.copy(), 10, 200)
+        edges = self._auto_canny(gray)
+        #edges = cv2.Canny(img.copy(), 10, 200)
         lines = cv2.HoughLines(edges,1,np.pi/180,130)
         #print "Lines " + lines[0]
 

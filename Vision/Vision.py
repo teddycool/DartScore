@@ -4,31 +4,28 @@ __author__ = 'teddycool'
 #Webinfo used for this part of project:
 # http://blog.miguelgrinberg.com/post/stream-video-from-the-raspberry-pi-camera-to-web-browsers-even-on-ios-and-android
 import time
-import picamera
-#import picamera.array
-from picamera.array import PiRGBArray
+
 import cv2
 import sys
 import numpy as np
 import os
 import ContourFinder
 import pickle
+import Cam
 try:
     from DartScoreConfig import dartconfig
-except:
+except: #Used when unittesting...
      dartconfig ={                   #Config for test-purpose
                 "cam": {"res":(640, 480), "id":1, "framerate": 20},
                 "Streamer": {"StreamerImage": "/tmp/stream/pic.jpg", "StreamerLib": "/tmp/stream", "VideoFile": "/home/pi/DartScore/video.mpg"},
-                "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": False}
-     }
+         "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True, "RecordRaw": False, "RecordCv": False, "CamType": "PI"}}
 
 class Vision(object):
 
     def __init__(self):
         print "Vision object started..."
         self._seqno = 0
-        #self._contourFinder = ContourFinder.ContourFinder()
-
+        self._cam = Cam.createCam(dartconfig["Vision"]["CamType"])
         #TODO: check that streamer is running
 
 
@@ -39,42 +36,20 @@ class Vision(object):
         print os.system('sudo mkdir /tmp/stream')
         print os.system('sudo LD_LIBRARY_PATH=/home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer  /home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer/mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /home/pi/DartScore/Vision/mjpg-streamer/mjpg-streamer/www" &')
 
-        #CAM stettings! exposure, wb etc or try using pygame.cam?
-        #https://picamera.readthedocs.org/en/release-1.10/recipes1.html#capturing-consistent-images
-        print "CAM init..."
-        resolution = dartconfig["cam"]["res"]
-        self._cam = picamera.PiCamera()
-        self._cam.resolution = resolution
-        self._center = (resolution[0]/2, resolution[1]/2)
-        self._cam.framerate = dartconfig["cam"]["framerate"]
-        print "Wait for the automatic gain control to settle"
-        time.sleep(2)
-        print "Setting cam fix values"
-        # Now fix the values
-        self._cam.shutter_speed = self._cam.exposure_speed
-        self._cam.exposure_mode = 'off'
-        g = self._cam.awb_gains
-        self._cam.awb_mode = 'off'
-        self._cam.awb_gains = g
-        self._lastframetime = time.time()
-        self._rawCapture = PiRGBArray(self._cam, size=resolution)
-        self._imagegenerator = self._cam.capture_continuous(self._rawCapture, format="bgr", use_video_port=True)
-        #self._contourFinder.initialize()
-        #frame =  self.update()
+        self._cam.initialize()
+
         filenameraw = "dartscoreRaw_" + time.strftime("%Y%m%d_%H%M%S") + ".avi"
         filenamecv = "dartscoreCv_" + time.strftime("%Y%m%d_%H%M%S") + ".avi"
         #Two videowriters...
-        self._videowraw = cv2.VideoWriter(dartconfig["Recorder"]["VideoFileDir"]+filenameraw, cv2.VideoWriter_fourcc(*'XVID'), 2, resolution )
-        self._videowcv = cv2.VideoWriter(dartconfig["Recorder"]["VideoFileDir"] + filenamecv,cv2.VideoWriter_fourcc(*'XVID'), 2, resolution)
+        if dartconfig["Vision"]["RecordRaw"]:
+            self._videowraw = cv2.VideoWriter(dartconfig["Recorder"]["VideoFileDir"]+filenameraw, cv2.VideoWriter_fourcc(*'XVID'), 2, resolution )
+        if dartconfig["Vision"]["RecordCv"]:
+            self._videowcv = cv2.VideoWriter(dartconfig["Recorder"]["VideoFileDir"] + filenamecv,cv2.VideoWriter_fourcc(*'XVID'), 2, resolution)
 
     def update(self):
-        #TODO: make threaded in exception catcher
-        rawframe = self._imagegenerator.next()
-        self._rawCapture.truncate()
-        self._rawCapture.seek(0)
-        frame = rawframe.array
-        #Write to 'raw-video* coming directly from cam
-        self._videowraw.write(frame)
+        frame = self._cam.update()
+        if dartconfig["Vision"]["RecordRaw"]:
+            self._videowraw.write(frame)
         #self._contourFinder.update(frame)
         if dartconfig["Vision"]["WriteFramesToSeparateFiles"]:
             cv2.imwrite("camseq"+str(self._seqno)+".jpg",frame)
@@ -94,13 +69,15 @@ class Vision(object):
             cv2.imwrite("cv2seq"+str(self._seqno)+".jpg",frame)
             self._seqno=self._seqno+1
         #Writing to opencv managed stream (same as to 'netcam')
-        self._videowcv.write(frame)
+            if dartconfig["Vision"]["RecordCv"]:
+                self._videowcv.write(frame)
 
     def __del__(self):
         print "Vision object deleted..."
-        self._videowcv = None
-        self._videowraw = None
-        self._cam.close()
+        if dartconfig["Vision"]["RecordRaw"]:
+            self._videowraw = None
+        if dartconfig["Vision"]["RecordCv"]:
+            self._videowcv = None
 
 
 
@@ -110,14 +87,21 @@ if __name__ == '__main__':
 
     vision= Vision()
     vision.initialize()
-    try:
-        while 1:
-            print "Updating frame..."
-            frame = vision.update()
-            print "TypeOfFrame: " + str(type(frame))
-            print "Drawing frame..."
-            vision.draw(frame, 2)
-            time.sleep(0.2)
-    except:
-        e = sys.exc_info()[0]
-        print e
+    if dartconfig["Vision"]["CamType"]== "PC":
+        frame = vision.update()
+        cv2.imshow('simple', frame)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    elif  dartconfig["Vision"]["CamType"]== "PI":
+
+        try:
+            while 1:
+                print "Updating frame..."
+                frame = vision.update()
+                print "TypeOfFrame: " + str(type(frame))
+                print "Drawing frame..."
+                vision.draw(frame, 2)
+                time.sleep(0.2)
+        except:
+            e = sys.exc_info()[0]
+            print e
