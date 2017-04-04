@@ -2,6 +2,7 @@ __author__ = 'teddycool'
 #TODO: break up this to pieces..
 import cv2
 import numpy as np
+import socket
 
 import BoardArray
 import DartScoreConfig
@@ -155,7 +156,10 @@ class Board(object):
 
 if __name__ == "__main__":
 
-    snapshot = cv2.imread("C:\Users\psk\Documents\GitHub\DartScore\Vision\camseq300.jpg")
+    if socket.gethostname() == "DESKTOP-GSGKDI2":
+        snapshot = cv2.imread("D:/Projekte/PycharmProjects/DartScore/Vision/frame1.jpg")
+    else:
+        snapshot = cv2.imread("C:\Users\psk\Documents\GitHub\DartScore\Vision\camseq300.jpg")
 
     bf = Board()
     original=snapshot.copy()
