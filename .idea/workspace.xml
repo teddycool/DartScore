@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8c577571-2f05-4ab2-986d-6c0af0c1b92d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DartScoreEngine/Board/Board.py" afterPath="$PROJECT_DIR$/DartScoreEngine/Board/Board.py" />
     </list>
     <ignored path="DartScore.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -83,7 +84,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DartScoreEngineConfig.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DartScoreEngineConfig.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DartScoreEngine/DartScoreEngineConfig.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
@@ -93,11 +94,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Board.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Board.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DartScoreEngine/Board/Board.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state relative-caret-position="48">
+              <caret line="155" column="0" lean-forward="true" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
               <folding>
                 <element signature="e#58#68#0" expanded="true" />
               </folding>
@@ -168,7 +169,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Board/Transform.py" />
         <option value="C:/Python27/Lib/site-packages/pygame/_camera_vidcapture.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/Cam/Cam.py" />
@@ -219,6 +219,7 @@
         <option value="$PROJECT_DIR$/GameMain.py" />
         <option value="$PROJECT_DIR$/DartScoreMainConfig.py" />
         <option value="$PROJECT_DIR$/DartScoreEngine/DartScoreEngineConfig.py" />
+        <option value="$PROJECT_DIR$/DartScoreEngine/Board/Board.py" />
       </list>
     </option>
   </component>
@@ -729,7 +730,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491413401534</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="New bransch and reworked repo">
+      <created>1491413620102</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1491413620102</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -1004,7 +1012,7 @@
         <state relative-caret-position="952">
           <caret line="59" column="54" lean-forward="false" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="54" />
           <folding>
-            <element signature="e#301#311#0" expanded="true" />
+            <element signature="e#301#311#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1143,7 +1151,7 @@
         <state relative-caret-position="102">
           <caret line="11" column="19" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="19" />
           <folding>
-            <element signature="e#97#107#0" expanded="true" />
+            <element signature="e#97#107#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1161,16 +1169,6 @@
         <state relative-caret-position="238">
           <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DartScoreEngine/Board/Board.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#58#68#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1228,6 +1226,16 @@
         <state relative-caret-position="68">
           <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DartScoreEngine/Board/Board.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="155" column="0" lean-forward="true" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+          <folding>
+            <element signature="e#58#68#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
