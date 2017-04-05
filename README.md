@@ -1,19 +1,20 @@
-# DartScore, bransch: DartScorePiCam
-Counting scores for dart with image recognition
-Raspberry pi cam in a case with a couple of push-buttons connected to the PI-io
+# DartScore, bransch: DartScoreEngine
+Counting scores for dart with image recognition.
+This bransch is dived into modules:
+DartScoreEngine
+PiSetup
+WindowwsSetup
+...and some gamelogic using these...
 
-Tactics:
-BoardArray with 'perfect' dartboard
-Board with a skewed image of the actual dartboard, from upper perspective.
-Make transform matrix to calculate perspective of image to fit BoardArray
-Find where the transformed board-picture is covered when image change
-Calculate score for covered region....
 
-All logic in raspberrypi
-Images sent to jpg-streamer to be picked up by any webbrowser
+A 'dart-score-engine' that can be used from different types of environment. 
+A simplified state-machine that can handle mounting, calibration and 'sets' of 3 darts.  
+The engine can report the score for each hit but doesn't know anything of the number of players or what they are playing. The engine can also be 'reseted' to start all over again.
 
-Prereqs:
-A working raspberrypi with cam
+The engine can't be used by itself (but maybe a debug-mode) but is used from a game-logic that could be 
+all the kinds of programs. The interaction between the 'engine' and the gamelogic should be solved in some general way since the 'engine' should be unaware of the logic that uses it.
+
+Engine:
 
 Cameramountingstate:
 Streams the camera images to the jpg-streamer with an overlay indication where to have bulls-eye to manage calibration
@@ -24,18 +25,6 @@ Runs camera calibration and calculate all sectors on dartboard, saves this as a 
 Playstate:
 Constantly overlooking board and reacts on changes when dart hits board. No other userinteraction is needed.
 
-MainLoop is engine and master for changing states
-Inputs from push-buttons decides when player is done with mounting etc and ready to play
+EngineMainLoop is engine and master for changing states
 
-
-Problem:
-Montering... Bra beslag och inställbart
-konturer i opencv. canny edge
-
-Hitta mitten 
-hita fält av resp färg? grå, svart, grön röd?
-hur definiera en sektor? kolla i opencv...
-hur numreras sektorerna?
-bygg dictionary med sector: points ?
-transformera? 
 
