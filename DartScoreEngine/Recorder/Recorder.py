@@ -4,7 +4,7 @@ import time
 
 import cv2
 
-from DartScoreConfig import dartconfig
+from DartScoreEngineConfig import dartconfig
 
 
 class Recorder(object):

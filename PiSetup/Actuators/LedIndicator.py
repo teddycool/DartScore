@@ -1,7 +1,7 @@
 __author__ = 'teddycool'
 import time
 
-from DartScoreConfig import dartconfig
+from DartScoreMainConfig import dartconfig
 
 
 class LedIndicator(object):

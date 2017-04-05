@@ -1,5 +1,5 @@
 __author__ = 'teddycool'
-#Config vaues for DartScore. This is the only place for these.
+#Config vaues for the DartScore game. This is the only place for these.
 
 dartconfig = {"cam": {"res": (800, 600), "id": 1, "framerate": 20},  # CAM settings
               "color": {"sector": (0, 255, 0), "hit": (255, 0, 0), "aim": (0, 255, 0), "calibrate": (0, 0, 255),
