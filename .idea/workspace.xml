@@ -1,66 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c577571-2f05-4ab2-986d-6c0af0c1b92d" name="Default" comment="New bransch and reworked repo">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/simple-sad1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Testdata/camseq300.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Testdata/frame1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DartScoreEngine/Logger/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DartScoreEngine/Recorder/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DartScoreMainConfig.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GameMain.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Board/Board.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Board/BoardArray.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Board/Sector.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Board/Transform.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Board/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Board/boardarraybg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Board/perfectboard.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Inputs/IoInputs.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Inputs/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Logger/Logger.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Recorder/Recorder.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/StateLoops/CamCalibrateLoop.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/StateLoops/CamMoutningLoop.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/StateLoops/PlayStateLoop.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/StateLoops/StateLoop.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/StateLoops/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Utils/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Utils/lineutils.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/Cam.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/ContourFinder.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/DartDetector.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/DartHit.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/PcCam.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/PiCam.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/SectorFinder.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/SectorFinderGray.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/Vision.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/camseq58.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/camseq64.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/camseq67.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Vision/seq48.jpg" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Actuators/Buzzer.py" afterPath="$PROJECT_DIR$/PiSetup/Actuators/Buzzer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Actuators/LedIndicator.py" afterPath="$PROJECT_DIR$/PiSetup/Actuators/LedIndicator.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Actuators/__init__.py" afterPath="$PROJECT_DIR$/DartScoreEngine/Logger/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DartScoreConfig.py" afterPath="$PROJECT_DIR$/DartScoreEngine/DartScoreEngineConfig.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/IoTest.py" afterPath="$PROJECT_DIR$/PiSetup/IoTest.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Logger/Logger.py" afterPath="$PROJECT_DIR$/DartScoreEngine/Logger/Logger.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Logger/__init__.py" afterPath="$PROJECT_DIR$/PiSetup/Actuators/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Main.py" afterPath="$PROJECT_DIR$/DartScoreEngine/Main.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/MainLoop.py" afterPath="$PROJECT_DIR$/DartScoreEngine/MainLoop.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Recorder/Recorder.py" afterPath="$PROJECT_DIR$/DartScoreEngine/Recorder/Recorder.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Recorder/__init__.py" afterPath="$PROJECT_DIR$/PiSetup/Actuators/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Utils/__init__.py" afterPath="$PROJECT_DIR$/DartScoreEngine/Utils/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Utils/lineutils.py" afterPath="$PROJECT_DIR$/DartScoreEngine/Utils/lineutils.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Videos/Darts_Testvideo_4.mp4" afterPath="$PROJECT_DIR$/Testdata/Videos/Darts_Testvideo_4.mp4" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Videos/dartscoreCv_20170327_193108.avi" afterPath="$PROJECT_DIR$/Testdata/Videos/dartscoreCv_20170327_193108.avi" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Videos/dartscoreRaw_20170327_193108.avi" afterPath="$PROJECT_DIR$/Testdata/Videos/dartscoreRaw_20170327_193108.avi" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/description.txt" afterPath="$PROJECT_DIR$/Documentation/description.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Documentation/DartScoreStates.png" afterPath="$PROJECT_DIR$/Documentation/DartScoreStates.png" />
+    <list default="true" id="8c577571-2f05-4ab2-986d-6c0af0c1b92d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Documentation/DartScoreStates.state.violet.html" afterPath="$PROJECT_DIR$/Documentation/DartScoreStates.state.violet.html" />
     </list>
     <ignored path="DartScore.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -780,7 +722,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491245168300</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="New bransch and reworked repo">
+      <created>1491413401534</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1491413401534</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -797,9 +746,9 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2155361" sideWeight="0.49155226" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25054705" sideWeight="0.5245727" order="13" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25054705" sideWeight="0.47542736" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.54485774" sideWeight="0.48130342" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38621444" sideWeight="0.5229701" order="13" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38512036" sideWeight="0.47542736" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38621444" sideWeight="0.47702992" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15864332" sideWeight="0.49577615" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822758" sideWeight="0.49577615" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24145299" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -884,7 +833,8 @@
     <MESSAGE value="Separated cam (frame-generation) from vision. Two cam-classes, one for pi and one for pc. Both returning a frame. Which cam to use is set in DartScoreConfig." />
     <MESSAGE value="Moved documantation and testdata to their own directories" />
     <MESSAGE value="Removed dependencies to gpio" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed dependencies to gpio" />
+    <MESSAGE value="New bransch and reworked repo" />
+    <option name="LAST_COMMIT_MESSAGE" value="New bransch and reworked repo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
