@@ -23,7 +23,7 @@ if __name__ == '__main__':
         frame = cam.update()
         if frame == None:
             break
-        cv2.imshow("Tracking", frame)
+        pres.draw(frame)
         time.sleep(0.1)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
