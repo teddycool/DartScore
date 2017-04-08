@@ -2,11 +2,11 @@ _author__ = 'teddycool'
 #State handling mounting of cam showing a square in the videofeed  where to have bulls-eye
 
 
-
 import cv2
 
 import DartScoreEngineConfig
 from  StateLoop import StateLoop
+import time
 
 
 class CamMountingLoop(StateLoop):
@@ -15,6 +15,7 @@ class CamMountingLoop(StateLoop):
         return
 
     def initialize(self):
+
         width, height= DartScoreEngineConfig.dartconfig['cam']['res']
         aimx = DartScoreEngineConfig.dartconfig['mounting']['aimrectx']
         aimy = DartScoreEngineConfig.dartconfig['mounting']['aimrecty']
@@ -22,9 +23,18 @@ class CamMountingLoop(StateLoop):
         self._startpos= (width/2-aimx/2,height/2-aimy/2)
         self._centerRect = (self._startpos[0]+aimx, self._startpos[1]+aimy)
         self._center = (width/2,height/2)
-        return
+        self._currentFrame = None
+        self._previousFrame = None
 
     def update(self, frame):
+        if self._previousFrame == None:
+            self._priviousFrame = frame
+            self._currentFrame = frame.copy()
+        else:
+            self._priviousFrame = self._currentFrame
+            self._currentFrame = frame.copy()
+
+
         #TODO: Add logic to switch state when ready Ie a button on the cam
 
 

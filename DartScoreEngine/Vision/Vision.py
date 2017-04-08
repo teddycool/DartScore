@@ -6,13 +6,11 @@ __author__ = 'teddycool'
 import os
 import sys
 import time
-
 import cv2
-
 import Cam
 
 try:
-    from DartScoreEngineConfig import dartconfig
+    from DartScoreEngine.DartScoreEngineConfig import dartconfig
 except: #Used when unittesting...
      dartconfig ={                   #Config for test-purpose
                 "cam": {"res":(640, 480), "id":1, "framerate": 20},
@@ -21,19 +19,17 @@ except: #Used when unittesting...
 
 class Vision(object):
 
-    def __init__(self):
+    def __init__(self, cam ):
         print "Vision object started..."
         self._seqno = 0
-        self._cam = Cam.createCam(dartconfig["Vision"]["CamType"])
+        self._cam = cam
         #TODO: check that streamer is running
 
 
     def initialize(self):
+
         print "Vision initialised"
         print "Starting streamer..."
-
-        print os.system('sudo mkdir /tmp/stream')
-        print os.system('sudo LD_LIBRARY_PATH=/home/pi/DartScore/mjpg-streamer/mjpg-streamer  /home/pi/DartScore/mjpg-streamer/mjpg-streamer/mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /home/pi/DartScore/mjpg-streamer/mjpg-streamer/www" &')
 
         self._cam.initialize()
 
@@ -84,8 +80,10 @@ class Vision(object):
 if __name__ == '__main__':
     print "Testcode for Vision"
 
-    vision= Vision()
+    vision = Vision()
     vision.initialize()
+
+
     if dartconfig["Vision"]["CamType"]== "PC":
         frame = vision.update()
         cv2.imshow('simple', frame)

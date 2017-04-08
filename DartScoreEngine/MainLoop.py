@@ -1,11 +1,6 @@
 __author__ = 'teddycool'
 #State-switching and handling of general rendering
-#from Inputs import Inputs
-#from Board import Board
 import time
-
-# Global GPIO used by all...
-#import RPi.GPIO as GPIO
 
 
 from DartScoreEngineConfig import dartconfig
@@ -16,10 +11,6 @@ from Vision import Vision
 class MainLoop(object):
     def __init__(self):
         #TODO: fix logging to file readable from web
-      #  self._gpio=GPIO
- #       self._gpio.setmode(GPIO.BCM)
-        #self._inputs=Inputs.Inputs(self)
-        #self._board = Board.Board()
         self._vision= Vision.Vision()
         self._calibrateState = CamCalibrateLoop.CamCalibrateLoop()
         self._mountingState = CamMoutningLoop.CamMountingLoop()
@@ -27,14 +18,6 @@ class MainLoop(object):
         self._state = {"MountState": self._mountingState, "CalState": self._calibrateState, "PlayState": self._playState}
         #Start -> MountState ->[button]-> CalState ->[auto when done]-> PlayState ---> End...
         self._currentStateLoop = self._state["MountState"]
-        # self._calButton = IoInputs.PushButton(self._gpio,dartconfig["IO"]["CalButton"])
-        # self._gameButton = IoInputs.PushButton(self._gpio,dartconfig["IO"]["GameButton"])
-        # self._playerSwitch = IoInputs.OnOnSwitch(self._gpio, dartconfig["IO"]["GameSwitch1"], dartconfig["IO"]["GameSwitch2"])
-        # self._onLed =  LedIndicator.LedIndicator(self._gpio, dartconfig["IO"]["OnLed"])
-        # #Move to statemachine...
-
-#        self._gameLed = LedIndicator.LedIndicator(self._gpio, dartconfig["IO"]["GameLed"])
- #       self._calLed = LedIndicator.LedIndicator(self._gpio, dartconfig["IO"]["CalLed"])
 
     def initialize(self):
         print "Main init..."
@@ -42,24 +25,15 @@ class MainLoop(object):
         self.time=time.time()
         self._vision.initialize()
         self._lastframetime = time.time()
-        #
-        # self._calButton.initialize()
-        # self._gameButton.initialize()
-        # self._playerSwitch.initialize()
-
         # Init all states
         for key in self._state.keys():
             self._state[key].initialize()
-
-       #self._onLed.activate()
         print "Game started at ", self.time
 
     def update(self):
         start = time.time()
         frame = self._vision.update()
         self._currentStateLoop.update(frame)
-        # cal = self._calButton.update()
-        # game = self._gameButton.update()
         #TODO: fix better state-machine, move to state-loops
         # if cal  == "Pressed":
         #     self.changeState("CalState") #Mounting ready
@@ -84,10 +58,6 @@ class MainLoop(object):
 
     def changeState(self, newstate):
         #TODO: Move to state.deactivate
-        # if newstate == "PlayState":
-        #     self._gameLed.activate(True)
-        # else:
-        #     self._gameLed.activate(False)
 
         self._currentStateLoop = self._state[newstate]
         self._currentStateLoop.initialize()

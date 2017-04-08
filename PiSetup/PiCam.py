@@ -5,7 +5,7 @@ import picamera
 from picamera.array import PiRGBArray
 
 try:
-    from DartScoreEngineConfig import dartconfig
+    from DartScoreEngine.DartScoreEngineConfig import dartconfig
 except:
      dartconfig ={                   #Config for test-purpose
                 "cam": {"res":(640, 480), "id":1, "framerate": 20},
@@ -48,6 +48,13 @@ class PiCam(object):
 
     def __del__(self):
         self._cam.close()
+
+if __name__ == '__main__':
+    print "Testcode for PiCam"
+    cam = PiCam()
+    cam.initialize()
+
+
 
 
 
