@@ -10,10 +10,10 @@ from DartScoreEngine import DartScoreEngineConfig
 
 class Board(object):
 
-    def __init__(self):
+    def __init__(self, width, heigth):
         self._ilines = []
         self._circles = []
-        self.imageX, self.imageY = self.width, self.height= DartScoreEngineConfig.dartconfig['cam']['res']
+        self.imageX, self.imageY = self.width, self.height = (width,heigth)
         self._bullseye=(0,0)
         self._scalibrate = DartScoreEngineConfig.dartconfig['color']['calibrate']
         self._centersectorlines = [] #lines that
@@ -156,20 +156,23 @@ class Board(object):
 
 
 if __name__ == "__main__":
-    if socket.gethostname() == "DESKTOP-GSGKDI2":
-        snapshot = cv2.imread("D:/Projekte/PycharmProjects/DartScore/Vision/frame1.jpg")
-    else:
-        snapshot = cv2.imread("C:\Users\psk\Documents\GitHub\DartScore\Vision\camseq300.jpg")
+    #cam= cv2.VideoCapture("C:/Users/psk/Documents/darts/Darts/Darts_Testvideo_4.mp4")
+    cam = cv2.VideoCapture("C:/Users/psk/Documents/GitHub/DartScore/Testdata/Videos/dartscoreRaw_20170327_193108.avi")
+    (ret, frame) = cam.read()
 
-    bf = Board()
-    original=snapshot.copy()
-    sectors = snapshot.copy()
-    maxmin = snapshot.copy()
+    width =  cam.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
+    heigth = cam.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)
 
-    bf.initialize(snapshot)
+
+    bf = Board(width,heigth)
+    original=frame.copy()
+    sectors = frame.copy()
+    maxmin = frame.copy()
+
+    bf.initialize(frame)
     sectors = bf.draw(sectors)
     ba=BoardArray.BoardArray(bf._bullseye)
-    ba.create(snapshot)
+    ba.create(frame)
 
     #maxminlines = bf.calculateLines()
 # for line in maxminlines:
@@ -178,7 +181,7 @@ if __name__ == "__main__":
     rect2 = (bf._bullseye[0]+15, bf._bullseye[1]-96)
 
     cv2.imshow('orig',original)
-    cv2.imshow('Step 1 Bulls eye',snapshot)
+    cv2.imshow('Step 1 Bulls eye',frame)
     cv2.rectangle(maxmin, rect1, rect2, DartScoreEngineConfig.dartconfig['color']['aim'], 2)
     cv2.imshow('Step 2 before transform',sectors)
     cv2.imshow('Step 3 before transform',maxmin)

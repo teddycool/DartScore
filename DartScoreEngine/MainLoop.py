@@ -19,7 +19,7 @@ class MainLoop(object):
         self._playState = PlayStateLoop.PlayStateLoop()
         self._state = {"MountState": self._mountingState, "CalState": self._calibrateState, "PlayState": self._playState}
         #Start -> MountState ->[button]-> CalState ->[auto when done]-> PlayState ---> End...
-        self._currentStateLoop = self._state["PlayState"]
+        self._currentStateLoop = self._state["CalState"]
 
     def initialize(self):
         print "Main init..."

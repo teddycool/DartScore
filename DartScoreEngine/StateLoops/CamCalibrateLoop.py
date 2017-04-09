@@ -21,7 +21,7 @@ class CamCalibrateLoop(StateLoop.StateLoop):
     def update(self, frame):
         if self._firstFrame == None:
             self._first = frame
-            frame = self._board.findSectorLines(frame)
+        frame = self._board.findSectorLines(frame)
         return frame
 
     def draw(self, frame):
