@@ -2,14 +2,12 @@ __author__ = 'teddycool'
 #State handling calibration of cam at startup when mounted correctly
 #Warm-up, set exposure etc, read dartboard and setup the 'score-calculator-engine'
 
-from Board import Board
-from Board import BoardArray
-from  StateLoop import StateLoop
-from Board import Board
+from DartScoreEngine.StateLoops import StateLoop
+from DartScoreEngine.Board import Board
 import cv2
 
 
-class CamCalibrateLoop(StateLoop):
+class CamCalibrateLoop(StateLoop.StateLoop):
     def __init__(self):
         super(CamCalibrateLoop, self).__init__()
         self._board = Board.Board()

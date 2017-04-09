@@ -3,7 +3,7 @@ import time
 import RPi.GPIO as GPIO
 
 from Actuators import LedIndicator
-from DartScoreMainConfig import dartconfig
+from GameMainConfig import dartconfig
 from Inputs import IoInputs
 
 #Start...

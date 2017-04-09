@@ -1,6 +1,6 @@
 import cv2
 
-from DartScoreEngineConfig import dartconfig
+from DartScoreEngine.DartScoreEngineConfig import dartconfig
 
 
 class DartHit(object):

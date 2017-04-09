@@ -5,7 +5,7 @@ import numpy as np
 import socket
 
 import BoardArray
-import DartScoreEngineConfig
+from DartScoreEngine import DartScoreEngineConfig
 
 
 class Board(object):

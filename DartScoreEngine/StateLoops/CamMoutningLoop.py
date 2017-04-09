@@ -4,7 +4,7 @@ _author__ = 'teddycool'
 
 import cv2
 
-import DartScoreEngineConfig
+from DartScoreEngine.DartScoreEngineConfig import dartconfig
 from  StateLoop import StateLoop
 import time
 
@@ -16,9 +16,9 @@ class CamMountingLoop(StateLoop):
 
     def initialize(self):
 
-        width, height= DartScoreEngineConfig.dartconfig['cam']['res']
-        aimx = DartScoreEngineConfig.dartconfig['mounting']['aimrectx']
-        aimy = DartScoreEngineConfig.dartconfig['mounting']['aimrecty']
+        width, height= dartconfig['cam']['res']
+        aimx = dartconfig['mounting']['aimrectx']
+        aimy = dartconfig['mounting']['aimrecty']
 
         self._startpos= (width/2-aimx/2,height/2-aimy/2)
         self._centerRect = (self._startpos[0]+aimx, self._startpos[1]+aimy)
@@ -41,10 +41,10 @@ class CamMountingLoop(StateLoop):
         return frame
 
     def draw(self, frame):
-        cv2.rectangle(frame, self._startpos, self._centerRect, DartScoreEngineConfig.dartconfig['color']['aim'], 5)
-        cv2.circle(frame, self._center, 10, DartScoreEngineConfig.dartconfig['color']['bullseye'], 2)
+        cv2.rectangle(frame, self._startpos, self._centerRect, dartconfig['color']['aim'], 5)
+        cv2.circle(frame, self._center, 10, dartconfig['color']['bullseye'], 2)
         cv2.putText(frame,"Mount to match bullseye here", (self._center[0]+15,self._center[1]),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
-        cv2.line(frame, self._center, (self._center[0],0), DartScoreEngineConfig.dartconfig['color']['bullseye'], 2)
+        cv2.line(frame, self._center, (self._center[0],0), dartconfig['color']['bullseye'], 2)
         cv2.putText(frame,"Put this line inside the 20-sector", (self._center[0]-100,100),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
         cv2.putText(frame,"Mounting State", (5,20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
         cv2.putText(frame,"Press cal-button when ready", (5,40),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)

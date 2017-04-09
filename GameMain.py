@@ -7,24 +7,39 @@ import cv2
 import time
 
 
-from DartScoreMainConfig import config
+from GameMainConfig import config
+from DartScoreEngine import MainLoop
+
+class GameMain(object):
+    def __init__(self):
+        return
+
+    def initialize(self):
+        print "Initialize for GameMain"
+        env = config["Environment"]
+        self._cam = Cam.createCam(env)
+        self._pres = Presenter.createPresenter(env)
+        self._cam.initialize()
+        self._emainloop = MainLoop.MainLoop(self._cam, self._pres)
+        self._emainloop.initialize()
+
+
+    def update(self):
+        frame = self._emainloop.update()
+        self._emainloop.draw(frame)
+
 
 
 
 if __name__ == '__main__':
     print "Testcode for GameMain"
-    env = config["Environment"]
-    print "Starting for environment: " + env
-    cam = Cam.createCam(env)
-    pres = Presenter.createPresenter(env)
-    cam.initialize()
+    print "Starting for environment: " + config["Environment"]
+
+    game= GameMain()
+    game.initialize()
 
     while True:
-        frame = cam.update()
-        if frame == None:
-            break
-        pres.draw(frame)
+        game.update()
         time.sleep(0.1)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
-    cv2.destroyAllWindows()

@@ -27,22 +27,9 @@ class Vision(object):
 
 
     def initialize(self):
-
         print "Vision initialised"
-        print "Starting streamer..."
 
-        self._cam.initialize()
-
-        filenameraw = "dartscoreRaw_" + time.strftime("%Y%m%d_%H%M%S") + ".avi"
-        filenamecv = "dartscoreCv_" + time.strftime("%Y%m%d_%H%M%S") + ".avi"
-        #Two videowriters...
-        if dartconfig["Vision"]["RecordRaw"]:
-            self._videowraw = cv2.VideoWriter(dartconfig["Recorder"]["VideoFileDir"]+filenameraw, cv2.VideoWriter_fourcc(*'XVID'), 2, resolution )
-        if dartconfig["Vision"]["RecordCv"]:
-            self._videowcv = cv2.VideoWriter(dartconfig["Recorder"]["VideoFileDir"] + filenamecv,cv2.VideoWriter_fourcc(*'XVID'), 2, resolution)
-
-    def update(self):
-        frame = self._cam.update()
+    def update(self, frame):
         if dartconfig["Vision"]["RecordRaw"]:
             self._videowraw.write(frame)
         #self._contourFinder.update(frame)
@@ -54,10 +41,6 @@ class Vision(object):
         #self._contourFinder.draw(frame)
         if dartconfig["Vision"]["PrintFrameRate"]:
             cv2.putText(frame, "Framerate: " + str(framerate), (5,150),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
-
-        #Write to actual frame for MJPG streamer
-        #TODO: use a ram-disk for this file
-        cv2.imwrite(dartconfig["Streamer"]["StreamerImage"],frame)
 
         if dartconfig["Vision"]["WriteFramesToSeparateFiles"]:
             #pickle.dump(self._contourFinder._cnts,open('cv2cnts' +str(self._seqno),'wb'))

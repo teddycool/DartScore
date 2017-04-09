@@ -6,7 +6,7 @@ __author__ = 'teddycool'
 import cv2
 
 from DartHit import DartHit
-from DartScoreEngineConfig import dartconfig
+from DartScoreEngine.DartScoreEngineConfig import dartconfig
 
 
 class DartDetector(object):
@@ -67,7 +67,7 @@ class DartDetector(object):
         # dilate the thresholded image to fill in holes, then find contours
         # on thresholded image
         thresh = cv2.dilate(thresh, None, iterations=2)
-        (_, cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        (cnts,hiarc) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
          # loop over the contours
         for c in cnts:
             # if the contour is too small, ignore it

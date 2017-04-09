@@ -4,7 +4,7 @@ import math
 
 import cv2
 
-import DartScoreEngineConfig
+from DartScoreEngine import  DartScoreEngineConfig
 
 
 # Class to create an array defining 'the perfect board' and a 'normalized' board used later on..

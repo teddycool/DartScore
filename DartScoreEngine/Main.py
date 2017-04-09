@@ -1,7 +1,8 @@
 __author__ = 'teddycool'
-
-# Put up the camera, run calibrate
-# Start to play...
+# Main for the DartScore engine statemachine
+# Takes a cam and a presenter device as arguments
+# Publish data to a ??
+# When the game is played this will run in the background
 
 
 import time
@@ -11,9 +12,9 @@ import MainLoop
 
 class Main(object):
 
-    def __init__(self):
+    def __init__(self, cam, presenter):
         print "Init Main object..."
-        self._mainLoop=MainLoop.MainLoop()
+        self._mainLoop=MainLoop.MainLoop(cam, presenter)
 
 
     def run(self):

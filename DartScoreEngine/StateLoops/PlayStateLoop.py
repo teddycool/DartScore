@@ -4,12 +4,12 @@ __author__ = 'teddycool'
 
 import cv2
 
-from Actuators import LedIndicator
-from DartScoreEngineConfig import dartconfig
-from  StateLoop import StateLoop
-from Vision import DartDetector
 
-class PlayStateLoop(StateLoop):
+from DartScoreEngine.DartScoreEngineConfig import dartconfig
+from DartScoreEngine.StateLoops import StateLoop
+from DartScoreEngine.Vision import DartDetector
+
+class PlayStateLoop(StateLoop.StateLoop):
     def __init__(self):
         super(PlayStateLoop, self).__init__()
         return
