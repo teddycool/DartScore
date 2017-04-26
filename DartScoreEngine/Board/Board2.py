@@ -159,6 +159,12 @@ if __name__ == "__main__":
     #cam= cv2.VideoCapture("C:/Users/psk/Documents/darts/Darts/Darts_Testvideo_4.mp4")
     cam = cv2.VideoCapture("C:/Users/psk/Documents/GitHub/DartScore/Testdata/Videos/dartscoreRaw_20170327_193108.avi")
     (ret, frame) = cam.read()
+    index = 0
+    while index < 30:
+        (ret, frame) = cam.read()
+        index = index +1
+
+    print "Frame # " + str(index) + " was captured"
 
     width =  cam.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
     heigth = cam.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)

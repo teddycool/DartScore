@@ -14,17 +14,24 @@ The engine can report the score for each hit but doesn't know anything of the nu
 The engine can't be used by itself (but maybe a debug-mode) but is used from a game-logic that could be 
 all the kinds of programs. The interaction between the 'engine' and the gamelogic should be solved in some general way since the 'engine' should be unaware of the logic that uses it.
 
-Engine:
+**Engine**:
 
-Cameramountingstate:
+**Cameramountingstate**:
+
 Streams the camera images to the jpg-streamer with an overlay indication where to have bulls-eye to manage calibration
 
-Calibratestate:
+**Calibratestate**:
+
 Runs camera calibration and calculate all sectors on dartboard, saves this as a ??? (dictionary, bitmap, array)
 
-Playstate:
+**Playstate**:
+
 Constantly overlooking board and reacts on changes when dart hits board. No other userinteraction is needed.
 
 EngineMainLoop is engine and master for changing states
+
+**Prerequisites:**
+Python 2.7 and OpenCv 2.4.12
+
 
 

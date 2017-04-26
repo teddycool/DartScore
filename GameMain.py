@@ -17,8 +17,9 @@ class GameMain(object):
     def initialize(self):
         print "Initialize for GameMain"
         env = config["Environment"]
+        pres = config["Presenter"]
         self._cam = Cam.createCam(env)
-        self._pres = Presenter.createPresenter(env)
+        self._pres = Presenter.createPresenter(pres)
         self._cam.initialize()
         self._emainloop = MainLoop.MainLoop(self._cam, self._pres)
         self._emainloop.initialize()

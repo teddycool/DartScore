@@ -17,4 +17,8 @@ def createPresenter(type):
         from WinSetup.VideoPresenter  import VideoPresenter
         presenter = VideoPresenter()
         return presenter
+    elif type == "FRONTEND":
+        from FrontEnd.FrontEnd  import FrontEnd
+        presenter = FrontEnd(1024,768)
+        return presenter
 
