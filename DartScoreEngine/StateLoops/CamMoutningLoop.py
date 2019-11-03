@@ -2,14 +2,14 @@ _author__ = 'teddycool'
 #State handling mounting of cam showing a square in the videofeed  where to have bulls-eye
 
 
-import cv2
+from cv2 import cv2
 
 from DartScoreEngine.DartScoreEngineConfig import dartconfig
-from  StateLoop import StateLoop
+from DartScoreEngine.StateLoops import StateLoop
 import time
 
 
-class CamMountingLoop(StateLoop):
+class CamMountingLoop(StateLoop.StateLoop):
     def __init__(self):
         super(CamMountingLoop, self).__init__()
         return

@@ -3,9 +3,9 @@ __author__ = 'teddycool'
 #The bounding rect for the new dart is used by DartHit to figure out the coordinates for the hit
 #Ref: http://www.pyimagesearch.com/2015/05/25/basic-motion-detection-and-tracking-with-python-and-opencv/
 
-import cv2
+from cv2 import cv2
 
-from DartHit import DartHit
+from DartScoreEngine.Vision.DartHit import DartHit
 from DartScoreEngine.DartScoreEngineConfig import dartconfig
 
 
@@ -19,17 +19,17 @@ class DartDetector(object):
         self._seqno =0
 
     def boardEmpty(self, frame):
-        print "Board empty?"
+        print ("Board empty?")
         cnts = self._frameDeltaBoundingBoxes(self._boardEmptyFrame, frame)
         return len(cnts)== 0
 
     def boardChanged(self, frame1, frame2):
-        print "Board changed?"
+        print ("Board changed?")
         cnts = self._frameDeltaBoundingBoxes(frame1, frame2)
         return len(cnts)> 0
 
     def detectDart(self, currentframe, previousframe):
-        print "Dart detected?"
+        print ("Dart detected?")
         self._boundingRects = self._frameDeltaBoundingBoxes(currentframe, previousframe)
         if len(self._boundingRects) > 0:
             rectno=0
@@ -46,7 +46,7 @@ class DartDetector(object):
         return len(self._boundingRects)> 0
 
     def draw(self, frame):
-        print "Draw dart"
+        print ("Draw dart")
         for (x, y, w, h) in self._boundingRects:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
         return frame
@@ -71,27 +71,27 @@ class DartDetector(object):
          # loop over the contours
         for c in cnts:
             # if the contour is too small, ignore it
-            print "Area = " + str( cv2.contourArea(c))
+            print ("Area = " + str( cv2.contourArea(c)))
             if cv2.contourArea(c) > dartconfig["DartHit"]["DartHitMinArea"]:
                 rect = cv2.boundingRect(c)
                 boundingRects.append(rect)
-        print "Counts for contours bigger then: " + str(len(boundingRects))
-        print "Raw counts for contours that differs: " + str(len(cnts))
+        print ("Counts for contours bigger then: " + str(len(boundingRects)))
+        print ("Raw counts for contours that differs: " + str(len(cnts)))
         self._rawCnts = cnts
         return boundingRects
 
 
 if __name__ == '__main__':
-    print "Testcode for DartFinder"
+    print ("Testcode for DartFinder")
     frame1 = cv2.imread(" ")
     frame2 = cv2.imread("camseq64.jpg")
     frame3 = cv2.imread("camseq67.jpg")
 
     dd = DartDetector(frame1)
-    print dd.detectDart(frame2, frame1)  #True
+    print (dd.detectDart(frame2, frame1) ) #True
     frame = dd.draw(frame2)  #False
-    print dd.boardEmpty(frame3)#True
-    print dd.boardChanged(frame1, frame3)
+    print (dd.boardEmpty(frame3))#True
+    print (dd.boardChanged(frame1, frame3))
     cv2.imshow("Darts found...", frame)
     x,y,w,h = dd._boundingRects[0]
     x1 = x+w

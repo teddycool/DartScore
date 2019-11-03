@@ -4,16 +4,8 @@ __author__ = 'teddycool'
 
 
 def createCam(camtype):
-    if camtype == "PC":
-        from WinSetup.PcCam import PcCam
-        cam = PcCam()
-        return cam
-    elif camtype == "PI":
-        from PiSetup.PiCam import PiCam
-        cam = PiCam()
-        return cam
-    elif camtype == "VIDEO":
-        from WinSetup.VideoCam import  VideoCam
-        cam = VideoCam()
+    if camtype == "STREAM":
+        from PiSetup.StreamCam import  StreamCam
+        cam = StreamCam()
         return cam
 

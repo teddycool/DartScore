@@ -2,7 +2,11 @@ __author__ = 'teddycool'
 
 import math
 
-import cv2
+from cv2 import cv2
+
+import os
+import sys
+sys.path.append(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore')
 
 from DartScoreEngine import  DartScoreEngineConfig
 
@@ -47,6 +51,7 @@ class BoardArray(object):
 
 
 if __name__ == "__main__":
+    
 
     img = cv2.imread("boardarraybg.jpg")
     bf = BoardArray()

@@ -1,10 +1,14 @@
 __author__ = 'teddycool'
 #TODO: break up this to pieces..
-import cv2
+from cv2 import cv2
 import numpy as np
 import socket
 
-import BoardArray
+import os
+import sys
+sys.path.append(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore')
+
+from DartScoreEngine.Board import BoardArray
 from DartScoreEngine import DartScoreEngineConfig
 
 
@@ -83,7 +87,7 @@ class Board(object):
         #Each line is represented by a two-element vector  (rho, theta) .
         # rho is the distance from the coordinate origin  (0,0) (top-left corner of the image).
         # theta is the line rotation angle in radians ( 0 \sim \textrm{vertical line}, \pi/2 \sim \textrm{horizontal line} ).
-        if lines != None:
+        if len(lines) > 0:
             templines = []
             for rho,theta in lines[0]:
                 a = np.cos(theta)
@@ -110,7 +114,7 @@ class Board(object):
                             if cross[0] < self.imageX/2+offsetx and cross[0] > self.imageX/2 -offsety:
                                 if cross[1] < self.imageY/2+offsety and cross[1] > self.imageY/2 - offsety :
                                     self._ilines.append(templines[i])
-                                    #cv2.line(img,self._lines[i][0],self._lines[i][1],self._scalibrate,1)
+                                    cv2.line(img,self._lines[i][0],self._lines[i][1],self._scalibrate,1)
                                     crosspoint.append(cross)
                                     xpoint.append(cross[0])
                                     ypoint.append(cross[1])
@@ -118,10 +122,10 @@ class Board(object):
                             pass
             try:
                 self._bullseye = (int(np.median(xpoint)),int(np.median(ypoint)))
-                print "Bullseye: ", self._bullseye
+                print ("Bullseye: ", self._bullseye)
             except:
-                print "Camera has to face a dartboard!"
-
+                print ("Camera has to face a dartboard!")
+        return img
 
 
 
@@ -159,7 +163,7 @@ if __name__ == "__main__":
     if socket.gethostname() == "DESKTOP-GSGKDI2":
         snapshot = cv2.imread("D:/Projekte/PycharmProjects/DartScore/Vision/frame1.jpg")
     else:
-        snapshot = cv2.imread("C:\Users\psk\Documents\GitHub\DartScore\Vision\camseq300.jpg")
+        snapshot = cv2.imread(r"C:\Users\par\OneDrive\Documents\GitHub\DartScore\DartScoreEngine\Vision\camseq58.jpg")
 
     bf = Board()
     original=snapshot.copy()

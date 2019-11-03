@@ -2,18 +2,13 @@ DartScore design concept and description
 ----------------------------------------
 
 Basics:
-In this version everything is run on a raspberry pi 3
-The pi has a cam
-There are some buttons, a switch and some leds connected to the pi
+In this version the recgbition is run on a raspberry pi 4
+I have two cams built with raspberry pi 2 and the motioneyos running as fast networed cams
 
 Design:
 DartScore is coded like a game-loop.
 All items in the project (allmost) has at least 3 public methods: initialize, update, draw.
 These are called for all objects in the project in a certain sequence.
-There are two main parts. This project (DartScore) and a mjpg streame to create a video-stream.
-The Videostream can be viewed in any webbrowser on the same network, like a netcam.
-The streamer is started from the Vision class but must installed and configured correctly.
-For the moment there is no actually gui since all information is written to the videostream
 
 
 

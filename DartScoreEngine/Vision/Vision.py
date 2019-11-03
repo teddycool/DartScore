@@ -6,8 +6,7 @@ __author__ = 'teddycool'
 import os
 import sys
 import time
-import cv2
-import Cam
+from cv2 import cv2
 
 try:
     from DartScoreEngine.DartScoreEngineConfig import dartconfig
@@ -18,16 +17,14 @@ except: #Used when unittesting...
          "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True, "RecordRaw": False, "RecordCv": False, "CamType": "PC"}}
 
 class Vision(object):
-
-    def __init__(self, cam ):
-        print "Vision object started..."
+    def __init__(self ):
+        print ("Vision object started...")
         self._seqno = 0
-        self._cam = cam
         #TODO: check that streamer is running
 
 
     def initialize(self):
-        print "Vision initialised"
+        print ("Vision initialised")
 
     def update(self, frame):
         if dartconfig["Vision"]["RecordRaw"]:
@@ -49,9 +46,11 @@ class Vision(object):
         #Writing to opencv managed stream (same as to 'netcam')
             if dartconfig["Vision"]["RecordCv"]:
                 self._videowcv.write(frame)
+        return frame
+
 
     def __del__(self):
-        print "Vision object deleted..."
+        print ("Vision object deleted...")
         if dartconfig["Vision"]["RecordRaw"]:
             self._videowraw = None
         if dartconfig["Vision"]["RecordCv"]:
@@ -61,27 +60,29 @@ class Vision(object):
 
 
 if __name__ == '__main__':
-    print "Testcode for Vision"
-
+    print ("Testcode for Vision")
+    import os
+    import sys
+    sys.path.append(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore')
+    import Cam
+    cam = Cam.createCam("STREAM")
+    cam.initialize()
     vision = Vision()
     vision.initialize()
+    try:
+        while 1:
+            print ("Updating frame...")
+            frame = cam.update()
+            frame = vision.update(frame)
+            #print ("TypeOfFrame: " + str(type(frame)))
+            print ("Drawing frame...")
+            frame = vision.draw(frame, cam._actualFrameRate)
+            cv2.imshow('Video', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+            #time.sleep(0.2)
+    except:
+        e = sys.exc_info()[0]
+        print (e)
 
-
-    if dartconfig["Vision"]["CamType"]== "PC":
-        frame = vision.update()
-        cv2.imshow('simple', frame)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-    elif  dartconfig["Vision"]["CamType"]== "PI":
-
-        try:
-            while 1:
-                print "Updating frame..."
-                frame = vision.update()
-                print "TypeOfFrame: " + str(type(frame))
-                print "Drawing frame..."
-                vision.draw(frame, 2)
-                time.sleep(0.2)
-        except:
-            e = sys.exc_info()[0]
-            print e
+    cv2.destroyAllWindows()

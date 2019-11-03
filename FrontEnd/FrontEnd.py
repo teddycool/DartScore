@@ -1,29 +1,30 @@
 __author__ = 'psk'
-import os, sys, pygame, cv2
+import os, sys, pygame
+from cv2 import cv2
 from pygame.locals import *
-from VideoCapture import Device
+#from VideoCapture import Device
 import pygame.camera
 import numpy
-from FrontEndConfig import config
+#from DartScore.FrontEnd.FrontEndConfig import config
 
 
 class FrontEnd(object):
 
     def __init__(self, width, height):
-        print "Init pygame..."
+        print ("Init pygame...")
         self.width = width
         self.heigth = height
         #Init and set up variables...
         pygame.init()
 
         self.size=(self.width, self.heigth)
-        self.screen = pygame.display.set_mode(config["screen"]["display"],0 )
+        self.screen = pygame.display.set_mode(1024,768,0 )
         self._myfont = pygame.font.SysFont("Arial", 60)
         self._label = self._myfont.render("Hello World !!", 1, (255,0,0))
 
 
         #Set surface to handle a frame from camera
-        self._snapshot = pygame.surface.Surface(config["screen"]["res"])
+        self._snapshot = pygame.surface.Surface(config["800"]["600"])
 
 
     def draw(self, frame):
@@ -66,10 +67,11 @@ class FrontEnd(object):
 #
 if __name__ == "__main__":
     #Set to webcam ID, std is 0. Networkedcam is probably 1
-    camid=0
+    import Cam 
+    cam = Cam.createCam("STREAM")
     #Set to resolution of your webcam
-    width=1280
-    height=720
+    width=1024
+    height=768
 
-    gl=FrontEnd(width, height, camid)
+    gl=FrontEnd(width, height)
     gl.run()

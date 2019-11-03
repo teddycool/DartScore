@@ -2,7 +2,7 @@ __author__ = 'teddycool'
 #State handling the actual game, might be separated to several states
 
 
-import cv2
+from cv2 import cv2
 
 
 from DartScoreEngine.DartScoreEngineConfig import dartconfig
@@ -15,7 +15,7 @@ class PlayStateLoop(StateLoop.StateLoop):
         return
 
     def initialize(self ):
-        print "PlayState init..."
+        print ("PlayState init...")
   #      self._gpio=gpio
         self._dartDetectorFrames = 0
         self._init = False
@@ -34,13 +34,13 @@ class PlayStateLoop(StateLoop.StateLoop):
             self._dartDetector = DartDetector.DartDetector(frame)
             self._previousFrame = frame.copy()
             self._init = True
-            print "First frame (empty board) initialized in PlayState Loop.."
+            print ("First frame (empty board) initialized in PlayState Loop..")
         else:
             if not self._dartDetector.boardEmpty(frame):
-                print "Detected not empty"
+                print ("Detected not empty")
                 self._empty = False
                 if self._dartDetector.detectDart(frame, self._previousFrame):
-                    print "New dart or change detected in this frame"
+                    print ("New dart or change detected in this frame")
                     #Add calculation of hit-scores here
                     self._dartDetectorFrames = 0
                     self._previousFrame = frame.copy()
@@ -51,11 +51,11 @@ class PlayStateLoop(StateLoop.StateLoop):
                         self._dartDetectorFrames = 0
                         #This was an actual hit, add sum of hit-scores  for player here
             else:
-                print "Detected empty"
+                print ("Detected empty")
                 self._empty = True
                 self._dartDetectorFrames = 0
                 self._previousFrame = frame.copy()
-        print "Similar frames with darts detected: " + str(self._dartDetectorFrames)
+        print ("Similar frames with darts detected: " + str(self._dartDetectorFrames))
         return frame
 
     def draw(self, frame):

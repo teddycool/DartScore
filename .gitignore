@@ -59,4 +59,5 @@ docs/_build/
 # PyBuilder
 target/
 
+.vscode/
 # Created by .ignore support plugin (hsz.mobi)

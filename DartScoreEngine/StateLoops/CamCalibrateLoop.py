@@ -4,7 +4,7 @@ __author__ = 'teddycool'
 
 from DartScoreEngine.StateLoops import StateLoop
 from DartScoreEngine.Board import Board
-import cv2
+from cv2 import cv2
 
 
 class CamCalibrateLoop(StateLoop.StateLoop):

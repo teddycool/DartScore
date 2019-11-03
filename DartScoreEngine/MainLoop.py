@@ -13,7 +13,7 @@ class MainLoop(object):
         #TODO: fix logging to file readable from web
         self._cam = cam
         self._pres = presenter
-        self._vision= Vision.Vision(self._cam)
+        self._vision= Vision.Vision()
         self._calibrateState = CamCalibrateLoop.CamCalibrateLoop()
         self._mountingState = CamMoutningLoop.CamMountingLoop()
         self._playState = PlayStateLoop.PlayStateLoop()
@@ -22,21 +22,22 @@ class MainLoop(object):
         self._currentStateLoop = self._state["CalState"]
 
     def initialize(self):
-        print "Main init..."
+        print ("Main init...")
         self.time=time.time()
+        self._cam.initialize()
         self._vision.initialize()
         self._lastframetime = time.time()
         # Init all states
         for key in self._state.keys():
             self._state[key].initialize()
-        print "Game started at ", self.time
+        print ("Game started at ", self.time)
 
     def update(self):
         start = time.time()
         frame = self._cam.update()
         frame = self._vision.update(frame)
         self._currentStateLoop.update(frame)
-        print "Main update time: " + str(time.time()-start)
+        print ("Main update time: " + str(time.time()-start))
         return frame
 
     def draw(self, frame):
@@ -47,7 +48,7 @@ class MainLoop(object):
         self._lastframetime= time.time()
         self._vision.draw(frame, framerate) #Actually draw frame to mjpeg streamer...
         self._pres.draw(frame)
-        print "Main draw time: " + str(time.time()-start)
+        print ("Main draw time: " + str(time.time()-start))
 
 
     def changeState(self, newstate):
