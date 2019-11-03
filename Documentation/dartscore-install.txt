@@ -1,44 +1,15 @@
 Pre reqs:
 
-For the Pi:
+
 Hardware:
-raspberryPi3, raspberrypi cam,  brackets for mounting, button(s),
-
-Software:
-install raspian jessie, instructions are found here: https://www.raspberrypi.org/downloads/raspbian/
-Enable the camera module and make apropriate settings for wifi-network, hostsname, keyboard  etc
-
-sudo apt-get install python-dev
-
-sudo apt-get install python-rpi.gpio
-
-
-install MJPG-streamer, instructions are found here: https://www.raspberrypi.org/forums/viewtopic.php?t=48597
-or here http://blog.miguelgrinberg.com/post/how-to-build-and-run-mjpg-streamer-on-the-raspberry-pi
-
-compile and install opencv for multicore RaspberryPi for best performance.
-Check out http://www.pyimagesearch.com for details but I skipped the virtual environment since I only will use the Pi for this project.
-
-
-Start streamer:
-
-sudo mkdir /tmp/stream
-cd mjpg-streamer/mjpg-streamer
-LD_LIBRARY_PATH=/your/path /your/path/mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /your/path/www" &
+A raspberryPi4  2GB as head-unit with some extra hardware (fan, buttons, indicator leds), raspberrypi2 & raspi-cam running motioneyos 
+as fast networked cam,  brackets for mounting om cameras.
+Widescreen monitor for Gui, power-supply, fast wifi network 
 
 
 
-
-For the PC:
-Python development IDE (PyCharm is a good choice)
-Firefox to show the video-stream
+For the dev PC:
+Python development IDE (I use visual studio code nowdays)
 Putty for connecting remotely to the Pi
 WinSCP to syncronize files
 GitHub account to get the source-code
-
-
-Modify ??-file to make streamer-directory and start the streamer automatically at boot
-Copy all source-code to the pi and run Main.py in the DartScore directory (sudo python Main.py) 
-
-Refs:
-http://blog.miguelgrinberg.com/post/stream-video-from-the-raspberry-pi-camera-to-web-browsers-even-on-ios-and-android

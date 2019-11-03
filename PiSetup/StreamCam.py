@@ -18,13 +18,13 @@ class StreamCam(object):
     def __int__(self):
         self._camId = 0
 
-    def initialize(self):
+    def initialize(self, camurl):
         print ("Stream CAM init...")
         resolution = dartconfig["cam"]["res"]
         #self._cam.framerate = dartconfig["cam"]["framerate"]
         self._actualFrameRate = 0
         self._lastFrameTime = time.time()
-        self._stream = urlopen('http://192.168.1.18:8081')
+        self._stream = urlopen(camurl)
         self._bytes = bytearray()
         
         #self._imagegenerator = self._cam.capture_continuous(self._rawCapture, format="bgr", use_video_port=True)
@@ -49,7 +49,7 @@ class StreamCam(object):
 if __name__ == '__main__':
     print ("Testcode for StreamCam")
     cam = StreamCam()
-    cam.initialize()
+    cam.initialize('http://192.168.1.131:8081')
 
     while True:
         img = cam.update()

@@ -8,4 +8,6 @@ def createCam(camtype):
         from PiSetup.StreamCam import  StreamCam
         cam = StreamCam()
         return cam
+    raise "CamSelectionError"
+
 
