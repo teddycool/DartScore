@@ -32,4 +32,13 @@ EngineMainLoop is engine and master for changing states and the engine 'event-lo
 Python 3.x, PyGame and OpenCv 
 
 
+Raspberry pi 4 2GB, Rasbian Buster full (includes Python3  and Python-game)
 
+Install open cv and dependencies...
+
+pip3 install opencv-python
+sudo apt-get install libatlas-base-dev
+sudo apt-get install libjasper-dev
+sudo apt-get install libqtgui4
+sudo apt-get install python3-pyqt5
+sudo apt install libqt4-test
