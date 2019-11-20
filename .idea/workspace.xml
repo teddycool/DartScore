@@ -23,18 +23,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/readme.adoc">
-          <provider selected="true" editor-type-id="split-provider[text-editor;AsciiDocPreviewEditor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="119">
-                <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SW/readme.adoc">
           <provider selected="true" editor-type-id="split-provider[text-editor;AsciiDocPreviewEditor]">
             <state split_layout="SPLIT">
@@ -84,9 +72,18 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Docs/20191120_182532.jpg">
           <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="708">
+              <caret line="62" column="46" lean-forward="true" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="46" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -142,10 +139,11 @@
         <option value="$PROJECT_DIR$/SW/readme.adoc" />
         <option value="$PROJECT_DIR$/HW/readme.adoc" />
         <option value="$PROJECT_DIR$/Docs/description.adoc" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-7" />
     <option name="y" value="9" />
     <option name="width" value="1918" />
@@ -163,11 +161,6 @@
             <path>
               <item name="DartScore" type="b2602c69:ProjectViewProjectNode" />
               <item name="DartScore" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DartScore" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DartScore" type="462c0819:PsiDirectoryNode" />
-              <item name="Docs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -329,6 +322,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23076923" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -466,9 +460,6 @@
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Docs/Re_ Method to Identify and Score Darts....eml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/SW/DartScoreEngine/DartScoreEngineConfig.py">
@@ -660,6 +651,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Docs/20191120_182532.jpg">
       <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="708">
+          <caret line="62" column="46" lean-forward="true" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="46" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
