@@ -2,10 +2,10 @@ __author__ = 'teddycool'
 #Config vaues for DartScoreEngine. This is the only place for these.
 
 
-dartconfig = {"cam": {"res": (800, 600), "id": 1, "framerate": 20},  # CAM settings
+dartconfig = {"cam": {"res": (1024, 768), "id": 1, "framerate": 10},  # CAM settings
               "color": {"sector": (0, 255, 0), "hit": (255, 0, 0), "aim": (0, 255, 0), "calibrate": (0, 0, 255),
                         "bullseye": (0, 0, 255)},  # colors of sectors and markers
-              "mounting": {"aimrectx": 80, "aimrecty": 40},  # values for mounting the cam and center bulls-eye
+              "mounting": {"aimrectx": 200, "aimrecty": 100},  # values for mounting the cam and center bulls-eye
               "play": {"warmupframes": 5, "hitframes": 2},
               "Streamer": {"StreamerImage": "/tmp/stream/pic.jpg", "StreamerLib": "/tmp/stream",
                            "VideoFile": "/home/pi/DartScore/video.avi"},
@@ -14,7 +14,7 @@ dartconfig = {"cam": {"res": (800, 600), "id": 1, "framerate": 20},  # CAM setti
               "Logger": {"Level": "Verbose", "LogFile": "/tmp/stream/log.log", "SaveDartEvalFrames": False},
               "IO": {"CalButton": 23, "GameButton": 24, "OnLed": 25, "CalLed": 8, "GameLed":7, "HitLed":18, "GameSwitch1":9, "GameSwitch2":10},
               "Main": {"MaxFrameRate": 10},
-              "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True, "RecordRaw": False, "RecordCv": False, "CamType": "PI"},
+              "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True, "RecordRaw": False, "RecordCv": False, "CamType": "NetCam"},
               "DartHit": {"WriteFramesToSeparateFiles": False, "DartHitMinArea": 500},
               "Recorder": {"VideoFileDir": "/home/pi/DartScore/Videos/", "VideoFile":"/home/pi/DartScore/video.avi", "tempfile": "/ram/videos/", "MinSize": 70000, "MaxFrames": 600},
               }

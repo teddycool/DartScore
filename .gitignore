@@ -62,3 +62,4 @@ target/
 .vscode/
 # Created by .ignore support plugin (hsz.mobi)
 Documentation/Re_ Method to Identify and Score Darts....eml
+SW/DartScoreEngine/Vision/test.py

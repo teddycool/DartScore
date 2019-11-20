@@ -1,0 +1,34 @@
+= The calibration pipe line...
+
+### Find bulls-eye
+First find all lines in the picture using HoughLinesP
+
+Aproximate straight lines and where they cross.
+
+
+### Find Elipses
+Finding contours of elipses or sectors by using filters for area and shape.
+
+### Match sectors to perfect board geometry
+
+
+
+
+The perfect board geometry
+--------------------------
+
+image:perfectboard.jpg[The perfect board]
+
+One step to calibrate
+---------------------
+Finding the outermost black sectors.
+
+image:cv1.jpg[OpenCv detected sectors]
+
+
+
+
+
+
+
+

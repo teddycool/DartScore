@@ -3,9 +3,9 @@ __author__ = 'teddycool'
 import time
 
 
-from DartScoreEngineConfig import dartconfig
-from  StateLoops import CamCalibrateLoop, CamMoutningLoop, PlayStateLoop
-from Vision import Vision
+from DartScoreEngine.DartScoreEngineConfig import dartconfig
+from  DartScoreEngine.StateLoops import CamCalibrateLoop, CamMoutningLoop, PlayStateLoop
+from DartScoreEngine.Vision import Vision
 
 
 class MainLoop(object):

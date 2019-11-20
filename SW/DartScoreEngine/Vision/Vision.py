@@ -1,8 +1,13 @@
 __author__ = 'teddycool'
-#Master class for the vision system, using other classes for each type of detection
-#
-#Webinfo used for this part of project:
+# This file is part of the DartScore project created by Pär Sundbäck
+# More at https://github.com/teddycool/DartScore
+
+# Purpose of this file:
+# Master class for the vision system, using other classes for each type of detection#
+# Webinfo used for this part of project:
 # http://blog.miguelgrinberg.com/post/stream-video-from-the-raspberry-pi-camera-to-web-browsers-even-on-ios-and-android
+
+
 import os
 import sys
 import time
@@ -56,33 +61,33 @@ class Vision(object):
         if dartconfig["Vision"]["RecordCv"]:
             self._videowcv = None
 
-
-
-
 if __name__ == '__main__':
     print ("Testcode for Vision")
     import os
     import sys
-    sys.path.append(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore')
-    import Cam
-    cam = Cam.createCam("STREAM")
-    cam.initialize()
+    #ap = cv2.VideoCapture(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore\Testdata\Videos\dartscore_20191107_152701.avi')
+    cap = cv2.VideoCapture(r'/home/pi/DartScore/Testdata/Videos/dartscore_20191107_152701.avi')
     vision = Vision()
     vision.initialize()
-    try:
-        while 1:
-            print ("Updating frame...")
-            frame = cam.update()
-            frame = vision.update(frame)
-            #print ("TypeOfFrame: " + str(type(frame)))
-            print ("Drawing frame...")
-            frame = vision.draw(frame, cam._actualFrameRate)
-            cv2.imshow('Video', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-            #time.sleep(0.2)
-    except:
-        e = sys.exc_info()[0]
-        print (e)
+    
+    if (cap.isOpened()== False): 
+        print("Error opening video stream or file")
+    
+    cv2.namedWindow('Video', cv2.WINDOW_AUTOSIZE)
+    # Read until video is completed
+    while(cap.isOpened()):    # Capture frame-by-frame
+                    
+        ret, frame = cap.read()
+        print(ret)
+        print ("Updating frame...")
+        frame = vision.update(frame)
+        print ("TypeOfFrame: " + str(type(frame)))
+        print ("Drawing frame...")
+        frame = vision.draw(frame, 5)
+        cv2.imshow('Video', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+        time.sleep(0.2)
 
+    cap.release()
     cv2.destroyAllWindows()

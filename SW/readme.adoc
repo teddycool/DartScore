@@ -1,0 +1,22 @@
+= Dartscore software...
+
+Engine, FrontEnd, PiSetup...
+
+**Engine:**
+All the calculation, separated in several modules.
+
+BoardCalibration: Find lines -> calc bullseye -> find elipse -> transform elipses to circles around bullseye -> rescale to fit 'perfect board'
+
+Vision: Manage the actual recognition of darthits etc
+
+Utils: several types of tools for calculations that are reused by the modules
+
+**Frontend:**
+The gui, using pygame to render the gui.
+
+**PiSetup:**
+Manage the IO like buttons, fan, light etc
+
+**if __name__ == "__main__"**
+If it is relevant, each module has an ' if __name__ == "__main__" '-statement at the end.
+This has to purposes: 1: Unit test of this module, and 2: A description of how to use the module

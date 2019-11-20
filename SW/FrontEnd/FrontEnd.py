@@ -1,9 +1,15 @@
-__author__ = 'psk'
-import os, sys, pygame
+__author__ = 'teddycool'
+# This file is part of the DartScore project created by Pär Sundbäck
+# More at https://github.com/teddycool/DartScore
+
+# Purpose of this file:
+#  
+
+import os, sys
+#import pygame as pygame
 from cv2 import cv2
+import pygame
 from pygame.locals import *
-#from VideoCapture import Device
-import pygame.camera
 import numpy
 #from DartScore.FrontEnd.FrontEndConfig import config
 
@@ -18,17 +24,18 @@ class FrontEnd(object):
         pygame.init()
 
         self.size=(self.width, self.heigth)
-        self.screen = pygame.display.set_mode(1024,768,0 )
+        self.screen = pygame.display.set_mode((1024,768),0 )
         self._myfont = pygame.font.SysFont("Arial", 60)
         self._label = self._myfont.render("Hello World !!", 1, (255,0,0))
 
 
         #Set surface to handle a frame from camera
-        self._snapshot = pygame.surface.Surface(config["800"]["600"])
+        self._snapshot = pygame.Surface(self.size)
 
 
     def draw(self, frame):
         frame = numpy.rot90(frame)
+        frame = numpy.flipud(frame)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = pygame.surfarray.make_surface(frame)
         black = 0, 0, 0
@@ -53,8 +60,8 @@ class FrontEnd(object):
 
             #Get inputs from user....
             for event in pygame.event.get():
-                if event.type == pygame.QUIT: sys.exit()
-                if(event.type is MOUSEBUTTONDOWN):
+                if event.type == pygame.event.QUIT: sys.exit()
+                if(event.type is pygame.event.MOUSEBUTTONDOWN):
                     pos = pygame.mouse.get_pos()
 
 
@@ -66,12 +73,21 @@ class FrontEnd(object):
 #       #self.dev.setresolution(width, height) on row 49 in:
 #
 if __name__ == "__main__":
-    #Set to webcam ID, std is 0. Networkedcam is probably 1
-    import Cam 
-    cam = Cam.createCam("STREAM")
+
+    from DartScoreEngine.Utils import testutils
+
+    cap = testutils.GetTestVideoCapture()
+    if (cap.isOpened()== False): 
+        print("Error opening video stream or file")
+    
+    cv2.namedWindow('Video', cv2.WINDOW_AUTOSIZE)
+    # Read until video is completed
     #Set to resolution of your webcam
     width=1024
     height=768
-
     gl=FrontEnd(width, height)
-    gl.run()
+
+    while(cap.isOpened()):    # Capture frame-by-frame
+                    
+        ret, frame = cap.read()
+        gl.draw(frame)

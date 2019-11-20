@@ -1,4 +1,9 @@
 __author__ = 'teddycool'
+# This file is part of the DartScore project created by Pär Sundbäck
+# More at https://github.com/teddycool/DartScore
+
+# Purpose of this file:
+# Record anything from a img stream to a videofile
 
 import time
 
@@ -77,9 +82,7 @@ class Recorder(object):
 
 
 if __name__ == "__main__":
-    import sys
-    sys.path.append(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore')
-    import Cam 
+    import Cam
     recorder = Recorder(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore\Testdata\Videos', (1024,768))
     cam = Cam.createCam("STREAM")
     cam.initialize('http://192.168.1.131:8081')

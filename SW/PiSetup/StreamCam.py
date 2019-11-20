@@ -1,17 +1,18 @@
 __author__ = 'teddycool'
+# This file is part of the DartScore project created by Pär Sundbäck
+# More at https://github.com/teddycool/DartScore
+
+# Purpose of this file:
+# Create a stream of frames from a video feed (networked cam) that can be used by opencv
+# REF: https://benhowell.github.io/guide/2015/03/09/opencv-and-web-cam-streaming
+
 import time
 
-import cv2
+from cv2 import cv2
 from urllib.request import urlopen
 import numpy as np
 
-try:
-    from DartScoreEngine.DartScoreEngineConfig import dartconfig
-except:
-     dartconfig ={                   #Config for test-purpose
-                "cam": {"res":(640, 480), "id":1, "framerate": 20},
-                "Streamer": {"StreamerImage": "/tmp/stream/pic.jpg", "StreamerLib": "/tmp/stream", "VideoFile": "/home/pi/DartScore/video.mpg"},
-                "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True, "RecordRaw": False, "RecordCv": False}}
+from DartScoreEngine.DartScoreEngineConfig import dartconfig
 
 class StreamCam(object):
 
@@ -37,11 +38,11 @@ class StreamCam(object):
             if a != -1 and b != -1:
                 jpg = self._bytes[a:b+2]
                 self._bytes = self._bytes[b+2:]
-                frame = cv2.cv2.imdecode(np.frombuffer(jpg, dtype=np.uint8), cv2.cv2.IMREAD_COLOR)
+                frame = cv2.imdecode(np.frombuffer(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
                 self._actualFrameRate = 1/(time.time()- self._lastFrameTime)
                 self._lastFrameTime = time.time()
                 return frame
-        # Write to 'raw-video* coming directly from cam
+        
         
 
     
@@ -53,11 +54,11 @@ if __name__ == '__main__':
 
     while True:
         img = cam.update()
-        cv2.cv2.imshow('Video', img)
-        if cv2.cv2.waitKey(1) & 0xFF == ord('q'):
+        cv2.imshow('Video', img)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-cv2.cv2.destroyAllWindows()
+    cv2.destroyAllWindows()
 
 
 
