@@ -1,6 +1,8 @@
 __author__ = 'teddycool'
 import math
 
+
+
  #Calculate y=kx+b from two coordinates defining a line
 def lineeq (coord1, coord2):
     k= (coord2[1]-coord1[1])/ (coord2[0]-coord1[0])
@@ -29,7 +31,7 @@ def stretchlines(line):
 
 
 #Returning coordinates for where linse intersect or exception if not crossing each other
-def intersect(self, line1, line2):
+def intersect(line1, line2):
     xdiff = (line1[0][0] - line1[1][0], line2[0][0] - line2[1][0])
     ydiff = (line1[0][1] - line1[1][1], line2[0][1] - line2[1][1])
 
@@ -38,10 +40,11 @@ def intersect(self, line1, line2):
 
     div = det(xdiff, ydiff)
     if div == 0:
+       print("Lines do not intersect")
        raise Exception('lines do not intersect')
 
     d = (det(*line1), det(*line2))
     x = det(d, xdiff) / div
     y = det(d, ydiff) / div
-
-    return x, y
+    print(x,y)
+    return [x, y]

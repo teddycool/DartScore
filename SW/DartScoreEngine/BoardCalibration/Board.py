@@ -10,7 +10,7 @@ import sys
 if platform.node() == 'DELL-laptop1':
     sys.path.append(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore\SW')
 
-from DartScoreEngine.Board import BoardArray
+from DartScoreEngine.BoardCalibration import BoardArray
 from DartScoreEngine import DartScoreEngineConfig
 
 

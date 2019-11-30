@@ -16,15 +16,12 @@ class PlayStateLoop(StateLoop.StateLoop):
 
     def initialize(self ):
         print ("PlayState init...")
-  #      self._gpio=gpio
         self._dartDetectorFrames = 0
         self._init = False
         self._empty = True
         self._warmup = 0
-   #     self._hitLed = LedIndicator.LedIndicator(self._gpio, dartconfig["IO"]["HitLed"])
 
     def update(self, frame):
-  #      self._hitLed.update()
         #TODO: move to calibrate state
         if self._warmup < dartconfig["play"]["warmupframes"]:
             self._warmup = self._warmup + 1

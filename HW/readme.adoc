@@ -1,5 +1,31 @@
 = Dartscore hardware
 
-to be defined...
-
 cams, brackets, lightning, moutning details etc etc...
+
+The Cams:
+---------
+I use a raspberry pi 3 with a raspicam and the motioneye os in fast networked cam setup for
+both cams.
+
+image:Netcam_front.jpg[One of the netcams]
+
+
+The PCB:
+--------
+In the 'eagle' directory is  a circuit board designed to use with a raspberry pi 4 as the
+main cumputing device i the dartscore project.
+
+The pcb is designed with connectors for switches and leds and also for the control of 2 fans,
+one for the CPU and one for the 'box'.
+
+In my project I use 'arcade-switches' and they neeed 5V as supply for the built in leds.
+Therefore all outputs are 'switched' with mosfets.
+
+The same goes for the fans which are 12V supply (standard PC fans)
+
+image:DartScorePcb_v1.jpg[The pcb]
+
+Physical installation:
+----------------------
+
+image:20191130_184738.jpg[The PCB in action..]

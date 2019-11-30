@@ -19,6 +19,7 @@ Raspberry Pi 4 2GB, Rasbian Buster full (includes Python3 and Python-game)
 
 Install open cv and dependencies:
 ---------------------------------
+This where the packages I had to install to get opencv to work:
 
 - pip3 install opencv-python
 - sudo apt-get install libatlas-base-dev

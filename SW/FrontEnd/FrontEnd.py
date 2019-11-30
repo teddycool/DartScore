@@ -5,7 +5,10 @@ __author__ = 'teddycool'
 # Purpose of this file:
 #  
 
-import os, sys
+
+import sys
+sys.path.append("/home/pi/DartScore/SW")
+
 #import pygame as pygame
 from cv2 import cv2
 import pygame
@@ -26,7 +29,7 @@ class FrontEnd(object):
         self.size=(self.width, self.heigth)
         self.screen = pygame.display.set_mode((1024,768),0 )
         self._myfont = pygame.font.SysFont("Arial", 60)
-        self._label = self._myfont.render("Hello World !!", 1, (255,0,0))
+        #self._label = self._myfont.render("Hello World !!", 1, (255,0,0))
 
 
         #Set surface to handle a frame from camera
@@ -43,7 +46,7 @@ class FrontEnd(object):
         #pygame.surfarray.blit_array(self._snapshot, frame)
         #self.screen.blit(frame, (0, 0))
         self.screen.blit(frame, (0, 0))
-        self.screen.blit(self._label, (100, 200))
+        #self.screen.blit(self._label, (100, 200))
         pygame.display.flip()
 
 
@@ -73,21 +76,15 @@ class FrontEnd(object):
 #       #self.dev.setresolution(width, height) on row 49 in:
 #
 if __name__ == "__main__":
-
+    import Cam
     from DartScoreEngine.Utils import testutils
-
-    cap = testutils.GetTestVideoCapture()
-    if (cap.isOpened()== False): 
-        print("Error opening video stream or file")
-    
-    cv2.namedWindow('Video', cv2.WINDOW_AUTOSIZE)
-    # Read until video is completed
-    #Set to resolution of your webcam
+    cap = Cam.createCam("STREAM")
+    cap.initialize('http://192.168.1.131:8081')
     width=1024
     height=768
     gl=FrontEnd(width, height)
 
-    while(cap.isOpened()):    # Capture frame-by-frame
+    while(True):    # Capture frame-by-frame
                     
-        ret, frame = cap.read()
+        frame = cap.update()
         gl.draw(frame)

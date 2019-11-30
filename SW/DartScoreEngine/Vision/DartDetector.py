@@ -67,11 +67,10 @@ class DartDetector(object):
         # dilate the thresholded image to fill in holes, then find contours
         # on thresholded image
         thresh = cv2.dilate(thresh, None, iterations=2)
-        (cnts,hiarc) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        img, cnts, hierarch = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
          # loop over the contours
         for c in cnts:
             # if the contour is too small, ignore it
-            print ("Area = " + str( cv2.contourArea(c)))
             if cv2.contourArea(c) > dartconfig["DartHit"]["DartHitMinArea"]:
                 rect = cv2.boundingRect(c)
                 boundingRects.append(rect)
@@ -83,19 +82,28 @@ class DartDetector(object):
 
 if __name__ == '__main__':
     print ("Testcode for DartFinder")
-    frame1 = cv2.imread(" ")
-    frame2 = cv2.imread("camseq64.jpg")
-    frame3 = cv2.imread("camseq67.jpg")
+    import Cam
+    import time
 
-    dd = DartDetector(frame1)
-    print (dd.detectDart(frame2, frame1) ) #True
-    frame = dd.draw(frame2)  #False
-    print (dd.boardEmpty(frame3))#True
-    print (dd.boardChanged(frame1, frame3))
-    cv2.imshow("Darts found...", frame)
-    x,y,w,h = dd._boundingRects[0]
-    x1 = x+w
-    y1 = y+h
-    cropped = frame[y:y1, x:x1]
-    cv2.imshow("DartPart",cropped )
-    cv2.waitKey(0)
+    cam = Cam.createCam("STREAM")
+
+    cam.initialize('http://192.168.1.131:8081')
+
+    frame1 = cam.update()
+    dd = DartDetector(frame1)   # Empty board expected!
+    previousframe  = cam.update()
+    currentframe = cam.update()
+
+    while True:
+        if not dd.boardEmpty(currentframe):
+            if dd.boardChanged(currentframe, previousframe):
+                if dd.detectDart(currentframe, previousframe):
+                    currentframe = dd.draw(currentframe)
+                    time.sleep(1)
+
+        cv2.imshow("Dart found...", currentframe)
+
+        previousframe = currentframe
+        currentframe = cam.update()
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break

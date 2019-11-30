@@ -21,14 +21,10 @@ class StreamCam(object):
 
     def initialize(self, camurl):
         print ("Stream CAM init...")
-        resolution = dartconfig["cam"]["res"]
-        #self._cam.framerate = dartconfig["cam"]["framerate"]
         self._actualFrameRate = 0
         self._lastFrameTime = time.time()
         self._stream = urlopen(camurl)
         self._bytes = bytearray()
-        
-        #self._imagegenerator = self._cam.capture_continuous(self._rawCapture, format="bgr", use_video_port=True)
 
     def update(self):
         while True:
