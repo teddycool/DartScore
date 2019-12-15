@@ -49,7 +49,7 @@ These where the packages I had to install to get opencv to work:
 - sudo apt-get install python3-pyqt5
 - sudo apt install libqt4-test
 
-image:Docs/20191215_144757.jpg[Dart board and scores for the last set]
+image:Docs/20191215_201225.jpg[Dart board and scores for the last set]
 
 == How to use it:
 
