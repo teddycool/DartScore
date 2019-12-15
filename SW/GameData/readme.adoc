@@ -1,0 +1,13 @@
+= GameData
+
+This directory contains persisted game data of two categories. All data is saved as python datastructures using the
+pickle module.
+
+1: Install settings
+-------------------
+Saved calibration settings to be reused between games. Without this data the calibration makes a 'cold-start'
+wich means that the user has to confirm the settings or change lightning conditions etc
+
+2: Saved Game data
+------------------
+Saved game data will contain previous players, high-score, saved games etc....

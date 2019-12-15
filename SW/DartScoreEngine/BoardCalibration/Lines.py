@@ -6,11 +6,14 @@ __author__ = 'teddycool'
 # Find lines in a picture of a dart-board and calculate the coordinates for the bullseye (the sector separators)
 # Input: image of dartboard, output: array of lines and the coordinates for bullseye
 
+import sys
+sys.path.append("/home/pi/DartScore/SW")
 
 
 from cv2 import cv2
 import numpy as np
 from DartScoreEngine.Utils import lineutils
+from DartScoreEngine import DartScoreEngineConfig
 
 
 class Lines(object):
@@ -27,7 +30,6 @@ class Lines(object):
         dst = cv2.Canny(src, 75, 150, None, 3)
         linesP = cv2.HoughLinesP(dst, 1, np.pi / 180, 200, maxLineGap=250)
         #TODO: Filter out lines not passing the middle of the board
-
         return linesP
 
 
@@ -36,6 +38,16 @@ class Lines(object):
         print (noLines)
         xpoint = []
         ypoint = []
+
+        camres = DartScoreEngineConfig.dartconfig[ "cam"]["res"]
+        boundx =  DartScoreEngineConfig.dartconfig["mounting"]["aimrectx"]
+        boundy = DartScoreEngineConfig.dartconfig["mounting"]["aimrecty"]
+        centerx = int(camres[0]/2)
+        centery = int(camres[1]/2)
+        xboundhigh = centerx + boundx
+        xboundlow = centerx - boundx
+        yboundhigh = centery + boundy
+        yboundlow = centery - boundy
 
         for i in range(0, noLines):
             for j in range(0, noLines):
@@ -51,8 +63,8 @@ class Lines(object):
                     print("----------")
                     try:
                         cross = lineutils.intersect(l1, l2)
-                        if cross[0] > 300 and cross[0] < 800:
-                            if cross[1] > 300 and cross[1] < 500:
+                        if cross[0] > xboundlow and cross[0] < xboundhigh:
+                            if cross[1] > yboundlow and cross[1] < yboundhigh:
                                 self._crosspoint.append(cross)
                                 xpoint.append(cross[0])
                                 ypoint.append(cross[1])
@@ -64,6 +76,7 @@ class Lines(object):
             print(self._crosspoint)
             self._bullseye = (int(np.median(xpoint)), int(np.median(ypoint)))
             print("Bullseye: ", self._bullseye)
+            return self._bullseye
         except:
             print("Camera has to face a dartboard!")
 
@@ -71,6 +84,18 @@ class Lines(object):
 
 
 if __name__ == "__main__":
+
+    import sys
+    import time
+    import pygame
+    sys.path.append("/home/pi/DartScore/SW")
+    import Cam
+    from FrontEnd import GameFrontEnd
+
+    width = 1680
+    height = 1050
+    gl = GameFrontEnd.GameFrontEnd(width, height)
+
     import Cam
 
     cam = Cam.createCam("STREAM")
@@ -103,9 +128,12 @@ if __name__ == "__main__":
         cv2.circle(dst, cross, 3, (0, 250, 0), 2)
 
     cv2.circle(dst, lines._bullseye, 3, (0, 0, 255), 2)
+    stopped = False
+    while not stopped:
+        gl.draw(dst)
+        time.sleep(0.1)
+        event = pygame.event.wait()
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+           stopped = True
 
-
-    cv2.imshow("Source", frame)
-    cv2.imshow('Lines',dst)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    pygame.quit()

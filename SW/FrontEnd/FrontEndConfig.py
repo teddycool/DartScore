@@ -1,7 +1,8 @@
 __author__ = 'teddycool'
 #Config vaues forFrontEnd. This is the only place for these.
+# Not used in MVP1
 
 
-config = {"screen": {"res": (800, 600), "display": (1024,768) },
+config = {"screen": {"res": (1680, 1050), "Fullscreen": True },
 
               }

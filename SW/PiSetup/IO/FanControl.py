@@ -3,7 +3,7 @@ __author__ = 'teddycool'
 # More at https://github.com/teddycool/DartScore
 
 # Purpose of this file:
-# Managing the fans to cool down cpu and 'machineroom'
+# Managing the fans to cool down cpu and 'machine-room'
 
 import time
 class FanControl(object):

@@ -57,8 +57,7 @@ class Recorder(object):
 
     def draw(self, frame, fr):
         #Write recorder string to frame
-        #cv2.putText(frame, time.strftime("%Y-%m-%d %H:%M:%S"), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-         #           (255, 255, 255), 2)
+        #cv2.putText(frame, time.strftime("%Y-%m-%d %H:%M:%S"), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(255, 255, 255), 2)
 
         if self._state == "START":
             print ("Start recording")
@@ -68,12 +67,12 @@ class Recorder(object):
                                            self._res, True)
             self._videow.write(frame)
             print ("Starting videofile: " + filename)
-            cv2.putText(frame, "rec", (900, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            cv2.putText(frame, "rec", (10, 450), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
         elif self._state == "REC":
             self._videow.write(frame)
             self._framecount = self._framecount+1
-            cv2.putText(frame, "rec " + str(self._framecount) , (900, 30), cv2.FONT_HERSHEY_SIMPLEX, 1 , (0, 0, 255), 2)
+            cv2.putText(frame, "rec " + str(self._framecount) , (10, 450), cv2.FONT_HERSHEY_SIMPLEX, 1 , (0, 0, 255), 2)
 
         elif self._state == "STOP":
             self._framecount = 0
@@ -82,10 +81,15 @@ class Recorder(object):
 
 
 if __name__ == "__main__":
+    import numpy as np
     import Cam
-    recorder = Recorder(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore\Testdata\Videos', (1024,768))
+    recorder = Recorder(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore\Testdata\Videos', (500,500))
     cam = Cam.createCam("STREAM")
     cam.initialize('http://192.168.1.131:8081')
+    transform = np.float32(
+        [[1.78852294e+00, -1.10143263e-01, -4.85063747e+02], [2.17855239e-01, 1.03682933e+00, -3.82665632e+01],
+         [1.28478485e-03, -1.58506840e-04, 1.00000000e+00]])
+    cam.settransformmatrix(transform)
     
     while True:
         img = cam.update()

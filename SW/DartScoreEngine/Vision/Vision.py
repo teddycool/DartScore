@@ -13,13 +13,7 @@ import sys
 import time
 from cv2 import cv2
 
-try:
-    from DartScoreEngine.DartScoreEngineConfig import dartconfig
-except: #Used when unittesting...
-     dartconfig ={                   #Config for test-purpose
-                "cam": {"res":(640, 480), "id":1, "framerate": 20},
-                "Streamer": {"StreamerImage": "/tmp/stream/pic.jpg", "StreamerLib": "/tmp/stream", "VideoFile": "/home/pi/DartScore/video.mpg"},
-         "Vision": {"WriteFramesToSeparateFiles": False, "PrintFrameRate": True, "RecordRaw": False, "RecordCv": False, "CamType": "PC"}}
+from DartScoreEngine.DartScoreEngineConfig import dartconfig
 
 class Vision(object):
     def __init__(self ):
@@ -60,6 +54,8 @@ class Vision(object):
             self._videowraw = None
         if dartconfig["Vision"]["RecordCv"]:
             self._videowcv = None
+
+
 
 if __name__ == '__main__':
     print ("Testcode for Vision")
