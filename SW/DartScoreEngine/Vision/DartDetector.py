@@ -82,6 +82,7 @@ class DartDetector(object):
         ret, thresh = cv2.threshold(frameDelta, 30, 200, cv2.THRESH_BINARY)
         thresh = cv2.dilate(thresh, None, iterations=2)
         cv2.imwrite("ddframe" + str(self._seqno) + ".jpg", thresh)
+        self._seqno = self._seqno+1
         img, cnts, hierarch = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for c in cnts:
             # if the contour is too small, ignore it

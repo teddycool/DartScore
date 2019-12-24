@@ -5,6 +5,10 @@ board, cams, brackets, lightning, moutning details etc etc...
 The board:
 ----------
 I use a lightbox for the board to get even lighting conditions.
+The 'frame' of the lightox is made of solid oak wood panels (from www.ess-enn.se) cut to the right size and a milled 'track'
+for the led-tape (standard 12V with 5mm squared leds and c/c  15mm).
+The led-strip is located at a distance of 70mm off, from the board-surface
+and the inside of the box is 500x500 mm.
 
 image:../Docs/dartboardlightbox.jpg[the lightingbox]
 
@@ -21,7 +25,8 @@ One of the cameras
 
 image:../Docs/bracket-bottom.jpg[Camera bracket]
 
-The 3d printed camera bracket
+The 3d printed camera bracket. Cambracket 1/2.stl are the 3D printer models for this bracket.
+I use standrad M3 machine-screws to put it together.
 
 The PCB:
 --------

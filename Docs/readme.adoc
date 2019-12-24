@@ -28,7 +28,7 @@ Some testscripts, helpfiles and pictures...
 
 == Modules/directories:
 There are alot of modules and classes to separate things and get a design that is easy to modify.
-The aim is that each class has a "if __name__ == "__main__":" statement and should be possible to
+The aim is that each class has a  `if __name__ == "__main__":` statement and should be possible to
 'unit-test'
 
 
@@ -60,6 +60,6 @@ Only a directory for storing recordings etc for test or documentation
 All things for the vision system detections etc
 
 == The states:
-A summery of the states in dartscore. The Load and shutdown states as the IO handling is not yet implemented.
+A summary of the states in dartscore. The Load and shutdown states as the IO handling is not yet implemented.
 
 image:DartScoreStates.png[The play states]

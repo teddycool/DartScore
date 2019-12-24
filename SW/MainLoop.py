@@ -62,6 +62,7 @@ class MainLoop(object):
         frame = self._cam.update()
         self._currentStateLoop.update(frame, self)
         #print ("Main update time: " + str(time.time()-start))
+        #TODO: implement threading!
         #TODO: if green button pressed -> next state
         #TODO: if red button longpressed -> shut down...
         return frame

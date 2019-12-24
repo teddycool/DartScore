@@ -6,6 +6,10 @@ This branch is forked from DartScoreEngine branch and it is ported to Python3.
 It is also simplified a lot when it comes to modules and setups. This is the current 'master'- branch
 and the only DartScore branch currently maintained and I will probably remove the others in the future.
 
+The purpose of this project is to make something that also can be used by others without
+too much effort. I put up the information I think is needed for this, but if you miss something, give me a hint and I
+will update with that as well.
+
 Currently the project is in 'MVP' (minimum viable product) status wich means that it has a minimum of
 functionallity but can be used for real. The supported functionallity is:
 
@@ -19,7 +23,7 @@ But it works (sort of...) !
 
 == Improvements that will come in future updates (and the current priority):
 This is the current plan for this project. The aim is to be able to distribute a project that can be used by others
-as soon as possible and then continue with the development of features.
+as soon as possible (the MVP) and then continue with the development of features from there.
 
 * Performace optimisation (main issue right now)
 * A better algorithm for counting the scores (main issue right now)
