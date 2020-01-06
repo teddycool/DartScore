@@ -21,6 +21,8 @@ right now.
 
 But it works (sort of...) !
 
+image:Docs/20200105_185252.jpg[DartScore installation]
+
 == Improvements that will come in future updates (and the current priority):
 This is the current plan for this project. The aim is to be able to distribute a project that can be used by others
 as soon as possible (the MVP) and then continue with the development of features from there.
@@ -41,7 +43,7 @@ as soon as possible (the MVP) and then continue with the development of features
 ------------------
 * Python 3.x, PyGame and OpenCv 3.4.x
 * Headunit: Raspberry Pi 4 2GB, Rasbian Buster full (includes Python3 and Python-game)
-* Network cam, i.e. Raspberry Pi 2 or 3 with a raspicam and motioneyeos configured as a  fast networked cam
+* Network cam, i.e. Raspberry Pi 2 or 3 with a raspicam and motioneyeos configured as a fast networked cam
 
 == Install open cv and dependencies:
 These where the packages I had to install to get opencv to work:
@@ -53,19 +55,21 @@ These where the packages I had to install to get opencv to work:
 - sudo apt-get install python3-pyqt5
 - sudo apt install libqt4-test
 
-image:Docs/20191215_201225.jpg[Dart board and scores for the last set]
+image:Docs/20191217_154805.jpg[DartScore screen]
 
 == How to use it:
 
 * First you need to install all the prerequisites and have a dartboard available :-)
 The dartboard need a good and even lighting, preferable a 'light-box'.
-* Next step is to install the camera. The camera url needs to be set up in dartconfig.py.
-* When the software and the cam is installed and the project is 'cloned' you need to
+* Next step is to setup the networkdéd camera and install the software. I use a raspberry pi with
+a raspi-cam and motioneyeos.
+* When the cam is installed and the project is 'cloned' you need to
 change the pathes and settings in DartScoreEngineConfig.py to fit your installation,
-including the cam-url.
+including the cam-url for the image stream.
 * Now its time to mount the camera to have a good view of the dartboard. To help with this, navigate to the
 StateLoops directory and run
-`sudo python3 CamMountingLoop.py` When done press any key to quit. _*TIP*_: I use the zoom-function in the fast netcam setup
+`sudo python3 CamMountingLoop.py` When done press any key to quit. _*TIP*_: I use the zoom-function in the
+fast netcam setup
 to be able to have the cam on a distance but still fill the frame with the board as much as possible.
 * When the cam is mounted and has a correct view of the dartboard its time to calibrate for the first time. Do
 this with `sudo python3 CamCalibrateLoop.py` When done press any key to quit.
@@ -76,3 +80,4 @@ game starts for real.
 
 (The procedure will be simplified in the future but since I do not have any IO at this point the mount and cal
 states needs to be run manually for the first time)
+

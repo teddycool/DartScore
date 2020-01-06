@@ -115,11 +115,13 @@ if __name__ == "__main__":
 
     width = 1024
     height = 768
-    gl = GameFrontEnd.GameFrontEnd(width, height)
+    gl = GameFrontEnd.GameFrontEnd()
 
-    cam = Cam.createCam("STREAM")
+    cam = Cam.createCam("VIDEO")
 
-    cam.initialize('http://192.168.1.131:8081')
+    cam.initialize(r'C:\Users\par\OneDrive\Documents\GitHub\DartScore\Testdata\Videos\dartscore_20191222_130118.avi')
+
+    #cam.initialize('http://192.168.1.131:8081')
 
     ba = BoardArray.BoardArray()
 

@@ -17,9 +17,11 @@ from DartScoreEngine.DartScoreEngineConfig import dartconfig
 from  DartScoreEngine.StateLoops import PlayStateLoop
 from DartScoreEngine.StateLoops import CamCalibrateLoop
 from DartScoreEngine.StateLoops import CamMoutningLoop
+from PiSetup.IO import ArcadeButton
 from DartScoreEngine.Vision import Vision
 import Cam
 from FrontEnd import GameFrontEnd
+import RPi.GPIO as GPIO
 
 
 
@@ -33,6 +35,13 @@ class MainLoop(object):
         self._playState = PlayStateLoop.PlayStateLoop()
         self._state = {"PlayState": self._playState, "CalState": self._calibrateState, "MountingState": self._mountingState}
 
+        GPIO.setmode(GPIO.BCM)
+        self._buttons = {}
+        self._buttons["GREEN"] = ArcadeButton.ArchadeButton(GPIO, 8, 7, 0.5, 2)
+        self._buttons["YELLOW"] = ArcadeButton.ArchadeButton(GPIO, 14, 15, 0.5, 2)
+        self._buttons["RED"] = ArcadeButton.ArchadeButton(GPIO, 23, 24, 0.5, 2)
+        self._buttons["BLUE"] = ArcadeButton.ArchadeButton(GPIO, 20, 21, 0.5, 2)
+
         if os.path.isfile(dartconfig["calibration"]["savepath"]):  #Calfile exists, presuming board and cam allready in place
             self._currentStateLoop = self._state["CalState"]
         else:
@@ -43,12 +52,15 @@ class MainLoop(object):
 
     def initialize(self):
         print ("Main init...")
-        print (r"DartScore:  Copyright (C) 2019  Pär Sundbäck, mailto:par@sundback.com   http://www.github.com/teddycool")
+        print (r"DartScore:  Copyright (C) 2019 - 2020  Pär Sundbäck, mailto:par@sundback.com   http://www.github.com/teddycool")
         print ("This program comes with ABSOLUTELY NO WARRANTY")
         print ("This is free software, and you are welcome to redistribute it under certain conditions")
-        print ("DartScore is licensed under GPL3. Full description in license.md in the root directory")
+        print ("DartScore is licensed under GPL3. A full description is available in license.md in the root directory")
 
-        time.sleep(2)
+        for button in self._buttons:
+            self._buttons[button].initialize()
+            self._buttons[button].activate(True)
+            time.sleep(1)
 
         self.time=time.time()
         self._lastframetime = time.time()
@@ -65,6 +77,8 @@ class MainLoop(object):
         #TODO: implement threading!
         #TODO: if green button pressed -> next state
         #TODO: if red button longpressed -> shut down...
+        #TODO: Break out gui handling from state-loops to be able to parallize
+
         return frame
 
     def draw(self, frame):

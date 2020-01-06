@@ -51,19 +51,29 @@ class ArchadeButton(object):
 
     def __del__(self):
         self.activate(False)
-        print ("LedIndicator object deactivated and deleted for IO: " + str(self._outputpin))
+        print ("LedIndicator object deactivated and deleted for IO: " + str(self._outputpin), + " and " + str(self._inputpin))
 
 if __name__ == '__main__':
     print("TestcodeArchadeButton")
     import RPi.GPIO as GPIO
     GPIO.setmode(GPIO.BCM)
+    archades ={}
+    archades["GREEN"] = ArchadeButton(GPIO,8,7,0.5, 2)
+    archades["YELLOW"] = ArchadeButton(GPIO, 14, 15, 0.5, 2)
+    archades["RED"] = ArchadeButton(GPIO, 23, 24, 0.5, 2)
+    archades["BLUE"] = ArchadeButton(GPIO, 20, 21, 0.5, 2)
 
-    archade = ArchadeButton(GPIO,8,7,0.5, 2)
-    archade.initialize()
-    archade.activate(True)
+    for button in archades:
+        archades[button].initialize()
+        archades[button].activate(True)
+        time.sleep(1)
 
-    while True:
-        s = str(archade.update()) + " "
-        print (str(time.time()) + " :   " + s)
-
-        time.sleep(0.2)
+    try:
+        while True:
+            for button in archades:
+                state = archades[button].update()
+                if  state != "Released":
+                    print(button + ": " + state)
+            time.sleep(0.1)
+    except(KeyboardInterrupt):
+        del (GPIO)

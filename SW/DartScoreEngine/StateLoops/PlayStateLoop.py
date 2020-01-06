@@ -42,7 +42,7 @@ class PlayStateLoop(StateLoop.StateLoop):
             self._warmup = self._warmup + 1
             return frame
 
-        # TODO: complete refactory of this state-machine. Its very messy...
+        # TODO: acomplete refactory of this state-machine. Its very messy...
         if not self._inited:
             self._dartDetector = DartDetector.DartDetector(frame)
             self._previousFrame = frame.copy()
@@ -58,6 +58,7 @@ class PlayStateLoop(StateLoop.StateLoop):
                 self._statestruct["player1"]["d1"] = 0
                 self._statestruct["player1"]["d2"] = 0
                 self._statestruct["player1"]["d3"] = 0
+                self._statestruct["player1"]["set"] = 0
                 self._empty = True
                 self._dartDetectorFrames = 0
                 self._dartDetector._lastscore = None
@@ -81,6 +82,7 @@ class PlayStateLoop(StateLoop.StateLoop):
                                 self._totalscore = self._totalscore + score
                                 self._statestruct["player1"][d] = str(score)
                                 self._statestruct["player1"]["total"] = self._totalscore
+                                self._statestruct["player1"]["set"] = self._setscore
                                 self._previousboardstate = frame.copy() #board stabilized, make new boardstate
                                 self._dartevallocked = True   #Lock evaluation until board change again
             self._previousFrame = frame.copy()

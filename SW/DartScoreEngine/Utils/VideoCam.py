@@ -19,21 +19,24 @@ class VideoCam(object):
     def __int__(self):
         self._camId = 0
 
-    def initialize(self, fileurl):
+    def initialize(self, fileurl, framerate=10):
         print("Video CAM init...")
         self._actualFrameRate = 0
         self._lastFrameTime = time.time()
         self._stream = cv2.VideoCapture(fileurl)
         self._transform = []
+        self._fr = framerate
 
     def update(self):
         while True:
             # TODO: fix configurable cam res
-            frame = self._stream.read()
+            ret, frame = self._stream.read()
+            time.sleep(1 / self._fr)
             if len(self._transform) == 0:
                 return frame
             else:
                 return cv2.warpPerspective(frame, self._transform, (500, 500))
+
 
     def settransformmatrix(self, matrix):
         self._transform = matrix

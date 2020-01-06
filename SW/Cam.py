@@ -12,6 +12,10 @@ def createCam(camtype):
         from PiSetup.StreamCam import StreamCam
         cam = StreamCam()
         return cam
+    if camtype == "VIDEO":
+        from DartScoreEngine.Utils.VideoCam import VideoCam
+        cam = VideoCam()
+        return cam
     raise ("CamSelectionError")
 
 

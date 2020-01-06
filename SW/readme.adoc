@@ -1,22 +1,81 @@
 = Dartscore software...
 
-Engine, FrontEnd, PiSetup...
+This readme file describes the DartScore software like DartScoreEngine, FrontEnd, PiSetup...
 
-**Engine:**
+
+== Design:
+DartScore is coded like a game-loop.
+All items in the project (allmost) has at least 3 public methods: initialize, update, draw.
+These are called for all objects in the project in a certain sequence.
+
+== The states:
+A summary of the states in dartscore. The Load and shutdown states as the IO handling is not yet implemented.
+
+image:../Docs/DartScoreStates.png[The play states]
+
+== Root-directory:
+*Cam*
+A module creating the image-stream. Right now two different types are supported;
+
+STREAM from the real cam via the cam-url and VIDEO from a videofile sent as an argument at initialization.
+
+The VIDEO cam is used for testing purposes.
+
+
+*Main*:
+The start for the project. Only used to start and run the loop and to catch general exceptions.
+
+*MainLoop*:
+The mainloop for the project. Implements methods for initialize, update and draw and decides
+the order of the other items.
+
+**DartScoreEngine:**
 All the calculation, separated in several modules.
-
-BoardCalibration: Find lines -> calc bullseye -> find elipse -> transform elipses to circles around bullseye -> rescale to fit 'perfect board'
-
-Vision: Manage the actual recognition of darthits etc
-
-Utils: several types of tools for calculations that are reused by the modules
+VContains DartScoreConfig which is a dictionary with all kinds of settings to separate commonly used parameters from the code.
+Not yet used fully but each module will have its own sub config-dictionary.
 
 **Frontend:**
-The gui, using pygame to render the gui.
+The gui, using pygame to render the gui. Each game-state has its own frontend implementation.
+
+**GameData:**
+Store calibration- and game-data etc. Only used for calibration right now.
 
 **PiSetup:**
 Manage the IO like buttons, fan, light etc
 
+== Modules/sub-directories:
+There are alot of modules and classes to separate things and get a design that is easy to modify.
+
 **if __name__ == "__main__"**
 If it is relevant, each module has an ' if __name__ == "__main__" '-statement at the end.
-This has to purposes: 1: Unit test of this module, and 2: A description of how to use the module
+This has two purposes: 1: Unit test of this module, and 2: A description of how to use the module
+
+
+*BoardCalibration*:
+Calibration and setup of board
+
+*Inputs*:
+Handles buttons and switches
+
+*Logger*:
+To log... Not used yet
+
+*Recorder*:
+Record the videostream.
+
+*StateLoops*:
+Handles different states in the game. Each game-state has its own loop implementation and a corresponding
+frontend (gui).
+
+*Utils*:
+Some help methods used in several places
+
+*Vision*:
+All things for the vision system, dart-detections etc
+
+*IO*:
+Classes for Pi io such as archade-buttons, temp-monitors, fan-control etc
+
+*Testdata*:
+Directory for images, files etc used for test...
+

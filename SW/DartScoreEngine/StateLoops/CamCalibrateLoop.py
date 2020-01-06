@@ -28,12 +28,11 @@ class CamCalibrateLoop(StateLoop.StateLoop):
         self._bullseye = None
         self._calcorners = None
         self._tmatrix = []
+        #self._gui =
         return
 
     def initialize(self):
-        #Calculate sectorlines passing bulls-eye
         self._gui = FrontEndBase.createfrontend("Calibrate")
-        return
 
     def update(self, frame, context):
         #TODO: add logic for switching state by pressing a button (first time) after startup and automatically if calibrated between each set.

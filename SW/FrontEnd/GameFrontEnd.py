@@ -36,6 +36,10 @@ class GameFrontEnd(FrontEndBase.FrontEndBase):
         self._scorep2_1 = self._mybigfont.render("Dart 1: ", 3, (0, 255, 0))
         self._scorep2_2 = self._mybigfont.render("Dart 2:", 3, (0, 255, 0))
         self._scorep2_3 = self._mybigfont.render("Dart 3:", 3, (0, 255, 0))
+
+        self._scorep1_s = self._mybigfont.render("Set: ", 3, (0, 255, 0))
+        self._scorep2_s = self._mybigfont.render("Set: ", 3, (0, 255, 0))
+
         self._scorep1_t = self._mybigfont.render("Total: ", 3, (0, 255, 0))
         self._scorep2_t = self._mybigfont.render("Total: ", 3, (0, 255, 0))
 
@@ -62,11 +66,14 @@ class GameFrontEnd(FrontEndBase.FrontEndBase):
         self.screen.blit(self._scorep1_1, (100, 250))
         self.screen.blit(self._scorep1_2, (100, 350))
         self.screen.blit(self._scorep1_3, (100, 450))
+        self.screen.blit(self._scorep1_s, (100, 550))
+        self.screen.blit(self._scorep1_t, (100, 650))
+
         # self.screen.blit(self._scorep2_1, (1200, 250))
         # self.screen.blit(self._scorep2_2, (1200, 350))
         # self.screen.blit(self._scorep2_3, (1200, 450))
-        self.screen.blit(self._scorep1_t, (100, 550))
-        # self.screen.blit(self._scorep2_t, (1200, 550))
+        #self.screen.blit(self._scorep2_s, (1200, 550))
+        #self.screen.blit(self._scorep2_t, (1200, 650))
         pygame.display.flip()
 
 
@@ -76,6 +83,7 @@ class GameFrontEnd(FrontEndBase.FrontEndBase):
         self._scorep1_1 = self._mybigfont.render("Dart 1: " + str(self._p1s["d1"]), 3, (0, 255, 0))
         self._scorep1_2 = self._mybigfont.render("Dart 2: " + str(self._p1s["d2"]), 3, (0, 255, 0))
         self._scorep1_3 = self._mybigfont.render("Dart 3: " + str(self._p1s["d3"]), 3, (0, 255, 0))
+        self._scorep1_s = self._mybigfont.render("Set: " + str(self._p1s["set"]), 3, (0, 255, 0))
         self._scorep1_t = self._mybigfont.render("Total: " + str(self._p1s["total"]), 3, (0, 255, 0))
 
     def __del__(self):
