@@ -2,7 +2,7 @@ __author__ = 'teddycool'
 
 import math
 
-from cv2 import cv2
+import cv2
 import numpy as np
 
 from DartScoreEngine import  DartScoreEngineConfig
