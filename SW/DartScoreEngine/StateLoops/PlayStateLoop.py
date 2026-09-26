@@ -4,15 +4,16 @@ __author__ = 'teddycool'
 #                           player1 -> player2 -> player1 -> player2....
 #                   -> end
 
-import sys
-
-sys.path.append("/home/pi/DartScore/SW")
-from cv2 import cv2
+import logging
+import cv2
 
 from DartScoreEngine.DartScoreEngineConfig import dartconfig
 from DartScoreEngine.StateLoops import StateLoop
 from DartScoreEngine.Vision import DartDetector
+from DartScoreEngine.Game import GameService
 from FrontEnd import FrontEndBase
+
+logger = logging.getLogger(__name__)
 
 class PlayStateLoop(StateLoop.StateLoop):
     def __init__(self):
@@ -26,11 +27,9 @@ class PlayStateLoop(StateLoop.StateLoop):
         self._inited = False
         self._empty = True
         self._warmup = 0
-        self._hits = []
-        self._detecteddarts = 0
-        self._setscore = 0
-        self._totalscore = 0
-        self._statestruct =  {"player1": {"d1": "-", "d2": "-", "d3": "-", "set": "-" , "total": "-", "diff": "-", "done": False}}
+        self._game = GameService()
+        self._game.start_game()
+        self._candidate_seq = 0
         self._dartevallocked = False
         #TODO: load saved game
         #TODO: internal states MVP, one player:  startset -> d1 -> d2 -> d3 -> endset
@@ -51,16 +50,10 @@ class PlayStateLoop(StateLoop.StateLoop):
            # print ("First frame (empty board) initialized in PlayState Loop..")
         else:
             if self._dartDetector.boardEmpty(frame):
-                self._hits = []
-                self._detecteddarts = 0
-                self._setscore = 0
-                # Reset statestruct
-                self._statestruct["player1"]["d1"] = 0
-                self._statestruct["player1"]["d2"] = 0
-                self._statestruct["player1"]["d3"] = 0
-                self._statestruct["player1"]["set"] = 0
+                self._game.clear_board()
                 self._empty = True
                 self._dartDetectorFrames = 0
+                self._dartevallocked = False
                 self._dartDetector._lastscore = None
             else:
                 #print("Detected not empty")
@@ -75,20 +68,27 @@ class PlayStateLoop(StateLoop.StateLoop):
                         if not self._dartevallocked:
                             if self._dartDetector.detectDart(frame, self._previousboardstate):
                                 score = self._dartDetector._lastscore
-                                self._detecteddarts = self._detecteddarts + 1
-                                # TODO: Uodate state-structure here...
-                                self._setscore = self._setscore + score
-                                d = "d" + str(self._detecteddarts)
-                                self._totalscore = self._totalscore + score
-                                self._statestruct["player1"][d] = str(score)
-                                self._statestruct["player1"]["total"] = self._totalscore
-                                self._statestruct["player1"]["set"] = self._setscore
+                                self._candidate_seq += 1
+                                try:
+                                    self._game.record_hit(f"legacy-{self._candidate_seq}", score)
+                                except ValueError as exc:
+                                    logger.warning("Ignoring invalid detected score: %s", exc)
                                 self._previousboardstate = frame.copy() #board stabilized, make new boardstate
                                 self._dartevallocked = True   #Lock evaluation until board change again
             self._previousFrame = frame.copy()
-            self._statestruct["player1"]["total"] = self._totalscore
-        self._gui.update(self._statestruct)
+        self._gui.update(self._legacy_scoreboard())
         return frame
+
+    def _legacy_scoreboard(self):
+        """Adapt pure game state to the existing Pygame frontend contract."""
+        state = self._game.snapshot()
+        darts = list(state.current_turn)
+        return {"player1": {
+            "d1": darts[0] if len(darts) > 0 else 0,
+            "d2": darts[1] if len(darts) > 1 else 0,
+            "d3": darts[2] if len(darts) > 2 else 0,
+            "set": sum(darts), "total": state.total, "diff": "-", "done": False,
+        }}
 
 
     def draw(self, frame):
