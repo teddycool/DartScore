@@ -1,0 +1,14 @@
+{"type":"start"}
+{"type":"camera","camera_id":"cam-0","state":"ready"}
+{"type":"camera","camera_id":"cam-1","state":"ready"}
+{"type":"hit","throw_id":"throw-1","points":20,"camera_ids":["cam-0","cam-1"]}
+{"type":"uncertain","throw_id":"throw-2","points":5,"camera_ids":["cam-0","cam-1"]}
+{"type":"correct","throw_id":"throw-2","points":60}
+{"type":"pause"}
+{"type":"hit","throw_id":"during-pause","points":20}
+{"type":"resume"}
+{"type":"hit","throw_id":"throw-3","points":0}
+{"type":"clear_board"}
+{"type":"uncertain","throw_id":"false-detection"}
+{"type":"reject","throw_id":"false-detection"}
+{"type":"camera","camera_id":"cam-1","state":"unavailable"}
