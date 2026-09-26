@@ -6,6 +6,7 @@ let online = false;
 let busy = false;
 let connection = null;
 let generation = 0;
+let retryTimer = null;
 
 function render() {
   const ready = online && state !== null;
@@ -88,10 +89,19 @@ byId("correct-form").addEventListener("submit", (event) => {
 });
 
 function connectEvents() {
+  clearTimeout(retryTimer);
   connection?.close();
   connection = new EventSource("/api/v1/events");
   connection.onopen = () => refresh();
-  connection.onerror = () => { online = false; render(); };
+  connection.onerror = () => {
+    // The proxy returns 503 while the engine is down. Some browsers stop
+    // retrying EventSource after that response, so explicitly open a new one.
+    generation++;
+    online = false;
+    render();
+    connection.close();
+    retryTimer = setTimeout(connectEvents, 2000);
+  };
   for (const kind of ["game_changed", "throw_scored", "throw_pending", "engine_status_changed"]) {
     connection.addEventListener(kind, () => refresh());
   }
