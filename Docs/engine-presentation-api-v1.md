@@ -1,6 +1,6 @@
 # Engine / presentation API contract (proposal)
 
-Status: **v1 proposal**, no endpoints implemented yet. Review this contract before extracting game logic. The GameService and API initially run on the Pi 5; the Pi 4B proxies them under the same paths for its local browser. The game rules are a separate component from vision and could later move hosts without changing the browser contract. JSON is UTF-8. Timestamps are UTC RFC 3339 strings. IDs are opaque strings. Scores and totals are integers.
+Status: **agreed v1 design**, no endpoints implemented yet. Validate this contract with tests while extracting game logic. The GameService and API initially run on the Pi 5; the Pi 4B proxies them under the same paths for its local browser. The game rules are a separate component from vision and could later move hosts without changing the browser contract. JSON is UTF-8. Timestamps are UTC RFC 3339 strings. IDs are opaque strings. Scores and totals are integers.
 
 ## Rules
 
