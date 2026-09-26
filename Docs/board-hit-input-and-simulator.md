@@ -56,9 +56,8 @@ For reproducible scripts it assigns deterministic UTC timestamps based on line
 number. The example ends with a total of 80 and camera 1 unavailable.
 
 The CLI is a developer diagnostic, not the HTTP API. It uses the one-player
-`simple_score` game. Pending candidates, accepted IDs, and camera health are
-**in memory only**; a process restart loses them. Persistence, durable IDs,
-operator request IDs, API events, evidence image storage, and 301/501 rules are
-separate next steps. The legacy Pygame loop remains on its existing direct
-`GameService` path for now; migrating it through this coordinator is also a
-later integration step.
+`simple_score` game. By default state is in memory; add `--db runtime/game.sqlite3`
+to persist actions and recover on restart. See [durable session](durable-game-session.md).
+The HTTP API, evidence image storage, and 301/501 rules are separate next
+steps. The legacy Pygame loop remains on its existing direct `GameService`
+path for now; migrating it through this coordinator is later integration work.
