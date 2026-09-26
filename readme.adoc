@@ -36,13 +36,16 @@ review, Pause/Resume, and camera-health states without GPIO, Pygame, or video:
 [source,shell]
 ----
 python3 SW/simulate_game.py Testdata/Simulations/basic_game.jsonl
+python3 SW/simulate_game.py Testdata/Simulations/basic_game.jsonl --db runtime/game.sqlite3
 python3 -m unittest discover -s tests -v
 ----
 
 Each JSON Lines action produces a game snapshot and result. The example ends
 with 80 points after a corrected hit; a throw during Pause is ignored. The
-simulator is a developer tool, and its pending hits are not yet persisted.
-See link:Docs/board-hit-input-and-simulator.md[the input contract and simulator notes].
+simulator is a developer tool. With `--db`, accepted actions, pending hits and
+camera health recover after a process restart. Use a fresh database for a new
+simulation scenario. See link:Docs/board-hit-input-and-simulator.md[the input
+contract] and link:Docs/durable-game-session.md[the persistence notes].
 
 == Replay the legacy detector
 
