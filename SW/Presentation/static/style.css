@@ -1,0 +1,32 @@
+:root { color-scheme: dark; font-family: system-ui, sans-serif; background: #101a21; color: #f3f5f4; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(circle at top left, #244149, #101a21 62%); }
+main { max-width: 1100px; margin: auto; padding: clamp(1rem, 4vw, 3rem); }
+header, .score-heading, .input-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+header { flex-wrap: wrap; margin-bottom: 2rem; }
+h1, h2, p { margin-top: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3.4rem); margin-bottom: 0; }
+.eyebrow { color: #91d3d2; text-transform: uppercase; letter-spacing: .14em; font-weight: 700; font-size: .9rem; }
+.status { display: grid; gap: .25rem; text-align: right; }
+#connection { color: #ffce82; }
+#connection.online { color: #9ee3b1; }
+.score-card, .attention, .controls, details { border: 1px solid #44616a; border-radius: 1rem; padding: clamp(1.2rem, 3vw, 2rem); background: #192b34; margin-bottom: 1.2rem; }
+.score-heading { font-size: clamp(1.2rem, 3vw, 2rem); }
+.badge { padding: .4rem .9rem; border-radius: 2rem; background: #315662; font-size: 1rem; text-transform: capitalize; }
+output { display: block; font-size: clamp(7rem, 27vw, 19rem); font-weight: 800; line-height: 1; text-align: center; letter-spacing: -.07em; font-variant-numeric: tabular-nums; }
+#turn { font-size: clamp(1.2rem, 3vw, 2rem); margin-bottom: 0; }
+.attention { border: 3px solid #f3b85b; background: #342b25; }
+.attention h2 { font-size: 2rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; }
+button { border: 0; border-radius: .6rem; background: #a5e2d4; color: #11242b; padding: .85rem 1.2rem; font: inherit; font-weight: 750; cursor: pointer; min-height: 3rem; }
+button.secondary { background: #f7cfba; }
+button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid #f9db74; outline-offset: 3px; }
+button:disabled { opacity: .48; cursor: not-allowed; }
+form { display: grid; gap: .4rem; }
+input { width: 6rem; font: inherit; padding: .7rem; border-radius: .5rem; border: 2px solid #a5e2d4; }
+.controls { display: flex; gap: 1rem; }
+[hidden] { display: none !important; }
+#notice { min-height: 1.5em; color: #ffce82; font-weight: 650; }
+details { color: #d2e2e3; }
+summary { cursor: pointer; font-weight: 700; }
+@media (max-width: 600px) { .status { text-align: left; } .actions { display: grid; } .score-heading { align-items: start; } }

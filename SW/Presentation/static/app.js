@@ -1,0 +1,102 @@
+"use strict";
+
+const byId = (id) => document.getElementById(id);
+let state = null;
+let online = false;
+let busy = false;
+let connection = null;
+let generation = 0;
+
+function render() {
+  const ready = online && state !== null;
+  const pending = state?.pending_throw;
+  byId("connection").textContent = ready ? "Engine connected" : "Engine disconnected · score may be stale";
+  byId("connection").classList.toggle("online", ready);
+  byId("score").textContent = state?.players?.[0]?.total ?? "—";
+  byId("player").textContent = state?.players?.[0]?.name ?? "Player 1";
+  byId("phase").textContent = state?.phase ?? "Loading";
+  byId("game-type").textContent = state?.game_type === "simple_score" ? "Simple score" : "Waiting for game";
+  byId("turn").textContent = "This turn: " + (state?.players?.[0]?.current_turn?.join(" · ") || "—");
+  const cameras = state?.cameras ?? [];
+  byId("camera-status").textContent = cameras.length ? cameras.map((c) => `${c.camera_id}: ${c.state}`).join(" · ") : "Cameras: not connected";
+  byId("attention").hidden = !pending;
+  if (pending) {
+    byId("candidate").textContent = `Throw ${pending.throw_id}: proposed ${pending.points ?? "unknown"} points. No score has been committed.`;
+    byId("evidence").textContent = pending.evidence_refs?.length ? `Evidence references: ${pending.evidence_refs.join(", ")}` : "No images available yet.";
+  }
+  byId("start").hidden = state?.phase !== "idle";
+  byId("pause").hidden = state?.phase !== "playing";
+  byId("resume").hidden = state?.phase !== "paused";
+  for (const button of document.querySelectorAll("button")) button.disabled = !ready || busy;
+  byId("confirm").disabled ||= pending?.points == null || state?.phase !== "playing";
+  byId("correct-points").disabled = !ready || busy || state?.phase !== "playing";
+  byId("engine-status").textContent = `Engine: ${state?.engine?.state ?? "unavailable"}. ${state?.engine?.reason ?? ""}`;
+}
+
+async function refresh() {
+  const requestGeneration = ++generation;
+  try {
+    const response = await fetch("/api/v1/state", {cache: "no-store"});
+    if (!response.ok) throw new Error("State unavailable");
+    const next = await response.json();
+    if (next.schema_version !== 1) throw new Error("Unsupported API version");
+    if (requestGeneration !== generation) return;
+    state = next;
+    online = true;
+    if (byId("notice").textContent === "State unavailable" || byId("notice").textContent === "Unsupported API version") byId("notice").textContent = "";
+    render();
+  } catch (error) {
+    if (requestGeneration !== generation) return;
+    online = false;
+    byId("notice").textContent = error.message;
+    render();
+  }
+}
+
+async function command(type, payload = {}) {
+  if (!online || !state || busy) return;
+  busy = true;
+  render();
+  byId("notice").textContent = "Sending command…";
+  const body = {schema_version: 1, request_id: crypto.randomUUID(),
+                expected_revision: state.revision, type, payload};
+  try {
+    const response = await fetch("/api/v1/commands", {
+      method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error?.message || `Command failed (${response.status})`);
+    byId("notice").textContent = `Accepted: ${type.replaceAll("_", " ")}.`;
+  } catch (error) {
+    byId("notice").textContent = `${error.message}. Reloading engine state.`;
+  } finally {
+    busy = false;
+    await refresh();
+  }
+}
+
+byId("start").addEventListener("click", () => command("start_game", {game_type: "simple_score"}));
+byId("pause").addEventListener("click", () => command("pause_game"));
+byId("resume").addEventListener("click", () => command("resume_game"));
+byId("confirm").addEventListener("click", () => command("confirm_throw", {throw_id: state.pending_throw.throw_id}));
+byId("reject").addEventListener("click", () => command("reject_throw", {throw_id: state.pending_throw.throw_id}));
+byId("correct-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!byId("correct-points").reportValidity()) return;
+  command("correct_throw", {throw_id: state.pending_throw.throw_id,
+                            points: Number(byId("correct-points").value)});
+});
+
+function connectEvents() {
+  connection?.close();
+  connection = new EventSource("/api/v1/events");
+  connection.onopen = () => refresh();
+  connection.onerror = () => { online = false; render(); };
+  for (const kind of ["game_changed", "throw_scored", "throw_pending", "engine_status_changed"]) {
+    connection.addEventListener(kind, () => refresh());
+  }
+}
+
+render();
+refresh();
+connectEvents();

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DartScore</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <div><p class="eyebrow">DartScore</p><h1>Scoreboard</h1></div>
+      <div class="status"><strong id="connection" role="status">Connecting…</strong><span id="camera-status">Cameras: awaiting engine</span></div>
+    </header>
+    <section class="score-card" aria-label="Current score">
+      <div class="score-heading"><span id="player">Player 1</span><span id="phase" class="badge">Loading</span></div>
+      <output id="score" aria-label="Total score">—</output>
+      <p id="game-type">Simple score</p>
+      <p id="turn">This turn: —</p>
+    </section>
+    <section id="attention" class="attention" hidden aria-labelledby="attention-title">
+      <p class="eyebrow">Needs your decision</p><h2 id="attention-title">Uncertain throw</h2>
+      <p id="candidate"></p>
+      <p id="evidence"></p>
+      <div class="actions">
+        <button id="confirm">Confirm proposed score</button>
+        <form id="correct-form"><label for="correct-points">Correct score (one dart)</label>
+          <div class="input-row"><input id="correct-points" type="number" min="0" max="60" step="1" required inputmode="numeric"><button type="submit">Set score</button></div>
+        </form>
+        <button id="reject" class="secondary">Reject false detection</button>
+      </div>
+    </section>
+    <section class="controls" aria-label="Game controls">
+      <button id="start" hidden>Start simple-score game</button>
+      <button id="pause" hidden>Pause game</button>
+      <button id="resume" hidden>Resume game</button>
+    </section>
+    <p id="notice" role="alert" aria-live="assertive"></p>
+    <details><summary>Engine details</summary><p id="engine-status">Awaiting engine</p><p id="storage-status"></p></details>
+  </main>
+</body>
+</html>

@@ -6,8 +6,8 @@ DartScore is an open-source experiment in detecting darts with cameras and turni
 
 == Project status
 
-* *Available now:* the original one-camera Pygame prototype, board calibration/detection code, recorded test videos, an extracted simple-score GameService, a durable camera-free simulator, and a first HTTP/SSE engine API.
-* *In design, not implemented yet:* two camera capture on a Raspberry Pi 5, 301/501 rules, a web scoreboard on a Raspberry Pi 4B, and status LEDs.
+* *Available now:* the original one-camera Pygame prototype, board calibration/detection code, recorded test videos, an extracted simple-score GameService, a durable camera-free simulator, an HTTP/SSE engine API, and a camera-free web scoreboard/proxy.
+* *In design, not implemented yet:* two camera capture on a Raspberry Pi 5, 301/501 rules, Pi service/kiosk deployment, and status LEDs.
 * *Accuracy:* the legacy detector is experimental. Replay candidate counts are a reproducible software baseline, not verified scoring accuracy.
 
 The original MVP supports mounting and calibration states, one player, and a simple accumulating score. Its fixed 1680 × 1050 Pygame interface, hardcoded configuration and older camera dependencies have not been migrated to the new hardware. Do not treat the historical instructions as a current Pi 5 installation guide.
@@ -54,7 +54,12 @@ It listens on loopback port 8765. State, health, commands and an SSE stream
 are available for the existing `simple_score` game. Add `--dev-input` to
 simulate board hits through a loopback-only development route. See
 link:Docs/engine-presentation-api-v1.md[the API contract and current scope].
-The browser frontend and Pi 4B proxy are next steps.
+Run `python3 SW/serve_presentation.py` in another terminal and open
+`http://127.0.0.1:8080`. On the Pi 4B, set `--engine-url` to the Pi 5's
+trusted-LAN address and use `--host 0.0.0.0` to serve its screen/browser.
+See link:Docs/web-ui-first-release.md[web UI scope and setup]. The page
+supports one-player simple score, Start, Pause/Resume, and pending-hit review;
+it does not yet display stored evidence images.
 
 == Replay the legacy detector
 
