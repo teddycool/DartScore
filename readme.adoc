@@ -6,8 +6,8 @@ DartScore is an open-source experiment in detecting darts with cameras and turni
 
 == Project status
 
-* *Available now:* the original one-camera Pygame prototype, board calibration/detection code, recorded test videos, a headless replay command, and a camera-free board-hit simulator for the extracted simple-score game.
-* *In design, not implemented yet:* two camera capture on a Raspberry Pi 5, an independent game-rules service, HTTP API, web scoreboard on a Raspberry Pi 4B, and status LEDs.
+* *Available now:* the original one-camera Pygame prototype, board calibration/detection code, recorded test videos, an extracted simple-score GameService, a durable camera-free simulator, and a first HTTP/SSE engine API.
+* *In design, not implemented yet:* two camera capture on a Raspberry Pi 5, 301/501 rules, a web scoreboard on a Raspberry Pi 4B, and status LEDs.
 * *Accuracy:* the legacy detector is experimental. Replay candidate counts are a reproducible software baseline, not verified scoring accuracy.
 
 The original MVP supports mounting and calibration states, one player, and a simple accumulating score. Its fixed 1680 × 1050 Pygame interface, hardcoded configuration and older camera dependencies have not been migrated to the new hardware. Do not treat the historical instructions as a current Pi 5 installation guide.
@@ -46,6 +46,15 @@ simulator is a developer tool. With `--db`, accepted actions, pending hits and
 camera health recover after a process restart. Use a fresh database for a new
 simulation scenario. See link:Docs/board-hit-input-and-simulator.md[the input
 contract] and link:Docs/durable-game-session.md[the persistence notes].
+
+== Run the camera-free engine API
+
+From the repository root, run `python3 SW/serve_engine.py --db runtime/game.sqlite3`.
+It listens on loopback port 8765. State, health, commands and an SSE stream
+are available for the existing `simple_score` game. Add `--dev-input` to
+simulate board hits through a loopback-only development route. See
+link:Docs/engine-presentation-api-v1.md[the API contract and current scope].
+The browser frontend and Pi 4B proxy are next steps.
 
 == Replay the legacy detector
 

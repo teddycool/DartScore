@@ -1,6 +1,6 @@
 # Engine / presentation API contract (proposal)
 
-Status: **agreed v1 design**, no endpoints implemented yet. Validate this contract with tests while extracting game logic. The GameService and API initially run on the Pi 5; the Pi 4B proxies them under the same paths for its local browser. The game rules are a separate component from vision and could later move hosts without changing the browser contract. JSON is UTF-8. Timestamps are UTC RFC 3339 strings. IDs are opaque strings. Scores and totals are integers.
+Status: **agreed v1 target; camera-free simple-score HTTP slice implemented.** State, health, commands and SSE use the durable action journal. The Pi 4B proxy, two-camera integration, 301/501 rules, player configuration, board-hit sector data and evidence storage remain future work. JSON is UTF-8. Timestamps are UTC RFC 3339 strings. IDs are opaque strings. Scores and totals are integers.
 
 ## Rules
 
@@ -9,6 +9,7 @@ Status: **agreed v1 design**, no endpoints implemented yet. Validate this contra
 - A camera observation is not a scored throw. Two camera observations may resolve to one `throw_id`; no two accepted score events may share that ID.
 - Every accepted change increases the game `revision` exactly once. Events carry the resulting revision; the full snapshot carries the latest revision.
 - A client loads the snapshot on startup and whenever event revisions are discontinuous. Repeated events with the same or older revision are ignored by the client.
+- Pending-review and camera-health changes can occur without advancing the game revision. Their SSE events carry `revision: null` and include a fresh `state` snapshot. Clients apply that snapshot even when the game revision is unchanged. SSE IDs are process-local; reconnects reload `/state`, with no missed-event replay.
 - Accepted changes and their IDs must survive an engine restart. A failed or uncertain observation must not alter the score.
 - `schema_version` is an integer. Unknown major versions/types must not be silently interpreted as known commands or scores.
 - No raw video or calibration matrices are included in game state events.
@@ -100,5 +101,13 @@ The engine stores the result for each `request_id`: retrying the same request re
 10. Evidence images remain until manual deletion in v1; image-write failures are visible without silently changing game state.
 
 Evidence images are retained on the Pi 5 until manual deletion in v1. The health/status response reports free disk space and image-write failures; removing the oldest images to maintain a specified free-space reserve is a later step. Game records are retained independently of image deletion.
+
+## Current implementation notes
+
+Run `python3 SW/serve_engine.py --db runtime/game.sqlite3` from the repository root. The server defaults to `127.0.0.1:8765`. `--host` may bind it to a trusted wired LAN; configure access controls before exposing it further. `GET /api/v1/state`, `/api/v1/health`, `/api/v1/events` and `POST /api/v1/commands` are available. Health reports free bytes and `image_write_status: "not_integrated"`; absent cameras appear as an empty list.
+
+The current `start_game` payload accepts only `{}` or `{"game_type":"simple_score"}` and starts a one-player accumulating game. `confirm_throw` and `reject_throw` take `throw_id`; `correct_throw` takes `throw_id` and `points`. Unsupported game types and payload fields return HTTP 400; stale `expected_revision` returns HTTP 409. A retried `request_id` returns the stored action result and does not apply the command twice. The response revision shows the current state.
+
+For local end-to-end testing, `--dev-input` enables `POST /api/v1/dev/actions` with the simulator's `hit`, `uncertain`, `camera` or `clear_board` action plus `request_id`. It is restricted to loopback and disabled by default. The server holds the journal's single-writer lock; do not run `simulate_game.py --db` against the same database concurrently.
 
 The API payloads are intentionally small. Frame transport, calibration storage, persistence technology and the web framework are internal implementation choices.

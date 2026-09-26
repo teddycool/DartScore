@@ -5,7 +5,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 .venv/
-/runtime/
 *.py[cod]
 *$py.class
 *.pyc
