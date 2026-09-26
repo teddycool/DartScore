@@ -1,13 +1,19 @@
 # Web UI: first release design
 
-Status: agreed first-release design. This document does not implement the browser or change game rules.
+Status: first camera-free browser/proxy slice implemented. This document also describes planned later additions, including evidence image viewing and richer player/game setup.
 See [two-Pi architecture](two-pi-architecture.md) and [API contract](engine-presentation-api-v1.md).
 
 ## Scope and deployment
 
+The current Pi 4B process is `python3 SW/serve_presentation.py --engine-url http://<pi5-address>:8765 --host 0.0.0.0`. It serves the browser on port 8080 and proxies only state, health, events and commands under `/api/v1`. The Pi 5 engine must bind to a reachable trusted-LAN address with `SW/serve_engine.py --host <pi5-address>`. The proxy does not expose the Pi 5 development input route. Network access controls, service units and kiosk startup are separate deployment work; use only on a trusted LAN for now.
+
+On one development computer, run the engine with `python3 SW/serve_engine.py --db runtime/game.sqlite3 --dev-input` and the presentation with `python3 SW/serve_presentation.py`, then open `http://127.0.0.1:8080`. The engine's loopback-only development endpoint can supply simulated hits. The browser shows their state through the proxy. The page refreshes `/state` after SSE messages and reconnects, and disables controls when the engine becomes unreachable.
+
 The Raspberry Pi 4B (2 GB) runs a lightweight web server/proxy and a fullscreen browser on the attached screen. The Pi 5 remains authoritative for board hits, game rules and durable game state. The Pi 4B never calculates a score. It loads a snapshot after opening/reconnecting and applies engine events in revision order. The web UI must clearly show when the engine connection is lost and disable commands until a fresh state is loaded.
 
 The first playable integration should support the existing simple accumulating-score mode and one player. The layout is designed for multiple players and 301/501, but those choices are shown only when the corresponding GameService rules exist. A disabled future game type must never appear to start a playable game.
+
+The current slice displays the total, current turn, phase, camera states and pending points-only candidate. It has Start, Pause/Resume and Confirm/Correct/Reject controls. The API does not yet expose a latest-throw summary, player-name configuration or evidence images; the page shows evidence references as text. It does not calculate game rules locally.
 
 ## Main screen
 
