@@ -6,7 +6,7 @@ DartScore is an open-source experiment in detecting darts with cameras and turni
 
 == Project status
 
-* *Available now:* the original one-camera Pygame prototype, board calibration/detection code, recorded test videos, and a headless recorded-video replay command.
+* *Available now:* the original one-camera Pygame prototype, board calibration/detection code, recorded test videos, a headless replay command, and a camera-free board-hit simulator for the extracted simple-score game.
 * *In design, not implemented yet:* two camera capture on a Raspberry Pi 5, an independent game-rules service, HTTP API, web scoreboard on a Raspberry Pi 4B, and status LEDs.
 * *Accuracy:* the legacy detector is experimental. Replay candidate counts are a reproducible software baseline, not verified scoring accuracy.
 
@@ -27,6 +27,22 @@ Read the design documents:
 * link:Docs/web-ui-first-release.md[First web UI and uncertain-hit review]
 
 These documents describe the target design; they do not indicate that the new services are running yet.
+
+== Simulate game input without cameras
+
+The board-hit simulator exercises the extracted one-player game, uncertain-hit
+review, Pause/Resume, and camera-health states without GPIO, Pygame, or video:
+
+[source,shell]
+----
+python3 SW/simulate_game.py Testdata/Simulations/basic_game.jsonl
+python3 -m unittest discover -s tests -v
+----
+
+Each JSON Lines action produces a game snapshot and result. The example ends
+with 80 points after a corrected hit; a throw during Pause is ignored. The
+simulator is a developer tool, and its pending hits are not yet persisted.
+See link:Docs/board-hit-input-and-simulator.md[the input contract and simulator notes].
 
 == Replay the legacy detector
 
