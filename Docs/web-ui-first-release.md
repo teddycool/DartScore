@@ -1,6 +1,6 @@
 # Web UI: first release design
 
-Status: design proposal. This document does not implement the browser or change game rules.
+Status: agreed first-release design. This document does not implement the browser or change game rules.
 See [two-Pi architecture](two-pi-architecture.md) and [API contract](engine-presentation-api-v1.md).
 
 ## Scope and deployment

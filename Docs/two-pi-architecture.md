@@ -1,6 +1,6 @@
 # Two-Pi architecture proposal
 
-Status: proposal for review. This document describes the target boundaries, not implemented behavior.
+Status: agreed target architecture. This document describes planned boundaries, not implemented behavior.
 
 ## Hardware and ownership
 
