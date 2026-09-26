@@ -47,6 +47,13 @@ camera health recover after a process restart. Use a fresh database for a new
 simulation scenario. See link:Docs/board-hit-input-and-simulator.md[the input
 contract] and link:Docs/durable-game-session.md[the persistence notes].
 
+== Deploy to two Pis for development
+
+For iterative testing across two Pis, use
+link:Docs/two-pi-development-deploy.md[the SSH/rsync development deploy guide].
+It copies only the current engine code to the Pi 5 and presentation code to the
+Pi 4B, keeping game data at its existing path. Service startup remains manual.
+
 == Run the camera-free engine API
 
 From the repository root, run `python3 SW/serve_engine.py --db runtime/game.sqlite3`.
