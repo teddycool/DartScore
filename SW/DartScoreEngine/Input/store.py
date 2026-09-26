@@ -4,6 +4,7 @@ import fcntl
 import json
 import sqlite3
 import threading
+import uuid
 from dataclasses import asdict
 from pathlib import Path
 
@@ -14,6 +15,10 @@ from .contract import InputCoordinator
 
 class StorageCorruptionError(RuntimeError):
     """Committed actions cannot be replayed into the same game state."""
+
+
+class RevisionConflict(ValueError):
+    """A command was based on an older game snapshot."""
 
 
 def _json(value):
@@ -47,6 +52,12 @@ class DurableSession:
                 payload TEXT NOT NULL,
                 result TEXT NOT NULL
             )""")
+            self._conn.execute("""CREATE TABLE IF NOT EXISTS metadata (
+                key TEXT PRIMARY KEY, value TEXT NOT NULL)""")
+            self._conn.execute("INSERT OR IGNORE INTO metadata(key,value) VALUES('game_id',?)",
+                               (str(uuid.uuid4()),))
+            self.game_id = self._conn.execute(
+                "SELECT value FROM metadata WHERE key='game_id'").fetchone()[0]
             self._conn.execute("PRAGMA user_version=1")
             self._conn.commit()
             self._reload()
@@ -60,7 +71,11 @@ class DurableSession:
         for sequence, payload, stored_result in self._conn.execute(
                 "SELECT sequence, payload, result FROM actions ORDER BY sequence"):
             try:
-                result = apply_action(game, inputs, json.loads(payload))
+                action = json.loads(payload)
+                expected = action.get("expected_revision")
+                if expected is not None and expected != game.snapshot().revision:
+                    raise ValueError("committed revision precondition differs")
+                result = apply_action(game, inputs, action)
                 if _json(result) != stored_result:
                     raise ValueError("replayed result differs from committed result")
             except (ValueError, TypeError, RuntimeError) as exc:
@@ -81,6 +96,10 @@ class DurableSession:
                         raise ValueError("request_id reused with a different action")
                     self._conn.commit()
                     return json.loads(old[1])
+                expected = action.get("expected_revision")
+                if expected is not None and (type(expected) is not int or
+                                             expected != self.game.snapshot().revision):
+                    raise RevisionConflict("expected_revision does not match current revision")
                 result = apply_action(self.game, self.inputs, action)
                 encoded = _json(result)
                 self._conn.execute("INSERT INTO actions(request_id,payload,result) VALUES(?,?,?)",
