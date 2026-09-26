@@ -1,3 +1,7 @@
+= Legacy software layout
+
+This document describes the original single-camera Pygame implementation. It is useful for understanding the code being refactored, but is not the deployment plan for the two-Pi system. See link:../Docs/two-pi-architecture.md[the target architecture], link:../Docs/engine-presentation-api-v1.md[API contract], and link:../Docs/web-ui-first-release.md[web UI design].
+
 = Dartscore software...
 
 This readme file describes the DartScore software like DartScoreEngine, FrontEnd, PiSetup...
