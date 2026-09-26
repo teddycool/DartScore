@@ -58,7 +58,7 @@ data: {"schema_version":1,"event_id":"game-42:17","type":"throw_scored","occurre
 
 Initial event types: `throw_scored`, `throw_pending`, `game_changed`, `engine_status_changed`. Every game mutation event carries `game_id` and `revision`; status-only events may have `revision: null` because they do not change the game. The client reconnects automatically, fetches `/state` after reconnect, and reconciles by revision. This avoids requiring unbounded event replay in v1. Heartbeats keep idle connections detectable.
 
-A pending throw is an uncommitted board-hit candidate. It contains `throw_id`, proposed board segment/multiplier/points or `null`, and a reason; the game total remains unchanged until explicit confirmation. The GameService then applies the active game type. The vision component never supplies a player's remaining total. The browser must visibly distinguish it from an accepted throw.
+A pending throw is an uncommitted board-hit candidate. It contains `throw_id`, proposed board segment/multiplier/points or `null`, and a reason; the game total remains unchanged until explicit confirmation. The GameService then applies the active game type. The vision component never supplies a player's remaining total. The pending item persists across presentation restarts until confirmed, corrected or rejected. The evidence record on the Pi 5 links `throw_id` to camera IDs, timestamps, calibration versions and still-frame references, plus the final operator outcome; no image bytes are embedded in game events. The browser must visibly distinguish it from an accepted throw.
 
 ### `GET /api/v1/health`
 
@@ -82,7 +82,7 @@ Optional, later endpoint for a still image during mounting/calibration. It is no
 }
 ```
 
-Initial command types to define in implementation: `start_game` (payload includes `game_type`, player IDs and rule options), `confirm_throw`, `reject_throw`, `pause_game`, `resume_game`. The engine validates board-hit consistency and game rules before applying a confirmed hit. Calibration and camera setup commands get their own review before implementation. A successful response includes `request_id`, `accepted: true`, `game_id` and the new `revision`. Invalid commands return structured code/message and do not change state.
+Initial command types to define in implementation: `start_game` (payload includes `game_type`, player IDs and rule options), `confirm_throw`, `correct_throw`, `reject_throw`, `pause_game`, `resume_game`. The engine validates board-hit consistency and game rules before applying a confirmed or corrected hit. `correct_throw` targets a pending `throw_id` and supplies a physical hit (segment 1–20 with multiplier 1–3, outer bull 25, inner bull 50, or miss 0). A points-only fallback may supply `points` (0–60) with `label_quality: "points_only"` when the exact board location is unknown. The Pi 5 calculates all authoritative points and game-rule effects. `reject_throw` means false detection and is distinct from an accepted miss worth zero points. Only one resolution may commit for a given pending `throw_id`. Calibration and camera setup commands get their own review before implementation. A successful response includes `request_id`, `accepted: true`, `game_id` and the new `revision`. Invalid commands return structured code/message and do not change state.
 
 The engine stores the result for each `request_id`: retrying the same request returns the same outcome, and reusing an ID with different content is rejected. `expected_revision` prevents stale controls from overwriting newer game state; a mismatch returns a conflict and the client reloads `/state`. Operator actions are restricted to the LAN service/proxy; authentication and authorization configuration must be decided before exposing the API beyond the trusted network.
 
@@ -94,6 +94,7 @@ The engine stores the result for each `request_id`: retrying the same request re
 4. An uncertain throw does not change the total until confirmation; a rejected throw never changes it. In 301/501, a physical board hit can also cause a bust without reducing the remaining total.
 5. Repeating a command with the same `request_id` does not repeat its effect.
 6. Loss of a camera is visible in status and LEDs; the engine makes an explicit degraded/attention decision.
-7. Accepted game events survive an engine restart; pending observations may be discarded with a visible status.
+7. Correcting a pending hit commits at most one throw. Its physical hit, points-only label (if used), and game-rule effect remain distinguishable; a rejected false detection never becomes a zero-point throw.
+8. Accepted game events and pending uncertain hits survive an engine restart, so an operator can resolve a pending hit after either Pi reboots.
 
 The API payloads are intentionally small. Frame transport, calibration storage, persistence technology and the web framework are internal implementation choices.
