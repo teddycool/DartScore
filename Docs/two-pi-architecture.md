@@ -1,0 +1,76 @@
+# Two-Pi architecture proposal
+
+Status: proposal for review. This document describes the target boundaries, not implemented behavior.
+
+## Hardware and ownership
+
+- **Engine Pi:** Raspberry Pi 5 (8 GB), two cameras, 512 GB M.2 SSD, status LEDs.
+- **Presentation Pi:** Raspberry Pi 4B (2 GB), display, local web service and fullscreen browser.
+- Both Pis use PoE and a wired LAN. The Pi 5 is the sole authority for game state and scoring. A presentation Pi restart must not interrupt a game.
+- The Pi 4B serves the browser assets and proxies its own `/api/v1/*` requests to the Pi 5. The browser sees one origin. The proxy does not store or calculate scores.
+- The Pi 5 persists accepted game events and a recoverable current state on the SSD. A browser reconnect obtains a full snapshot before subscribing to updates.
+
+```mermaid
+flowchart LR
+  subgraph E["Pi 5: DartScore engine"]
+    C["Camera adapters (new)"] --> V["Calibration + detection (refactor)"]
+    V --> G["Game state + score (extract)"]
+    G --> A["HTTP API + events (new)"]
+    G --> L["LED status adapter (new)"]
+  end
+  subgraph P["Pi 4B: presentation"]
+    W["Web server + API proxy (new)"] --> B["Browser kiosk (new)"]
+  end
+  A <-->|"JSON / SSE over LAN"| W
+```
+
+Camera frames stay on the Pi 5. The API carries state, decisions and optional still images for setup, not two continuous video streams. The two cameras produce observations of one throw; only the game service can accept one scoring event for that throw.
+
+## Ownership and migration map
+
+| Area | Current source | Target | Treatment |
+| --- | --- | --- | --- |
+| Board geometry / score lookup | `BoardCalibration/BoardArray.py` | Engine Pi | Carry over initially; validate geometry and boundaries with labelled throws. |
+| Calibration | `CamCalibrateLoop.py`, `Lines.py`, `Sectors.py` | Engine Pi | Refactor into one calibration record per camera, in common board coordinates. |
+| Detection / tip estimate | `DartDetector.py`, `DartHit.py` | Engine Pi | Refactor into camera observations and one throw decision; preserve replay baseline. |
+| Game score and turn state | `PlayStateLoop.py` | Engine Pi | Extract from rendering; scoring commands and events are independent of Pygame. |
+| Capture | `Cam.py`, `StreamCam.py`, `VideoCam.py` | Engine Pi | New camera-source interface; retain file replay adapter. |
+| Orchestration | `Main.py`, `MainLoop.py`, state loops | Engine Pi | Separate capture, game, API, persistence and hardware lifecycles. |
+| Old Pygame presentation | `FrontEnd/*` and state-loop `draw()` | Retired after parity | Replace with web UI; keep as reference while migrating. |
+| GPIO buttons / buzzer | `PiSetup/IO/*` | Engine Pi if needed | Isolate behind hardware interfaces; do not import GPIO in game logic. |
+| HTTP API and persistence | New | Engine Pi | Versioned contract and durable accepted events. |
+| Web UI and proxy | New | Presentation Pi | Read-only rendering plus explicit operator commands. |
+| LED status | New | Engine Pi | Status consumer, never a source of game decisions. |
+
+## Internal boundaries
+
+`CameraSource` emits `Frame(camera_id, captured_at, sequence, pixels)`.
+`CalibrationService` maps each camera's image coordinates to a common board coordinate system.
+`Detector` emits candidate observations with camera ID and evidence.
+`ThrowResolver` groups observations by time and board position, yielding one candidate throw or an uncertain result.
+`GameService` alone accepts a throw and changes score. `EventStore` persists accepted events.
+`ApiService` publishes snapshots/events and validates commands. `LedStatus` maps health and engine state to GPIO outputs.
+
+These are proposed responsibilities, not mandatory class names. The first migration can keep one camera and use the recorded-video replay input. Introduce the second camera only after the game and API boundaries work.
+
+## LED proposal
+
+| LED state | Meaning |
+| --- | --- |
+| Blue | Starting or calibrating |
+| Green | Ready for play |
+| Amber | Operator attention: uncertain throw or calibration needed |
+| Red | Engine or camera unavailable |
+
+A disconnected presentation Pi is reported in health/status but does not invalidate scoring. LED outputs default to an unambiguous error/off state on engine shutdown; exact pins and driver are hardware configuration.
+
+## Delivery sequence
+
+1. Agree on the architecture and API contract. Add contract examples and tests before network code.
+2. Extract pure game state and typed events from `PlayStateLoop`; replay one camera into it.
+3. Add persistence, snapshot, event stream and command API on the engine Pi.
+4. Add the Pi 4B proxy and browser scoreboard; verify restart and reconnect during a game.
+5. Add LED adapter, then two-camera capture, independent calibration and throw resolution.
+6. Replace the old Pygame entry point after the web UI covers mounting, calibration and play.
+
+The initial web UI targets scoreboard and status. Setup still images can follow. Measure the Pi 4B kiosk memory and responsiveness before adding continuous previews.
