@@ -6,7 +6,7 @@ __author__ = 'teddycool'
 # Takes a bounding-box for a dart and calculate hitpoint and scores
 
 
-from cv2 import cv2
+import cv2
 
 from DartScoreEngine.DartScoreEngineConfig import dartconfig
 from DartScoreEngine.BoardCalibration import BoardArray

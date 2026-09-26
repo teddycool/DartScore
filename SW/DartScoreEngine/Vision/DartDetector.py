@@ -7,11 +7,8 @@ __author__ = 'teddycool'
 # The bounding rect for the new dart is used by DartHit to figure out the coordinates for the hit and calsulate scores
 
 
-from cv2 import cv2
+import cv2
 import numpy as np
-import sys
-
-sys.path.append("/home/pi/DartScore/SW")
 
 from DartScoreEngine.Vision.DartHit import DartHit
 from DartScoreEngine.DartScoreEngineConfig import dartconfig
@@ -19,7 +16,7 @@ from DartScoreEngine.DartScoreEngineConfig import dartconfig
 
 class DartDetector(object):
 
-    def __init__(self, boardemptyframe):
+    def __init__(self, boardemptyframe, debug_dir=None):
         self._boundingRects = []
         self._rawCnts = []
         self._boardEmptyFrame = boardemptyframe.copy()
@@ -27,6 +24,7 @@ class DartDetector(object):
         self._lastscore = None
         self._lasthitcoords = None
         self._darthit = DartHit()
+        self._debug_dir = debug_dir
 
     def boardEmpty(self, frame):
        # print ("Board empty?")
@@ -81,9 +79,10 @@ class DartDetector(object):
 
         ret, thresh = cv2.threshold(frameDelta, 30, 200, cv2.THRESH_BINARY)
         thresh = cv2.dilate(thresh, None, iterations=2)
-        cv2.imwrite("ddframe" + str(self._seqno) + ".jpg", thresh)
+        if self._debug_dir is not None:
+            cv2.imwrite(str(self._debug_dir / ("ddframe" + str(self._seqno) + ".jpg")), thresh)
         self._seqno = self._seqno+1
-        img, cnts, hierarch = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cnts, hierarch = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for c in cnts:
             # if the contour is too small, ignore it
             if cv2.contourArea(c) > dartconfig["DartHit"]["DartHitMinArea"]:
@@ -106,7 +105,7 @@ class DartDetector(object):
         # dilate the thresholded image to fill in holes, then find contours
         # on thresholded image
         thresh = cv2.dilate(thresh, None, iterations=2)
-        img, cnts, hierarch = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        cnts, hierarch = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
          # loop over the contours
         for c in cnts:
             # if the contour is too small, ignore it
