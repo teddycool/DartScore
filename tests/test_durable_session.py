@@ -105,6 +105,25 @@ class DurableSessionTests(unittest.TestCase):
                              "pending_review")
             self.assertEqual(store.state()["game"]["total"], 5)
 
+    def test_review_committed_before_auto_scoring_upgrade_keeps_confirmed_dart(self):
+        with DurableSession(self.db) as store:
+            store.apply("start", {"type": "start"})
+            store.apply("first", hit("dart-1", 20))
+            store.apply("second", hit("dart-2", 15, True))
+            store.apply("third", hit("dart-3", 25))
+            result = store.apply("resolve-second", {"type": "confirm", "throw_id": "dart-2"})
+            self.assertEqual(len(result["following_scores"]), 1)
+        # The previous PR version stored only the second dart's resolution.
+        result.pop("following_scores")
+        with sqlite3.connect(self.db) as conn:
+            conn.execute("UPDATE actions SET result=? WHERE request_id='resolve-second'",
+                         (json.dumps(result, sort_keys=True, separators=(",", ":")),))
+        with DurableSession(self.db) as store:
+            self.assertEqual(store.state()["game"]["current_turn"], (20, 15))
+            self.assertEqual(store.state()["pending"]["dart-3"]["status"], "confirmed")
+            store.apply("finish-third", {"type": "confirm", "throw_id": "dart-3"})
+            self.assertEqual(store.state()["game"]["current_turn"], (20, 15, 25))
+
     def test_failed_write_restores_memory_and_allows_retry(self):
         with DurableSession(self.db) as store:
             store.apply("start", {"type": "start"})

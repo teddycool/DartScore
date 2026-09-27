@@ -35,7 +35,11 @@ function render() {
   byId("camera-status").textContent = cameras.length ? cameras.map((c) => `${c.camera_id}: ${c.state}`).join(" · ") : "Cameras: not connected";
   byId("attention").hidden = !pending;
   if (pending) {
-    byId("candidate").textContent = `${reviews} throw${reviews === 1 ? "" : "s"} to review. Next dart (${pending.throw_id}): proposed ${pending.points ?? "unknown"} points. Confirmed darts behind it will score automatically after review.`;
+    byId("attention-title").textContent = pending.status === "confirmed" ? "Confirmed dart waiting" : "Uncertain throw";
+    byId("candidate").textContent = pending.status === "confirmed" ?
+      `Dart ${pending.throw_id} was detected as ${pending.points} points. Apply this saved score to finish the round.` :
+      `${reviews} throw${reviews === 1 ? "" : "s"} to review. Next dart (${pending.throw_id}): proposed ${pending.points ?? "unknown"} points. Confirmed darts behind it will score automatically after review.`;
+    byId("confirm").textContent = pending.status === "confirmed" ? "Apply confirmed score" : "Confirm proposed score";
     byId("evidence").textContent = pending.evidence_refs?.length ? `Evidence references: ${pending.evidence_refs.join(", ")}` : "No images available yet.";
   }
   byId("start").hidden = state?.phase !== "idle";

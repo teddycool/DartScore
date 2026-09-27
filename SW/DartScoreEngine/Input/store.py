@@ -80,7 +80,10 @@ class DurableSession:
                                   old_result.get("reason") == "pending_review" and
                                   action.get("type") in ("hit", "uncertain"))
                 result = apply_action(game, inputs, action,
-                                      legacy_pending_ignored=legacy_ignored)
+                                      legacy_pending_ignored=legacy_ignored,
+                                      replay_old_resolution=(action.get("type") in
+                                                             ("confirm", "correct", "reject") and
+                                                             "following_scores" not in old_result))
                 if _json(result) != stored_result:
                     raise ValueError("replayed result differs from committed result")
             except (ValueError, TypeError, RuntimeError) as exc:

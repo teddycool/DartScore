@@ -94,7 +94,8 @@ class InputCoordinator:
         self._results[candidate.throw_id] = result
         return result
 
-    def resolve(self, throw_id: str, decision: str, points: int | None = None) -> InputResult:
+    def resolve(self, throw_id: str, decision: str, points: int | None = None,
+                *, auto_drain=True) -> InputResult:
         """Confirm proposed points, correct them, or reject a false detection."""
         if decision not in ("confirm", "correct", "reject"):
             raise ValueError("decision must be confirm, correct or reject")
@@ -129,7 +130,7 @@ class InputCoordinator:
                 raise RuntimeError("pending throw could not be committed")
         del self.pending[throw_id]
         following = []
-        while self.pending:
+        while auto_drain and self.pending:
             next_id, next_candidate = next(iter(self.pending.items()))
             if next_candidate.status != "confirmed":
                 break

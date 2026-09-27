@@ -15,7 +15,7 @@ def serialize_result(result):
 
 
 def apply_action(game: GameService, inputs: InputCoordinator, action: dict,
-                 *, legacy_pending_ignored=False) -> dict:
+                 *, legacy_pending_ignored=False, replay_old_resolution=False) -> dict:
     """Return a JSON-compatible result; raise before accepting invalid input."""
     if not isinstance(action, dict):
         raise ValueError("action must be an object")
@@ -38,7 +38,8 @@ def apply_action(game: GameService, inputs: InputCoordinator, action: dict,
                 return serialize_result(inputs.restore_legacy_ignored(candidate))
             return serialize_result(inputs.submit(candidate))
         if kind in ("confirm", "correct", "reject"):
-            return serialize_result(inputs.resolve(action["throw_id"], kind, action.get("points")))
+            return serialize_result(inputs.resolve(action["throw_id"], kind, action.get("points"),
+                                                   auto_drain=not replay_old_resolution))
         if kind == "pause":
             game.pause()
             return {"outcome": "paused"}
