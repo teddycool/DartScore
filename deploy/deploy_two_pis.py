@@ -4,6 +4,7 @@
 import argparse
 import getpass
 import hashlib
+import shlex
 import stat
 from pathlib import Path
 
@@ -12,10 +13,10 @@ DEFAULT_CONFIG = ROOT / "deploy" / "deploy.local.yaml"
 DEPLOY_DIR = "dartscore-deploy"
 TARGETS = {"engine": "dartscore-engine", "presentation": "dartscore-presentation"}
 FILES = {
-    "engine": ("SW/__init__.py", "SW/DartScoreEngine/__init__.py",
+    "engine": ("deploy/manage_process.py", "SW/__init__.py", "SW/DartScoreEngine/__init__.py",
                "SW/DartScoreEngine/Api", "SW/DartScoreEngine/Game",
                "SW/DartScoreEngine/Input", "SW/serve_engine.py", "SW/simulate_game.py"),
-    "presentation": ("SW/__init__.py", "SW/Presentation", "SW/serve_presentation.py"),
+    "presentation": ("deploy/manage_process.py", "SW/__init__.py", "SW/Presentation", "SW/serve_presentation.py"),
 }
 
 
@@ -48,8 +49,14 @@ def load_config(path):
     if unknown:
         raise ValueError(f"unknown deploy targets: {', '.join(sorted(unknown))}")
     for role, values in data.items():
-        if not isinstance(values, dict) or set(values) - {"host", "ip", "user", "password", "port"}:
+        allowed = {"host", "ip", "user", "password", "port"}
+        if role == "engine":
+            allowed.add("database_path")
+        if not isinstance(values, dict) or set(values) - allowed:
             raise ValueError(f"invalid {role} configuration")
+        if role == "engine" and "database_path" in values and (
+                not isinstance(values["database_path"], str) or not values["database_path"]):
+            raise ValueError("engine.database_path must be a non-empty path")
     return data
 
 
@@ -93,7 +100,7 @@ def mkdirs(sftp, path):
             sftp.mkdir(current)
 
 
-def deploy(role, info, files):
+def deploy(role, info, files, *, restart=True, engine_address=None, database_path=None):
     try:
         import paramiko
     except ImportError as exc:
@@ -122,6 +129,21 @@ def deploy(role, info, files):
                 sftp.put(str(local), remote, confirm=True)
                 print(f"  copied {relative}")
                 changed += 1
+        if restart:
+            command = ["python3", destination + "/deploy/manage_process.py", role]
+            if role == "engine":
+                command += ["--bind", host, "--database", database_path or
+                            "~/DartScore/runtime/game.sqlite3"]
+            else:
+                command += ["--engine-url", f"http://{engine_address}:8765"]
+            _stdin, stdout, stderr = ssh.exec_command(shlex.join(command), timeout=25)
+            output = stdout.read().decode("utf-8", errors="replace")
+            error = stderr.read().decode("utf-8", errors="replace")
+            code = stdout.channel.recv_exit_status()
+            if output.strip():
+                print(output.rstrip())
+            if code:
+                raise RuntimeError(f"{role} restart failed: {error.strip() or output.strip()}")
     print(f"[{role}] {changed} updated, {len(files) - changed} unchanged")
 
 
@@ -131,8 +153,12 @@ def main(argv=None):
                         help="local YAML configuration (default: deploy/deploy.local.yaml)")
     parser.add_argument("--only", choices=tuple(TARGETS), help="deploy one Pi only")
     parser.add_argument("--dry-run", action="store_true", help="print plan without connecting or prompting")
+    parser.add_argument("--copy-only", action="store_true", help="copy code without restarting processes")
     args = parser.parse_args(argv)
     config = load_config(args.config)
+    engine_values = config.get("engine", {})
+    engine_address = engine_values.get("ip") or engine_values.get("host") or TARGETS["engine"]
+    database_path = engine_values.get("database_path")
     for role in ((args.only,) if args.only else TARGETS):
         files = manifest(role)
         info = connection_info(role, config, args.dry_run)
@@ -142,9 +168,11 @@ def main(argv=None):
             for path in files:
                 print(f"  {path}")
         else:
-            deploy(role, info, files)
+            deploy(role, info, files, restart=not args.copy_only,
+                   engine_address=engine_address, database_path=database_path)
     if not args.dry_run:
-        print("Copy complete. Restart the selected process to use the new code.")
+        print("Copy complete." + (" Processes left running as-is." if args.copy_only else
+                                  " Selected processes restarted from deployed code."))
 
 
 if __name__ == "__main__":

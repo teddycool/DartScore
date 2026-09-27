@@ -2,10 +2,11 @@
 # The local file is ignored by Git. The IP takes priority over the hostname.
 engine:
   host: dartscore-engine
-  ip: null  # Example: 192.168.1.65
+  ip: null  # Example: 192.168.1.64
   user: pi
   password: null  # Enter at run time; use "" to try an SSH key instead.
   port: 22
+  database_path: ~/DartScore/runtime/game.sqlite3
 presentation:
   host: dartscore-presentation
   ip: null  # Set an IP if this hostname does not resolve on your network.

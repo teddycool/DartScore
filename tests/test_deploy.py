@@ -33,7 +33,7 @@ class FakeSFTP:
 
 
 class FakeSSH:
-    def __init__(self, sftp): self.sftp = sftp
+    def __init__(self, sftp): self.sftp = sftp; self.commands = []
     def __enter__(self): return self
     def __exit__(self, *_): pass
     def load_system_host_keys(self): pass
@@ -42,13 +42,18 @@ class FakeSSH:
         assert host == "dartscore-engine"
         assert kwargs["username"] == "pi"
     def open_sftp(self): return self.sftp
+    def exec_command(self, command, timeout):
+        self.commands.append(command)
+        output = io.BytesIO(b"started engine process 123\n")
+        output.channel = types.SimpleNamespace(recv_exit_status=lambda: 0)
+        return None, output, io.BytesIO()
 
 
 class DeployTests(unittest.TestCase):
     def test_manifest_has_no_cross_pi_components(self):
         engine = {str(path) for path in script.manifest("engine")}
         presentation = {str(path) for path in script.manifest("presentation")}
-        self.assertEqual(engine & presentation, {"SW/__init__.py"})
+        self.assertEqual(engine & presentation, {"SW/__init__.py", "deploy/manage_process.py"})
         self.assertIn("SW/serve_engine.py", engine)
         self.assertIn("SW/serve_presentation.py", presentation)
         self.assertTrue(any(path.endswith("static/app.js") for path in presentation))
@@ -75,7 +80,8 @@ class DeployTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             home = Path(temp)
             sftp = FakeSFTP(home)
-            fake_paramiko = types.SimpleNamespace(SSHClient=lambda: FakeSSH(sftp), RejectPolicy=object)
+            ssh = FakeSSH(sftp)
+            fake_paramiko = types.SimpleNamespace(SSHClient=lambda: ssh, RejectPolicy=object)
             files = script.manifest("engine")
             data_dir = home / "dartscore-deploy/runtime"
             data_dir.mkdir(parents=True)
@@ -83,8 +89,13 @@ class DeployTests(unittest.TestCase):
             with patch.dict(sys.modules, {"paramiko": fake_paramiko}), patch("sys.stdout", new_callable=io.StringIO):
                 script.deploy("engine", ("dartscore-engine", 22, "pi", "secret"), files)
                 self.assertEqual(len(sftp.writes), len(files))
-                script.deploy("engine", ("dartscore-engine", 22, "pi", "secret"), files)
+                self.assertIn("manage_process.py", ssh.commands[0])
+                self.assertIn("--bind dartscore-engine", ssh.commands[0])
+                self.assertNotIn("secret", ssh.commands[0])
+                script.deploy("engine", ("dartscore-engine", 22, "pi", "secret"), files,
+                              restart=False)
                 self.assertEqual(len(sftp.writes), len(files))
+                self.assertEqual(len(ssh.commands), 1)
             self.assertEqual((data_dir / "game.sqlite3").read_bytes(), b"keep this game")
             self.assertFalse((home / "dartscore-deploy/SW/Presentation").exists())
 
