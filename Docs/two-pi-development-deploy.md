@@ -36,13 +36,13 @@ Each Pi receives code under `~/dartscore-deploy/SW/`. The script never copies lo
 The deployer normally does this automatically. For manual troubleshooting, on the Pi 5 start the **deployed code** using the current **absolute database path**:
 
 ```sh
-python3 "$HOME/dartscore-deploy/SW/serve_engine.py" --db "$HOME/DartScore/runtime/game.sqlite3" --host 192.168.1.65
+python3 "$HOME/dartscore-deploy/SW/serve_engine.py" --db "$HOME/DartScore/runtime/game.sqlite3" --host 192.168.1.64
 ```
 
 On the Pi 4B, run:
 
 ```sh
-python3 "$HOME/dartscore-deploy/SW/serve_presentation.py" --engine-url http://192.168.1.65:8765
+python3 "$HOME/dartscore-deploy/SW/serve_presentation.py" --engine-url http://192.168.1.64:8765
 ```
 
 Adjust the Pi 5 IP in these commands if needed. Open `http://127.0.0.1:8080` on the connected screen. Refresh the browser after deploying changed HTML/CSS/JavaScript so it loads the new files; subsequent engine restarts should reconnect automatically. The Pi 5 journal remains at the same path. If your current database lives elsewhere, substitute that exact path instead of starting with an empty game.
