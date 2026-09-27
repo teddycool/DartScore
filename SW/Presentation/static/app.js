@@ -27,13 +27,15 @@ function render() {
     item.setAttribute("aria-label", `Dart ${index + 1}: ${index < darts.length ? `${darts[index]} points` : "not thrown"}`);
     return item;
   }));
+  const reviews = (state?.pending_throws ?? []).filter((item) => item.status === "uncertain").length;
+  const queued = pendingCount - reviews;
   byId("round-status").textContent = complete ? "Round complete · remove the darts to continue" :
-    `${darts.length} scored · ${pendingCount} awaiting review · ${3 - darts.length - pendingCount} remaining`;
+    `${darts.length} scored · ${reviews} to review${queued ? ` · ${queued} confirmed waiting` : ""} · ${3 - darts.length - pendingCount} remaining`;
   const cameras = state?.cameras ?? [];
   byId("camera-status").textContent = cameras.length ? cameras.map((c) => `${c.camera_id}: ${c.state}`).join(" · ") : "Cameras: not connected";
   byId("attention").hidden = !pending;
   if (pending) {
-    byId("candidate").textContent = `${pendingCount} throw${pendingCount === 1 ? "" : "s"} awaiting review. Review the next dart (${pending.throw_id}): proposed ${pending.points ?? "unknown"} points. No score has been committed for this dart.`;
+    byId("candidate").textContent = `${reviews} throw${reviews === 1 ? "" : "s"} to review. Next dart (${pending.throw_id}): proposed ${pending.points ?? "unknown"} points. Confirmed darts behind it will score automatically after review.`;
     byId("evidence").textContent = pending.evidence_refs?.length ? `Evidence references: ${pending.evidence_refs.join(", ")}` : "No images available yet.";
   }
   byId("start").hidden = state?.phase !== "idle";

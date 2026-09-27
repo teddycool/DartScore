@@ -47,6 +47,7 @@ class BoardHitInputTests(unittest.TestCase):
         self.assertIn("uncertain", self.inputs.pending)
         corrected = self.inputs.resolve("uncertain", "correct", 20)
         self.assertEqual(corrected.score_event.total, 20)
+        self.assertEqual([event.throw_id for event in corrected.following_scores], ["later"])
         self.assertEqual(self.inputs.resolve("uncertain", "correct", 20), corrected)
         with self.assertRaises(ValueError):
             self.inputs.resolve("uncertain", "reject")
@@ -70,6 +71,17 @@ class BoardHitInputTests(unittest.TestCase):
             self.assertEqual(self.inputs.resolve(f"dart-{index}", "correct", score).outcome, "scored")
         self.assertEqual(self.game.snapshot().current_turn, (20, 0, 25))
         self.assertEqual(self.game.snapshot().total, 45)
+
+    def test_confirmed_third_dart_scores_when_second_review_is_resolved(self):
+        self.inputs.submit(hit("first", 20))
+        self.inputs.submit(hit("second", 15, "uncertain"))
+        self.assertEqual(self.inputs.submit(hit("third", 25)).outcome, "pending")
+        self.assertEqual(list(self.inputs.pending), ["second", "third"])
+        result = self.inputs.resolve("second", "confirm")
+        self.assertEqual([event.points for event in result.following_scores], [25])
+        self.assertEqual(self.game.snapshot().current_turn, (20, 15, 25))
+        self.assertEqual(self.inputs.pending, {})
+        self.assertEqual(self.inputs.submit(hit("third", 25)).outcome, "scored")
 
     def test_pause_ignores_throw_id_permanently_and_health_is_separate(self):
         self.game.pause()

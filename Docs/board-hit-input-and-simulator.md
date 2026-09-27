@@ -24,7 +24,8 @@ confirmed hit scores immediately when no earlier candidate needs review. Up to
 three scored and pending darts together occupy a round. Later candidates can
 queue while review is pending; even a confirmed hit waits behind an earlier
 uncertain candidate to preserve dart order. The UI resolves queued candidates
-in that order after the player has thrown. A fourth candidate is ignored until
+in that order after the player has thrown. When the earliest uncertain dart is
+resolved, following confirmed darts score automatically in order. A fourth candidate is ignored until
 a false detection is rejected (freeing a slot) or the board is cleared. `resolve()`
 confirms the proposed points, corrects them with achievable single-dart points,
 or rejects a false detection. An accepted miss at zero points is distinct from

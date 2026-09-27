@@ -13,7 +13,7 @@ The Raspberry Pi 4B (2 GB) runs a lightweight web server/proxy and a fullscreen 
 
 The first playable integration should support the existing simple accumulating-score mode and one player. The layout is designed for multiple players and 301/501, but those choices are shown only when the corresponding GameService rules exist. A disabled future game type must never appear to start a playable game.
 
-The current slice displays the total, three scored dart slots, pending review count, phase, camera states and the next points-only candidate. It has Start, Pause/Resume, Confirm/Correct/Reject and Remove darts / Next round controls. Up to three detections can wait for review while the player finishes throwing; the operator resolves them in dart order after going to the board. The round button becomes available after three accepted darts and a resolved review; while paused it remains disabled. The API does not yet expose a latest-throw summary, player-name configuration or evidence images; the page shows evidence references as text. It does not calculate game rules locally.
+The current slice displays the total, three scored dart slots, pending review count, phase, camera states and the next points-only candidate. It has Start, Pause/Resume, Confirm/Correct/Reject and Remove darts / Next round controls. Up to three detections can wait while the player finishes throwing; the operator resolves uncertain darts in order after going to the board. A confirmed dart behind an uncertain one scores automatically when the earlier review is resolved. The round button becomes available after three accepted darts and a resolved review; while paused it remains disabled. The API does not yet expose a latest-throw summary, player-name configuration or evidence images; the page shows evidence references as text. It does not calculate game rules locally.
 
 ## Main screen
 
@@ -37,7 +37,7 @@ While paused, camera monitoring may continue for health, but throw detection is 
 
 ## Uncertain-hit review
 
-An uncertain throw creates a pending item with a unique `throw_id`. Up to three candidates can be pending together; the player's total changes only as each is resolved. The attention panel shows the pending count and the next dart in order, with its proposed points and optional still-image references. A confirmed hit queued behind an uncertain one also appears here so that scores commit in dart order.
+An uncertain throw creates a pending item with a unique `throw_id`. Up to three candidates can be pending together; the player's total changes as uncertain darts are resolved and following confirmed darts score. The attention panel shows the number needing review, the number of confirmed darts waiting behind them, and the next dart in order, with its proposed points and optional still-image references.
 
 The operator has three mutually exclusive actions:
 

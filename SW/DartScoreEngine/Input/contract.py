@@ -41,6 +41,7 @@ class InputResult:
     throw_id: str
     score_event: ScoreEvent | None = None
     reason: str | None = None
+    following_scores: tuple[ScoreEvent, ...] = ()
 
 
 class InputCoordinator:
@@ -84,6 +85,15 @@ class InputCoordinator:
         self._results[candidate.throw_id] = result
         return result
 
+    def restore_legacy_ignored(self, candidate: BoardHitCandidate) -> InputResult:
+        """Replay an old journal entry that ignored a hit during review."""
+        if candidate.throw_id in self._candidates:
+            raise ValueError("legacy ignored throw ID already used")
+        result = InputResult("ignored", candidate.throw_id, reason="pending_review")
+        self._candidates[candidate.throw_id] = candidate
+        self._results[candidate.throw_id] = result
+        return result
+
     def resolve(self, throw_id: str, decision: str, points: int | None = None) -> InputResult:
         """Confirm proposed points, correct them, or reject a false detection."""
         if decision not in ("confirm", "correct", "reject"):
@@ -113,14 +123,26 @@ class InputCoordinator:
                 raise ValueError("reject does not accept points")
             accepted_points = None
 
-        if decision == "reject":
-            result = InputResult("rejected", throw_id)
-        else:
+        if decision != "reject":
             event = self.game.record_hit(throw_id, accepted_points)
             if event is None:
                 raise RuntimeError("pending throw could not be committed")
-            result = InputResult("scored", throw_id, event)
         del self.pending[throw_id]
+        following = []
+        while self.pending:
+            next_id, next_candidate = next(iter(self.pending.items()))
+            if next_candidate.status != "confirmed":
+                break
+            scored = self.game.record_hit(next_id, next_candidate.points)
+            if scored is None:
+                raise RuntimeError("queued confirmed throw could not be committed")
+            following.append(scored)
+            del self.pending[next_id]
+            self._results[next_id] = InputResult("scored", next_id, scored)
+            self._resolutions[next_id] = ("confirm", None)
+        result = InputResult("rejected" if decision == "reject" else "scored", throw_id,
+                             None if decision == "reject" else event,
+                             following_scores=tuple(following))
         self._results[throw_id] = result
         self._resolutions[throw_id] = signature
         return result

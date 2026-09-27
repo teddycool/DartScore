@@ -7,7 +7,15 @@ from DartScoreEngine.Game import GameService
 from .contract import BoardHitCandidate, InputCoordinator
 
 
-def apply_action(game: GameService, inputs: InputCoordinator, action: dict) -> dict:
+def serialize_result(result):
+    record = asdict(result)
+    if not record["following_scores"]:
+        del record["following_scores"]  # Keep existing journal records replayable.
+    return record
+
+
+def apply_action(game: GameService, inputs: InputCoordinator, action: dict,
+                 *, legacy_pending_ignored=False) -> dict:
     """Return a JSON-compatible result; raise before accepting invalid input."""
     if not isinstance(action, dict):
         raise ValueError("action must be an object")
@@ -26,9 +34,11 @@ def apply_action(game: GameService, inputs: InputCoordinator, action: dict) -> d
                 camera_ids=tuple(action.get("camera_ids", ())),
                 evidence_refs=tuple(action.get("evidence_refs", ())),
             )
-            return asdict(inputs.submit(candidate))
+            if legacy_pending_ignored:
+                return serialize_result(inputs.restore_legacy_ignored(candidate))
+            return serialize_result(inputs.submit(candidate))
         if kind in ("confirm", "correct", "reject"):
-            return asdict(inputs.resolve(action["throw_id"], kind, action.get("points")))
+            return serialize_result(inputs.resolve(action["throw_id"], kind, action.get("points")))
         if kind == "pause":
             game.pause()
             return {"outcome": "paused"}

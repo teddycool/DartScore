@@ -75,7 +75,12 @@ class DurableSession:
                 expected = action.get("expected_revision")
                 if expected is not None and expected != game.snapshot().revision:
                     raise ValueError("committed revision precondition differs")
-                result = apply_action(game, inputs, action)
+                old_result = json.loads(stored_result)
+                legacy_ignored = (old_result.get("outcome") == "ignored" and
+                                  old_result.get("reason") == "pending_review" and
+                                  action.get("type") in ("hit", "uncertain"))
+                result = apply_action(game, inputs, action,
+                                      legacy_pending_ignored=legacy_ignored)
                 if _json(result) != stored_result:
                     raise ValueError("replayed result differs from committed result")
             except (ValueError, TypeError, RuntimeError) as exc:
@@ -129,13 +134,13 @@ class DurableSession:
             seen = set()
             for (record,) in results:
                 result = json.loads(record)
-                event = result.get("score_event")
-                if result.get("outcome") != "scored" or event is None:
-                    continue
-                key = (event["throw_id"], event["revision"])
-                if key not in seen:
-                    accepted.append(event)
-                    seen.add(key)
+                events = ([result["score_event"]] if result.get("score_event") is not None else [])
+                events.extend(result.get("following_scores", ()))
+                for event in events:
+                    key = (event["throw_id"], event["revision"])
+                    if key not in seen:
+                        accepted.append(event)
+                        seen.add(key)
             return accepted
 
     def close(self):

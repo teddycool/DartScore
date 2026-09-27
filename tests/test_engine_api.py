@@ -141,6 +141,24 @@ class ApiTests(unittest.TestCase):
         with DurableSession(self.db) as reopened:
             self.assertEqual(reopened.state()["game"]["current_turn"], (20, 0, 25))
 
+    def test_confirmed_third_dart_commits_after_second_review(self):
+        self.command("start_game", "start", 0)
+        for index, kind, points in ((1, "hit", 20), (2, "uncertain", 15), (3, "hit", 25)):
+            self.request("POST", "/api/v1/dev/actions", {
+                "request_id": f"capture-{index}", "type": kind, "throw_id": f"dart-{index}",
+                "captured_at": "2026-09-26T12:00:00Z", "points": points})
+        _, state = self.request("GET", "/api/v1/state")
+        self.assertEqual([item["status"] for item in state["pending_throws"]],
+                         ["uncertain", "confirmed"])
+        _, response = self.command("confirm_throw", "confirm-second", 2, {"throw_id": "dart-2"})
+        self.assertEqual([item["throw_id"] for item in response["result"]["following_scores"]], ["dart-3"])
+        _, state = self.request("GET", "/api/v1/state")
+        self.assertEqual(state["pending_throws"], [])
+        self.assertEqual((state["players"][0]["current_turn"], state["players"][0]["total"]),
+                         ([20, 15, 25], 60))
+        self.assertEqual([event["throw_id"] for event in self.store.accepted_score_events()],
+                         ["dart-1", "dart-2", "dart-3"])
+
 
 if __name__ == "__main__":
     unittest.main()

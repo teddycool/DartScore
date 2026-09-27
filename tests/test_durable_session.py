@@ -33,6 +33,7 @@ class DurableSessionTests(unittest.TestCase):
         with DurableSession(self.db) as store:
             store.apply("start", {"type": "start"})
             scored = store.apply("hit-1", hit("throw-1", 20))
+            self.assertNotIn("following_scores", scored)  # Old journal result shape remains valid.
             store.apply("camera-1", {"type": "camera", "camera_id": "cam-1", "state": "degraded"})
             store.apply("pending", hit("throw-2", 5, uncertain=True))
             self.assertEqual(store.state()["game"]["total"], 20)
@@ -85,6 +86,24 @@ class DurableSessionTests(unittest.TestCase):
                                                  "points": 25})
             store.apply("confirm-replacement", {"type": "confirm", "throw_id": "replacement"})
             self.assertEqual(store.state()["game"]["current_turn"], (25, 25, 20))
+
+    def test_legacy_hit_ignored_during_review_remains_ignored_on_replay(self):
+        with DurableSession(self.db) as store:
+            store.apply("start", {"type": "start"})
+            store.apply("uncertain", hit("first", 5, True))
+            store.apply("later", hit("old-ignored", 20))
+        # This is the result shape saved by the previous one-pending-at-a-time engine.
+        old_result = {"outcome": "ignored", "throw_id": "old-ignored",
+                      "score_event": None, "reason": "pending_review"}
+        with sqlite3.connect(self.db) as conn:
+            conn.execute("UPDATE actions SET result=? WHERE request_id='later'",
+                         (json.dumps(old_result, sort_keys=True, separators=(",", ":")),))
+        with DurableSession(self.db) as store:
+            self.assertEqual(list(store.state()["pending"]), ["first"])
+            store.apply("confirm-first", {"type": "confirm", "throw_id": "first"})
+            self.assertEqual(store.apply("repeat-old", hit("old-ignored", 20))["reason"],
+                             "pending_review")
+            self.assertEqual(store.state()["game"]["total"], 5)
 
     def test_failed_write_restores_memory_and_allows_retry(self):
         with DurableSession(self.db) as store:
