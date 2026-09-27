@@ -1,0 +1,14 @@
+# Copy to deploy/deploy.local.yaml and fill in your connection details.
+# The local file is ignored by Git. The IP takes priority over the hostname.
+engine:
+  host: dartscore-engine
+  ip: null  # Example: 192.168.1.65
+  user: pi
+  password: null  # Enter at run time; use "" to try an SSH key instead.
+  port: 22
+presentation:
+  host: dartscore-presentation
+  ip: null  # Set an IP if this hostname does not resolve on your network.
+  user: pi
+  password: null
+  port: 22

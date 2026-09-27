@@ -50,7 +50,7 @@ contract] and link:Docs/durable-game-session.md[the persistence notes].
 == Deploy to two Pis for development
 
 For iterative testing across two Pis, use
-link:Docs/two-pi-development-deploy.md[the SSH/rsync development deploy guide].
+link:Docs/two-pi-development-deploy.md[the Python SSH/SFTP development deploy guide].
 It copies only the current engine code to the Pi 5 and presentation code to the
 Pi 4B, keeping game data at its existing path. Service startup remains manual.
 
