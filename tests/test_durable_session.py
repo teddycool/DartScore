@@ -69,6 +69,23 @@ class DurableSessionTests(unittest.TestCase):
             self.assertEqual(again["outcome"], "ignored")
             self.assertEqual(store.state()["game"]["total"], 0)
 
+    def test_three_pending_darts_survive_restart_and_rejection_frees_slot(self):
+        with DurableSession(self.db) as store:
+            store.apply("start", {"type": "start"})
+            for index in range(3):
+                self.assertEqual(store.apply(f"candidate-{index}", hit(f"dart-{index}", 5, True))["outcome"],
+                                 "pending")
+            self.assertEqual(store.apply("fourth", hit("dart-fourth", 20))["reason"], "turn_complete")
+        with DurableSession(self.db) as store:
+            self.assertEqual(list(store.state()["pending"]), ["dart-0", "dart-1", "dart-2"])
+            store.apply("reject-first", {"type": "reject", "throw_id": "dart-0"})
+            self.assertEqual(store.apply("replacement", hit("replacement", 20))["outcome"], "pending")
+            for index in (1, 2):
+                store.apply(f"correct-{index}", {"type": "correct", "throw_id": f"dart-{index}",
+                                                 "points": 25})
+            store.apply("confirm-replacement", {"type": "confirm", "throw_id": "replacement"})
+            self.assertEqual(store.state()["game"]["current_turn"], (25, 25, 20))
+
     def test_failed_write_restores_memory_and_allows_retry(self):
         with DurableSession(self.db) as store:
             store.apply("start", {"type": "start"})

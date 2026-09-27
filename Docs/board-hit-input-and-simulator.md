@@ -19,10 +19,13 @@ this same coordinator without hardware; it does not calculate game scores.
 | `camera_ids` | Camera IDs contributing to the candidate, if any. |
 | `evidence_refs` | Opaque image/evidence references, if any; never image bytes. |
 
-`InputCoordinator.submit()` returns `scored`, `pending`, or `ignored`. Only a
-confirmed accepted hit enters `GameService.record_hit`. An uncertain candidate
-does not alter the game total. One pending review is supported at a time; new
-throw IDs are ignored while it is pending to preserve throw order. `resolve()`
+`InputCoordinator.submit()` returns `scored`, `pending`, or `ignored`. A
+confirmed hit scores immediately when no earlier candidate needs review. Up to
+three scored and pending darts together occupy a round. Later candidates can
+queue while review is pending; even a confirmed hit waits behind an earlier
+uncertain candidate to preserve dart order. The UI resolves queued candidates
+in that order after the player has thrown. A fourth candidate is ignored until
+a false detection is rejected (freeing a slot) or the board is cleared. `resolve()`
 confirms the proposed points, corrects them with achievable single-dart points,
 or rejects a false detection. An accepted miss at zero points is distinct from
 rejecting a false detection. A repeated identical candidate/resolution returns

@@ -39,8 +39,9 @@ class BoardHitInputTests(unittest.TestCase):
     def test_uncertain_correction_and_rejection_are_distinct_from_miss(self):
         self.assertEqual(self.inputs.submit(hit("uncertain", 5, "uncertain")).outcome, "pending")
         self.assertEqual(self.game.snapshot().total, 0)
-        blocked = self.inputs.submit(hit("later", 20))
-        self.assertEqual((blocked.outcome, blocked.reason), ("ignored", "pending_review"))
+        queued = self.inputs.submit(hit("later", 20))
+        self.assertEqual(queued.outcome, "pending")
+        self.assertEqual(list(self.inputs.pending), ["uncertain", "later"])
         with self.assertRaises(ValueError):
             self.inputs.resolve("uncertain", "correct", 23)
         self.assertIn("uncertain", self.inputs.pending)
@@ -50,11 +51,25 @@ class BoardHitInputTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.inputs.resolve("uncertain", "reject")
 
+        self.assertEqual(self.inputs.resolve("later", "confirm").score_event.total, 40)
+
         self.inputs.submit(hit("false", None, "uncertain"))
         self.assertEqual(self.inputs.resolve("false", "reject").outcome, "rejected")
-        self.assertEqual(self.game.snapshot().total, 20)
+        self.assertEqual(self.game.snapshot().total, 40)
         self.inputs.submit(hit("miss", 0))
-        self.assertEqual(self.game.snapshot().current_turn, (20, 0))
+        self.assertEqual(self.game.snapshot().current_turn, (20, 20, 0))
+
+    def test_three_uncertain_darts_can_all_be_corrected_after_capture(self):
+        for index in range(3):
+            self.assertEqual(self.inputs.submit(hit(f"dart-{index}", 5, "uncertain")).outcome, "pending")
+        self.assertEqual(self.inputs.submit(hit("fourth", 20)).reason, "turn_complete")
+        self.assertEqual(self.game.snapshot().current_turn, ())
+        with self.assertRaisesRegex(ValueError, "dart order"):
+            self.inputs.resolve("dart-2", "correct", 25)
+        for index, score in enumerate((20, 0, 25)):
+            self.assertEqual(self.inputs.resolve(f"dart-{index}", "correct", score).outcome, "scored")
+        self.assertEqual(self.game.snapshot().current_turn, (20, 0, 25))
+        self.assertEqual(self.game.snapshot().total, 45)
 
     def test_pause_ignores_throw_id_permanently_and_health_is_separate(self):
         self.game.pause()

@@ -14,7 +14,8 @@ from DartScoreEngine.Input.store import RevisionConflict
 def snapshot(store):
     state = store.state()
     game = state["game"]
-    pending = next(iter(state["pending"].values()), None)
+    pending_throws = list(state["pending"].values())
+    pending = pending_throws[0] if pending_throws else None
     cameras = [{"camera_id": key, "state": value, "calibrated": False}
                for key, value in sorted(state["camera_health"].items())]
     return {"schema_version": 1, "game_id": store.game_id,
@@ -22,7 +23,7 @@ def snapshot(store):
             "game_type": game["game_type"], "active_player_id": game["player_id"],
             "players": [{"player_id": game["player_id"], "name": "Player 1",
                          "total": game["total"], "current_turn": game["current_turn"]}],
-            "pending_throw": pending,
+            "pending_throw": pending, "pending_throws": pending_throws,
             "engine": {"state": "attention" if pending else "ready", "reason": "pending_review" if pending else None},
             "cameras": cameras}
 

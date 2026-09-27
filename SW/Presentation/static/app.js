@@ -11,6 +11,7 @@ let retryTimer = null;
 function render() {
   const ready = online && state !== null;
   const pending = state?.pending_throw;
+  const pendingCount = state?.pending_throws?.length ?? (pending ? 1 : 0);
   byId("connection").textContent = ready ? "Engine connected" : "Engine disconnected · score may be stale";
   byId("connection").classList.toggle("online", ready);
   byId("score").textContent = state?.players?.[0]?.total ?? "—";
@@ -27,12 +28,12 @@ function render() {
     return item;
   }));
   byId("round-status").textContent = complete ? "Round complete · remove the darts to continue" :
-    `${darts.length} of 3 darts scored this round`;
+    `${darts.length} scored · ${pendingCount} awaiting review · ${3 - darts.length - pendingCount} remaining`;
   const cameras = state?.cameras ?? [];
   byId("camera-status").textContent = cameras.length ? cameras.map((c) => `${c.camera_id}: ${c.state}`).join(" · ") : "Cameras: not connected";
   byId("attention").hidden = !pending;
   if (pending) {
-    byId("candidate").textContent = `Throw ${pending.throw_id}: proposed ${pending.points ?? "unknown"} points. No score has been committed.`;
+    byId("candidate").textContent = `${pendingCount} throw${pendingCount === 1 ? "" : "s"} awaiting review. Review the next dart (${pending.throw_id}): proposed ${pending.points ?? "unknown"} points. No score has been committed for this dart.`;
     byId("evidence").textContent = pending.evidence_refs?.length ? `Evidence references: ${pending.evidence_refs.join(", ")}` : "No images available yet.";
   }
   byId("start").hidden = state?.phase !== "idle";
@@ -79,6 +80,7 @@ async function command(type, payload = {}) {
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.error?.message || `Command failed (${response.status})`);
+    if (type === "correct_throw") byId("correct-points").value = "";
     byId("notice").textContent = `Accepted: ${type.replaceAll("_", " ")}.`;
   } catch (error) {
     byId("notice").textContent = `${error.message}. Reloading engine state.`;

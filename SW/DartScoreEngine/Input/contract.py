@@ -46,8 +46,8 @@ class InputResult:
 class InputCoordinator:
     """Accept at most one resolution for each throw ID.
 
-    While an uncertain hit is pending, new throw IDs are ignored so a later
-    correction cannot be applied out of order. Ignored IDs remain remembered.
+    Reserve up to three slots for scored and pending throws together. Resolve
+    pending throws in arrival order so corrected scores keep their dart order.
     """
 
     def __init__(self, game: GameService):
@@ -68,11 +68,11 @@ class InputCoordinator:
         state = self.game.snapshot()
         if state.phase != "playing":
             result = InputResult("ignored", candidate.throw_id, reason="game_not_playing")
-        elif self.pending:
-            result = InputResult("ignored", candidate.throw_id, reason="pending_review")
-        elif len(state.current_turn) == 3:
+        elif len(state.current_turn) + len(self.pending) == 3:
             result = InputResult("ignored", candidate.throw_id, reason="turn_complete")
-        elif candidate.status == "uncertain":
+        elif candidate.status == "uncertain" or self.pending:
+            # A confirmed hit behind an unresolved candidate must wait as well;
+            # committing it now would put scores in the wrong dart order.
             self.pending[candidate.throw_id] = candidate
             result = InputResult("pending", candidate.throw_id)
         else:
@@ -96,6 +96,8 @@ class InputCoordinator:
         candidate = self.pending.get(throw_id)
         if candidate is None:
             raise ValueError("no pending throw with this ID")
+        if throw_id != next(iter(self.pending)):
+            raise ValueError("resolve pending throws in dart order")
         if self.game.snapshot().phase != "playing":
             raise ValueError("resume the game before resolving a pending throw")
         if decision == "correct":

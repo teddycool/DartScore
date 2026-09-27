@@ -95,7 +95,7 @@ class ApiTests(unittest.TestCase):
         candidate("two", "hit", 0)
         candidate("three", "uncertain", 15)
         self.assertEqual(self.command("next_round", "review-first", 3)[0], 400)
-        self.assertEqual(candidate("blocked", "hit", 5)[1]["result"]["reason"], "pending_review")
+        self.assertEqual(candidate("blocked", "hit", 5)[1]["result"]["reason"], "turn_complete")
         _, resolved = self.command("correct_throw", "resolve", 3, {"throw_id": "three", "points": 25})
         self.assertEqual(resolved["revision"], 4)
         self.assertEqual(self.request("GET", "/api/v1/state")[1]["players"][0]["current_turn"], [20, 0, 25])
@@ -115,6 +115,31 @@ class ApiTests(unittest.TestCase):
         with DurableSession(self.db) as reopened:
             self.assertEqual(reopened.state()["game"]["current_turn"], (50,))
             self.assertEqual(reopened.state()["game"]["total"], 95)
+
+    def test_three_uncertain_darts_are_reviewable_in_order_after_restart(self):
+        self.command("start_game", "start", 0)
+        for index in range(3):
+            status, response = self.request("POST", "/api/v1/dev/actions", {
+                "request_id": f"capture-{index}", "type": "uncertain", "throw_id": f"dart-{index}",
+                "captured_at": "2026-09-26T12:00:00Z", "points": 5})
+            self.assertEqual((status, response["result"]["outcome"]), (200, "pending"))
+        _, state = self.request("GET", "/api/v1/state")
+        self.assertEqual([item["throw_id"] for item in state["pending_throws"]],
+                         ["dart-0", "dart-1", "dart-2"])
+        self.assertEqual(state["players"][0]["current_turn"], [])
+        self.assertEqual(self.command("correct_throw", "out-of-order", 1,
+                                      {"throw_id": "dart-2", "points": 25})[0], 400)
+        for index, points in enumerate((20, 0, 25)):
+            status, response = self.command("correct_throw", f"review-{index}", 1 + index,
+                                            {"throw_id": f"dart-{index}", "points": points})
+            self.assertEqual((status, response["result"]["outcome"]), (200, "scored"))
+        _, state = self.request("GET", "/api/v1/state")
+        self.assertEqual(state["pending_throws"], [])
+        self.assertEqual((state["players"][0]["current_turn"], state["players"][0]["total"]),
+                         ([20, 0, 25], 45))
+        self.stop()
+        with DurableSession(self.db) as reopened:
+            self.assertEqual(reopened.state()["game"]["current_turn"], (20, 0, 25))
 
 
 if __name__ == "__main__":
