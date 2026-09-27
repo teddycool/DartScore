@@ -14,6 +14,7 @@ from pathlib import Path
 HOME = Path.home()
 DEPLOY = HOME / "dartscore-deploy"
 ENTRIES = {"engine": "serve_engine.py", "presentation": "serve_presentation.py"}
+UNITS = {"engine": "dartscore-engine.service", "presentation": "dartscore-presentation.service"}
 
 
 def owned_processes(role):
@@ -67,7 +68,7 @@ def start(role, bind, engine_url, database):
         probe_host, probe_port = bind, 8765
     else:
         command += ["--engine-url", engine_url]
-        probe_host, probe_port = "127.0.0.1", 8080
+        probe_host, probe_port = "localhost", 8080
     run = DEPLOY / "run"
     run.mkdir(mode=0o700, exist_ok=True)
     log_path = run / f"{role}.log"
@@ -96,10 +97,24 @@ def start(role, bind, engine_url, database):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("role", choices=tuple(ENTRIES))
-    parser.add_argument("--bind", default="127.0.0.1")
-    parser.add_argument("--engine-url", default="http://dartscore-engine:8765")
-    parser.add_argument("--database", default="~/DartScore/runtime/game.sqlite3")
+    parser.add_argument("--bind")
+    parser.add_argument("--engine-url")
+    parser.add_argument("--database")
     args = parser.parse_args()
+    unit = HOME / ".config/systemd/user" / UNITS[args.role]
+    if unit.is_file():
+        # The service manager owns the process once installed. Never launch a
+        # second unmanaged copy beside it.
+        result = subprocess.run(("systemctl", "--user", "restart", UNITS[args.role]),
+                                capture_output=True, text=True, timeout=20)
+        if result.returncode:
+            raise RuntimeError(f"service restart failed: {result.stderr.strip()}")
+        print(f"restarted {UNITS[args.role]}")
+        return
+    if args.role == "engine" and (not args.bind or not args.database):
+        parser.error("engine requires --bind and --database")
+    if args.role == "presentation" and not args.engine_url:
+        parser.error("presentation requires --engine-url")
     run = DEPLOY / "run"
     run.mkdir(mode=0o700, exist_ok=True)
     with (run / f"{args.role}.lock").open("a+") as lock:

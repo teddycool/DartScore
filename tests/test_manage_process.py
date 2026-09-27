@@ -18,7 +18,8 @@ class ProcessTests(unittest.TestCase):
     def test_missing_game_database_leaves_old_process_running(self):
         with tempfile.TemporaryDirectory() as temp:
             with patch.object(manager, "DEPLOY", Path(temp)), patch.object(manager, "stop_old") as stop:
-                with patch("sys.argv", ["manage_process.py", "engine", "--database", str(Path(temp) / "missing.db")]):
+                with patch("sys.argv", ["manage_process.py", "engine", "--bind", "engine.example",
+                                        "--database", str(Path(temp) / "missing.db")]):
                     with self.assertRaisesRegex(RuntimeError, "database missing"):
                         manager.main()
                 stop.assert_not_called()

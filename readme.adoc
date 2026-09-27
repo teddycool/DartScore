@@ -53,7 +53,10 @@ For iterative testing across two Pis, use
 link:Docs/two-pi-development-deploy.md[the Python SSH/SFTP development deploy guide].
 It copies only the current engine code to the Pi 5 and presentation code to the
 Pi 4B, keeping game data at its existing path, then restarts those processes.
-System services and reboot startup remain later work.
+Boot startup is available through optional per-user system services.
+Use `--install-services` once after enabling user lingering on both Pis for
+boot startup. For a shareable status/log report, run
+`python3 deploy/collect_diagnostics.py`. See the deploy guide for details.
 
 == Run the camera-free engine API
 
