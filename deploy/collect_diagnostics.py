@@ -8,7 +8,7 @@ import shlex
 from datetime import datetime, timezone
 from pathlib import Path
 
-from deploy_two_pis import DEFAULT_CONFIG, TARGETS, connection_info, load_config
+from deploy_two_pis import DEFAULT_CONFIG, TARGETS, connection_info, load_config, resolve_address
 
 ROOT = Path(__file__).resolve().parents[1]
 MASK = re.compile(r"(?i)\b(password|token|secret|api[_-]?key)\b\s*[:=]\s*[^\s,;]+")
@@ -33,7 +33,7 @@ def collect(role, info, engine_address):
     import paramiko
     host, port, user, password = info
     unit = f"dartscore-{role}.service"
-    base = "http://" + (engine_address + ":8765" if role == "engine" else "127.0.0.1:8080")
+    base = "http://" + (engine_address + ":8765" if role == "engine" else "localhost:8080")
     with paramiko.SSHClient() as ssh:
         ssh.load_system_host_keys()
         ssh.set_missing_host_key_policy(paramiko.RejectPolicy())
@@ -63,13 +63,14 @@ def main(argv=None):
     parser.add_argument("--out", type=Path, help="JSON report path (default: reports/timestamp.json)")
     args = parser.parse_args(argv)
     config = load_config(args.config)
-    engine_values = config.get("engine", {})
-    engine_address = engine_values.get("ip") or engine_values.get("host") or TARGETS["engine"]
+    session = {}
+    engine_address = (resolve_address("engine", config, session=session)
+                      if args.only != "presentation" else None)
     report = {"schema_version": 1, "created_at": datetime.now(timezone.utc).isoformat(),
               "description": "Bounded service, journal, disk and HTTP state/health; no DB or images",
               "targets": []}
     for role in ((args.only,) if args.only else TARGETS):
-        info = connection_info(role, config)
+        info = connection_info(role, config, session=session)
         try:
             report["targets"].append(collect(role, info, engine_address))
         except Exception as exc:

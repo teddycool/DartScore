@@ -15,7 +15,7 @@ chmod 600 deploy/deploy.local.yaml
 
 Edit `deploy/deploy.local.yaml` with the real `ip` or `host`, `user`, and optionally `password` for each Pi. `ip` takes priority when supplied. Passwords are plain text in this local file, which Git ignores; leave `password: null` to be prompted or use `password: ""` for SSH key/agent authentication. Keep the template free of real credentials. The script checks server host keys against the development computer's SSH `known_hosts`; first connect with normal `ssh user@address` and verify/accept its fingerprint. Use the **IP** as `address` when the config selects an IP, since SSH host keys are checked for the address actually used.
 
-If there is **no local config file**, the script uses `dartscore-engine` and `dartscore-presentation` and asks for a username and password for each selected Pi. `--dry-run` shows the default hostnames and file list without prompting or connecting. If the hostnames do not resolve, create the config and set `ip` values.
+If there is **no local config file**, the script asks for an IP address or hostname, username (default `pi`), and password for each selected Pi. The engine database path is also requested when starting/restarting the engine. Within one run, an address or credential is requested only once per Pi; the Pi 4B's engine URL reuses the engine address already entered. `--dry-run` shows placeholders for missing addresses and the file list without prompting or connecting. A presentation-only copy with `--copy-only` needs no engine address.
 
 ## Deploy
 

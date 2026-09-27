@@ -61,10 +61,14 @@ def install(role, bind, engine_url, database):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("role", choices=tuple(UNITS))
-    parser.add_argument("--bind", default="127.0.0.1")
-    parser.add_argument("--engine-url", default="http://dartscore-engine:8765")
-    parser.add_argument("--database", default="~/DartScore/runtime/game.sqlite3")
+    parser.add_argument("--bind")
+    parser.add_argument("--engine-url")
+    parser.add_argument("--database")
     args = parser.parse_args()
+    if args.role == "engine" and (not args.bind or not args.database):
+        parser.error("engine requires --bind and --database")
+    if args.role == "presentation" and not args.engine_url:
+        parser.error("presentation requires --engine-url")
     install(args.role, args.bind, args.engine_url, args.database)
 
 
