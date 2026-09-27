@@ -47,4 +47,31 @@ python3 "$HOME/dartscore-deploy/SW/serve_presentation.py" --engine-url http://19
 
 Adjust the Pi 5 IP in these commands if needed. Open `http://127.0.0.1:8080` on the connected screen. Refresh the browser after deploying changed HTML/CSS/JavaScript so it loads the new files; subsequent engine restarts should reconnect automatically. The Pi 5 journal remains at the same path. If your current database lives elsewhere, substitute that exact path instead of starting with an empty game.
 
-This workflow starts processes for development but not after a reboot. Once the code and data paths are settled, system services can replace this process manager and start the same deployed commands automatically.
+Without the optional system services below, deployed processes do not start after a Pi reboot.
+
+## Enable boot startup once
+
+On **each Pi**, enable lingering for the SSH user (for example `psk` on the engine and `pi` on presentation):
+
+```sh
+sudo loginctl enable-linger "$(whoami)"
+```
+
+Then from the development computer run:
+
+```sh
+.venv/bin/python deploy/deploy_two_pis.py --install-services
+```
+
+The installer checks lingering and the engine's existing database **before** it stops the old process. It installs `dartscore-engine.service` or `dartscore-presentation.service` under the SSH user's `~/.config/systemd/user/`, enables it for boot and starts it. From then on the regular deploy command copies code and uses `systemctl --user restart` for that Pi instead of launching a second unmanaged process. The services write to the user journal and retry failed startup; the Pi 4B page reconnects after the Pi 5 becomes available. `--copy-only` leaves them running.
+
+On a Pi, inspect a service with `systemctl --user status dartscore-engine.service` (or `dartscore-presentation.service`) and its log with `journalctl --user -u dartscore-engine.service -n 80 --no-pager`. The engine still uses `engine.database_path` from your local deploy YAML (default `~/DartScore/runtime/game.sqlite3`). If its address changes, update the YAML and run `--install-services` again to regenerate both units. The Pi 4B browser itself is not yet launched in kiosk mode; the service hosts the page for the screen's browser.
+
+## Collect a shareable diagnostic report
+
+```sh
+.venv/bin/python deploy/collect_diagnostics.py
+.venv/bin/python deploy/collect_diagnostics.py --only engine
+```
+
+The command saves a timestamped JSON report under ignored `reports/` on your development computer. It records each service's state, up to 200 journal lines, disk summary, deployed source commit and API state/health. It does **not** copy the database, YAML config, passwords or images. Log text is bounded and common credential assignments are masked; review the report before sharing it, since application log lines and pending evidence references can contain your own data. Upload that report when asking for help here or in Copilot.

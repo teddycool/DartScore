@@ -14,6 +14,7 @@ from pathlib import Path
 HOME = Path.home()
 DEPLOY = HOME / "dartscore-deploy"
 ENTRIES = {"engine": "serve_engine.py", "presentation": "serve_presentation.py"}
+UNITS = {"engine": "dartscore-engine.service", "presentation": "dartscore-presentation.service"}
 
 
 def owned_processes(role):
@@ -100,6 +101,16 @@ def main():
     parser.add_argument("--engine-url", default="http://dartscore-engine:8765")
     parser.add_argument("--database", default="~/DartScore/runtime/game.sqlite3")
     args = parser.parse_args()
+    unit = HOME / ".config/systemd/user" / UNITS[args.role]
+    if unit.is_file():
+        # The service manager owns the process once installed. Never launch a
+        # second unmanaged copy beside it.
+        result = subprocess.run(("systemctl", "--user", "restart", UNITS[args.role]),
+                                capture_output=True, text=True, timeout=20)
+        if result.returncode:
+            raise RuntimeError(f"service restart failed: {result.stderr.strip()}")
+        print(f"restarted {UNITS[args.role]}")
+        return
     run = DEPLOY / "run"
     run.mkdir(mode=0o700, exist_ok=True)
     with (run / f"{args.role}.lock").open("a+") as lock:

@@ -4,8 +4,11 @@
 import argparse
 import getpass
 import hashlib
+import json
 import shlex
 import stat
+import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,10 +16,10 @@ DEFAULT_CONFIG = ROOT / "deploy" / "deploy.local.yaml"
 DEPLOY_DIR = "dartscore-deploy"
 TARGETS = {"engine": "dartscore-engine", "presentation": "dartscore-presentation"}
 FILES = {
-    "engine": ("deploy/manage_process.py", "SW/__init__.py", "SW/DartScoreEngine/__init__.py",
+    "engine": ("deploy/manage_process.py", "deploy/install_service.py", "SW/__init__.py", "SW/DartScoreEngine/__init__.py",
                "SW/DartScoreEngine/Api", "SW/DartScoreEngine/Game",
                "SW/DartScoreEngine/Input", "SW/serve_engine.py", "SW/simulate_game.py"),
-    "presentation": ("deploy/manage_process.py", "SW/__init__.py", "SW/Presentation", "SW/serve_presentation.py"),
+    "presentation": ("deploy/manage_process.py", "deploy/install_service.py", "SW/__init__.py", "SW/Presentation", "SW/serve_presentation.py"),
 }
 
 
@@ -100,7 +103,8 @@ def mkdirs(sftp, path):
             sftp.mkdir(current)
 
 
-def deploy(role, info, files, *, restart=True, engine_address=None, database_path=None):
+def deploy(role, info, files, *, restart=True, install_services=False,
+           engine_address=None, database_path=None):
     try:
         import paramiko
     except ImportError as exc:
@@ -129,8 +133,17 @@ def deploy(role, info, files, *, restart=True, engine_address=None, database_pat
                 sftp.put(str(local), remote, confirm=True)
                 print(f"  copied {relative}")
                 changed += 1
-        if restart:
-            command = ["python3", destination + "/deploy/manage_process.py", role]
+            revision = subprocess.run(("git", "rev-parse", "HEAD"), cwd=ROOT,
+                                      capture_output=True, text=True, check=False).stdout.strip()
+            dirty = bool(subprocess.run(("git", "status", "--porcelain"), cwd=ROOT,
+                                        capture_output=True, text=True, check=False).stdout.strip())
+            marker = {"role": role, "source_commit": revision or "unknown", "dirty": dirty,
+                      "deployed_at": datetime.now(timezone.utc).isoformat()}
+            with sftp.open(destination + "/deploy/deployed.json", "w") as target:
+                target.write(json.dumps(marker) + "\n")
+        if restart or install_services:
+            helper = "install_service.py" if install_services else "manage_process.py"
+            command = ["python3", destination + "/deploy/" + helper, role]
             if role == "engine":
                 command += ["--bind", host, "--database", database_path or
                             "~/DartScore/runtime/game.sqlite3"]
@@ -154,7 +167,10 @@ def main(argv=None):
     parser.add_argument("--only", choices=tuple(TARGETS), help="deploy one Pi only")
     parser.add_argument("--dry-run", action="store_true", help="print plan without connecting or prompting")
     parser.add_argument("--copy-only", action="store_true", help="copy code without restarting processes")
+    parser.add_argument("--install-services", action="store_true", help="one-time boot service installation")
     args = parser.parse_args(argv)
+    if args.copy_only and args.install_services:
+        parser.error("--copy-only and --install-services cannot be combined")
     config = load_config(args.config)
     engine_values = config.get("engine", {})
     engine_address = engine_values.get("ip") or engine_values.get("host") or TARGETS["engine"]
@@ -169,9 +185,11 @@ def main(argv=None):
                 print(f"  {path}")
         else:
             deploy(role, info, files, restart=not args.copy_only,
+                   install_services=args.install_services,
                    engine_address=engine_address, database_path=database_path)
     if not args.dry_run:
         print("Copy complete." + (" Processes left running as-is." if args.copy_only else
+                                  " Selected services installed and started." if args.install_services else
                                   " Selected processes restarted from deployed code."))
 
 

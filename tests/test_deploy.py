@@ -53,7 +53,7 @@ class DeployTests(unittest.TestCase):
     def test_manifest_has_no_cross_pi_components(self):
         engine = {str(path) for path in script.manifest("engine")}
         presentation = {str(path) for path in script.manifest("presentation")}
-        self.assertEqual(engine & presentation, {"SW/__init__.py", "deploy/manage_process.py"})
+        self.assertEqual(engine & presentation, {"SW/__init__.py", "deploy/manage_process.py", "deploy/install_service.py"})
         self.assertIn("SW/serve_engine.py", engine)
         self.assertIn("SW/serve_presentation.py", presentation)
         self.assertTrue(any(path.endswith("static/app.js") for path in presentation))
