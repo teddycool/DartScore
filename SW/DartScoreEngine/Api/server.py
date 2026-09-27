@@ -38,7 +38,8 @@ def command_action(command):
     if type(payload) is not dict:
         raise ValueError("payload must be an object")
     kind = command.get("type")
-    no_payload = {"pause_game": "pause", "resume_game": "resume"}
+    no_payload = {"pause_game": "pause", "resume_game": "resume",
+                  "next_round": "next_round"}
     resolution = {"confirm_throw": "confirm", "correct_throw": "correct",
                   "reject_throw": "reject"}
     if kind == "start_game":

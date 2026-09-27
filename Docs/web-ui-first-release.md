@@ -13,7 +13,7 @@ The Raspberry Pi 4B (2 GB) runs a lightweight web server/proxy and a fullscreen 
 
 The first playable integration should support the existing simple accumulating-score mode and one player. The layout is designed for multiple players and 301/501, but those choices are shown only when the corresponding GameService rules exist. A disabled future game type must never appear to start a playable game.
 
-The current slice displays the total, current turn, phase, camera states and pending points-only candidate. It has Start, Pause/Resume and Confirm/Correct/Reject controls. The API does not yet expose a latest-throw summary, player-name configuration or evidence images; the page shows evidence references as text. It does not calculate game rules locally.
+The current slice displays the total, three dart slots for the current round, phase, camera states and pending points-only candidate. It has Start, Pause/Resume, Confirm/Correct/Reject and Remove darts / Next round controls. The round button becomes available after three accepted darts and a resolved review; while paused it remains disabled. The API does not yet expose a latest-throw summary, player-name configuration or evidence images; the page shows evidence references as text. It does not calculate game rules locally.
 
 ## Main screen
 

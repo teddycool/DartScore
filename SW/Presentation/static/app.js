@@ -17,7 +17,17 @@ function render() {
   byId("player").textContent = state?.players?.[0]?.name ?? "Player 1";
   byId("phase").textContent = state?.phase ?? "Loading";
   byId("game-type").textContent = state?.game_type === "simple_score" ? "Simple score" : "Waiting for game";
-  byId("turn").textContent = "This turn: " + (state?.players?.[0]?.current_turn?.join(" · ") || "—");
+  const darts = state?.players?.[0]?.current_turn ?? [];
+  const complete = darts.length === 3;
+  byId("turn").replaceChildren(...Array.from({length: 3}, (_, index) => {
+    const item = document.createElement("li");
+    item.textContent = darts[index] ?? "—";
+    item.classList.toggle("empty", index >= darts.length);
+    item.setAttribute("aria-label", `Dart ${index + 1}: ${index < darts.length ? `${darts[index]} points` : "not thrown"}`);
+    return item;
+  }));
+  byId("round-status").textContent = complete ? "Round complete · remove the darts to continue" :
+    `${darts.length} of 3 darts scored this round`;
   const cameras = state?.cameras ?? [];
   byId("camera-status").textContent = cameras.length ? cameras.map((c) => `${c.camera_id}: ${c.state}`).join(" · ") : "Cameras: not connected";
   byId("attention").hidden = !pending;
@@ -28,7 +38,9 @@ function render() {
   byId("start").hidden = state?.phase !== "idle";
   byId("pause").hidden = state?.phase !== "playing";
   byId("resume").hidden = state?.phase !== "paused";
+  byId("next-round").hidden = !complete || state?.phase === "idle";
   for (const button of document.querySelectorAll("button")) button.disabled = !ready || busy;
+  byId("next-round").disabled ||= Boolean(pending) || state?.phase !== "playing";
   byId("confirm").disabled ||= pending?.points == null || state?.phase !== "playing";
   byId("correct-points").disabled = !ready || busy || state?.phase !== "playing";
   byId("engine-status").textContent = `Engine: ${state?.engine?.state ?? "unavailable"}. ${state?.engine?.reason ?? ""}`;
@@ -79,6 +91,7 @@ async function command(type, payload = {}) {
 byId("start").addEventListener("click", () => command("start_game", {game_type: "simple_score"}));
 byId("pause").addEventListener("click", () => command("pause_game"));
 byId("resume").addEventListener("click", () => command("resume_game"));
+byId("next-round").addEventListener("click", () => command("next_round"));
 byId("confirm").addEventListener("click", () => command("confirm_throw", {throw_id: state.pending_throw.throw_id}));
 byId("reject").addEventListener("click", () => command("reject_throw", {throw_id: state.pending_throw.throw_id}));
 byId("correct-form").addEventListener("submit", (event) => {

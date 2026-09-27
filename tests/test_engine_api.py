@@ -82,6 +82,40 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(self.command("reject_throw", "reject", 2, {"throw_id": "throw-1"})[0], 400)
         connection.close()
 
+    def test_three_dart_round_advances_only_after_review_and_survives_restart(self):
+        self.command("start_game", "start", 0)
+        self.assertEqual(self.command("next_round", "too-early", 1)[0], 400)
+
+        def candidate(request_id, kind, points):
+            return self.request("POST", "/api/v1/dev/actions", {
+                "request_id": request_id, "type": kind, "throw_id": request_id,
+                "captured_at": "2026-09-26T12:00:00Z", "points": points})
+
+        candidate("one", "hit", 20)
+        candidate("two", "hit", 0)
+        candidate("three", "uncertain", 15)
+        self.assertEqual(self.command("next_round", "review-first", 3)[0], 400)
+        self.assertEqual(candidate("blocked", "hit", 5)[1]["result"]["reason"], "pending_review")
+        _, resolved = self.command("correct_throw", "resolve", 3, {"throw_id": "three", "points": 25})
+        self.assertEqual(resolved["revision"], 4)
+        self.assertEqual(self.request("GET", "/api/v1/state")[1]["players"][0]["current_turn"], [20, 0, 25])
+        self.assertEqual(candidate("fourth", "hit", 60)[1]["result"]["reason"], "turn_complete")
+        self.command("pause_game", "pause", 4)
+        self.assertEqual(self.command("next_round", "while-paused", 5)[0], 400)
+        self.command("resume_game", "resume", 5)
+        self.assertEqual(self.command("next_round", "stale", 5)[0], 409)
+        status, advanced = self.command("next_round", "advance", 6)
+        self.assertEqual((status, advanced["revision"], advanced["result"]["outcome"]),
+                         (200, 7, "round_started"))
+        self.assertEqual(self.command("next_round", "advance", 6)[1]["revision"], 7)
+        state = self.request("GET", "/api/v1/state")[1]
+        self.assertEqual((state["players"][0]["current_turn"], state["players"][0]["total"]), ([], 45))
+        self.assertEqual(candidate("new", "hit", 50)[1]["revision"], 8)
+        self.stop()
+        with DurableSession(self.db) as reopened:
+            self.assertEqual(reopened.state()["game"]["current_turn"], (50,))
+            self.assertEqual(reopened.state()["game"]["total"], 95)
+
 
 if __name__ == "__main__":
     unittest.main()

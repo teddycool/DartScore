@@ -17,7 +17,9 @@
       <div class="score-heading"><span id="player">Player 1</span><span id="phase" class="badge">Loading</span></div>
       <output id="score" aria-label="Total score">—</output>
       <p id="game-type">Simple score</p>
-      <p id="turn">This turn: —</p>
+      <div class="round"><span id="round-status">Waiting for game</span>
+        <ol id="turn" aria-label="Three darts in this round"><li>—</li><li>—</li><li>—</li></ol>
+      </div>
     </section>
     <section id="attention" class="attention" hidden aria-labelledby="attention-title">
       <p class="eyebrow">Needs your decision</p><h2 id="attention-title">Uncertain throw</h2>
@@ -35,6 +37,7 @@
       <button id="start" hidden>Start simple-score game</button>
       <button id="pause" hidden>Pause game</button>
       <button id="resume" hidden>Resume game</button>
+      <button id="next-round" hidden>Remove darts / Next round</button>
     </section>
     <p id="notice" role="alert" aria-live="assertive"></p>
     <details><summary>Engine details</summary><p id="engine-status">Awaiting engine</p><p id="storage-status"></p></details>
