@@ -5,7 +5,7 @@ reviews and camera health are in memory until persistence is implemented.
 """
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 
 from DartScoreEngine.Game import GameService, ScoreEvent
 from DartScoreEngine.Game.service import VALID_DART_POINTS
@@ -47,8 +47,8 @@ class InputResult:
 class InputCoordinator:
     """Accept at most one resolution for each throw ID.
 
-    Reserve up to three slots for scored and pending throws together. Resolve
-    pending throws in arrival order so corrected scores keep their dart order.
+    Reserve up to three slots for scored and pending throws together. Pending
+    throws are ordered by capture time, with arrival order breaking ties.
     """
 
     def __init__(self, game: GameService):
@@ -58,6 +58,16 @@ class InputCoordinator:
         self._candidates: dict[str, BoardHitCandidate] = {}
         self._results: dict[str, InputResult] = {}
         self._resolutions: dict[str, tuple[str, int | None]] = {}
+        self._last_scored_at: datetime | None = None
+
+    def ordered_pending(self) -> list[tuple[str, BoardHitCandidate]]:
+        pending = list(self.pending.items())
+        return sorted(pending, key=lambda item: item[1].captured_at.astimezone(timezone.utc))
+
+    def _remember_score_time(self, candidate: BoardHitCandidate) -> None:
+        captured = candidate.captured_at.astimezone(timezone.utc)
+        if self._last_scored_at is None or captured > self._last_scored_at:
+            self._last_scored_at = captured
 
     def submit(self, candidate: BoardHitCandidate) -> InputResult:
         previous = self._candidates.get(candidate.throw_id)
@@ -71,31 +81,27 @@ class InputCoordinator:
             result = InputResult("ignored", candidate.throw_id, reason="game_not_playing")
         elif len(state.current_turn) + len(self.pending) == 3:
             result = InputResult("ignored", candidate.throw_id, reason="turn_complete")
-        elif candidate.status == "uncertain" or self.pending:
-            # A confirmed hit behind an unresolved candidate must wait as well;
-            # committing it now would put scores in the wrong dart order.
-            self.pending[candidate.throw_id] = candidate
-            result = InputResult("pending", candidate.throw_id)
         else:
-            event = self.game.record_hit(candidate.throw_id, candidate.points)
-            result = InputResult("scored", candidate.throw_id, event) if event else InputResult(
-                "ignored", candidate.throw_id, reason="game_rejected")
+            if (self._last_scored_at is not None and
+                    candidate.captured_at.astimezone(timezone.utc) < self._last_scored_at):
+                raise ValueError("candidate predates an already scored dart; cannot reorder committed scores")
+            if candidate.status == "uncertain" or self.pending:
+                # A confirmed hit behind an unresolved candidate must wait as well;
+                # committing it now would put scores in the wrong dart order.
+                self.pending[candidate.throw_id] = candidate
+                result = InputResult("pending", candidate.throw_id)
+            else:
+                event = self.game.record_hit(candidate.throw_id, candidate.points)
+                if event:
+                    self._remember_score_time(candidate)
+                result = InputResult("scored", candidate.throw_id, event) if event else InputResult(
+                    "ignored", candidate.throw_id, reason="game_rejected")
 
         self._candidates[candidate.throw_id] = candidate
         self._results[candidate.throw_id] = result
         return result
 
-    def restore_legacy_ignored(self, candidate: BoardHitCandidate) -> InputResult:
-        """Replay an old journal entry that ignored a hit during review."""
-        if candidate.throw_id in self._candidates:
-            raise ValueError("legacy ignored throw ID already used")
-        result = InputResult("ignored", candidate.throw_id, reason="pending_review")
-        self._candidates[candidate.throw_id] = candidate
-        self._results[candidate.throw_id] = result
-        return result
-
-    def resolve(self, throw_id: str, decision: str, points: int | None = None,
-                *, auto_drain=True) -> InputResult:
+    def resolve(self, throw_id: str, decision: str, points: int | None = None) -> InputResult:
         """Confirm proposed points, correct them, or reject a false detection."""
         if decision not in ("confirm", "correct", "reject"):
             raise ValueError("decision must be confirm, correct or reject")
@@ -107,7 +113,7 @@ class InputCoordinator:
         candidate = self.pending.get(throw_id)
         if candidate is None:
             raise ValueError("no pending throw with this ID")
-        if throw_id != next(iter(self.pending)):
+        if throw_id != self.ordered_pending()[0][0]:
             raise ValueError("resolve pending throws in dart order")
         if self.game.snapshot().phase != "playing":
             raise ValueError("resume the game before resolving a pending throw")
@@ -128,15 +134,17 @@ class InputCoordinator:
             event = self.game.record_hit(throw_id, accepted_points)
             if event is None:
                 raise RuntimeError("pending throw could not be committed")
+            self._remember_score_time(candidate)
         del self.pending[throw_id]
         following = []
-        while auto_drain and self.pending:
-            next_id, next_candidate = next(iter(self.pending.items()))
+        while self.pending:
+            next_id, next_candidate = self.ordered_pending()[0]
             if next_candidate.status != "confirmed":
                 break
             scored = self.game.record_hit(next_id, next_candidate.points)
             if scored is None:
                 raise RuntimeError("queued confirmed throw could not be committed")
+            self._remember_score_time(next_candidate)
             following.append(scored)
             del self.pending[next_id]
             self._results[next_id] = InputResult("scored", next_id, scored)

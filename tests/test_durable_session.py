@@ -33,7 +33,6 @@ class DurableSessionTests(unittest.TestCase):
         with DurableSession(self.db) as store:
             store.apply("start", {"type": "start"})
             scored = store.apply("hit-1", hit("throw-1", 20))
-            self.assertNotIn("following_scores", scored)  # Old journal result shape remains valid.
             store.apply("camera-1", {"type": "camera", "camera_id": "cam-1", "state": "degraded"})
             store.apply("pending", hit("throw-2", 5, uncertain=True))
             self.assertEqual(store.state()["game"]["total"], 20)
@@ -87,43 +86,6 @@ class DurableSessionTests(unittest.TestCase):
             store.apply("confirm-replacement", {"type": "confirm", "throw_id": "replacement"})
             self.assertEqual(store.state()["game"]["current_turn"], (25, 25, 20))
 
-    def test_legacy_hit_ignored_during_review_remains_ignored_on_replay(self):
-        with DurableSession(self.db) as store:
-            store.apply("start", {"type": "start"})
-            store.apply("uncertain", hit("first", 5, True))
-            store.apply("later", hit("old-ignored", 20))
-        # This is the result shape saved by the previous one-pending-at-a-time engine.
-        old_result = {"outcome": "ignored", "throw_id": "old-ignored",
-                      "score_event": None, "reason": "pending_review"}
-        with sqlite3.connect(self.db) as conn:
-            conn.execute("UPDATE actions SET result=? WHERE request_id='later'",
-                         (json.dumps(old_result, sort_keys=True, separators=(",", ":")),))
-        with DurableSession(self.db) as store:
-            self.assertEqual(list(store.state()["pending"]), ["first"])
-            store.apply("confirm-first", {"type": "confirm", "throw_id": "first"})
-            self.assertEqual(store.apply("repeat-old", hit("old-ignored", 20))["reason"],
-                             "pending_review")
-            self.assertEqual(store.state()["game"]["total"], 5)
-
-    def test_review_committed_before_auto_scoring_upgrade_keeps_confirmed_dart(self):
-        with DurableSession(self.db) as store:
-            store.apply("start", {"type": "start"})
-            store.apply("first", hit("dart-1", 20))
-            store.apply("second", hit("dart-2", 15, True))
-            store.apply("third", hit("dart-3", 25))
-            result = store.apply("resolve-second", {"type": "confirm", "throw_id": "dart-2"})
-            self.assertEqual(len(result["following_scores"]), 1)
-        # The previous PR version stored only the second dart's resolution.
-        result.pop("following_scores")
-        with sqlite3.connect(self.db) as conn:
-            conn.execute("UPDATE actions SET result=? WHERE request_id='resolve-second'",
-                         (json.dumps(result, sort_keys=True, separators=(",", ":")),))
-        with DurableSession(self.db) as store:
-            self.assertEqual(store.state()["game"]["current_turn"], (20, 15))
-            self.assertEqual(store.state()["pending"]["dart-3"]["status"], "confirmed")
-            store.apply("finish-third", {"type": "confirm", "throw_id": "dart-3"})
-            self.assertEqual(store.state()["game"]["current_turn"], (20, 15, 25))
-
     def test_failed_write_restores_memory_and_allows_retry(self):
         with DurableSession(self.db) as store:
             store.apply("start", {"type": "start"})
@@ -147,6 +109,27 @@ class DurableSessionTests(unittest.TestCase):
                          (json.dumps({"outcome": "wrong"}),))
         with self.assertRaises(StorageCorruptionError):
             DurableSession(self.db)
+
+    def test_non_object_journal_result_reports_storage_corruption(self):
+        with DurableSession(self.db) as store:
+            store.apply("start", {"type": "start"})
+        with sqlite3.connect(self.db) as conn:
+            conn.execute("UPDATE actions SET result='[]' WHERE request_id='start'")
+        with self.assertRaisesRegex(StorageCorruptionError, "result must be an object"):
+            DurableSession(self.db)
+
+    def test_pending_state_follows_capture_time_after_restart(self):
+        with DurableSession(self.db) as store:
+            store.apply("start", {"type": "start"})
+            for name, second in (("late", 30), ("early", 10), ("middle", 20)):
+                action = hit(name, 5, uncertain=True)
+                action["captured_at"] = f"2026-09-26T10:00:{second:02d}+00:00"
+                store.apply(name, action)
+            self.assertEqual(list(store.state()["pending"]), ["early", "middle", "late"])
+        with DurableSession(self.db) as store:
+            self.assertEqual(list(store.state()["pending"]), ["early", "middle", "late"])
+            store.apply("resolve-early", {"type": "confirm", "throw_id": "early"})
+            self.assertEqual(list(store.state()["pending"]), ["middle", "late"])
 
     def test_simulator_script_can_reopen_database(self):
         script = ROOT / "Testdata/Simulations/basic_game.jsonl"

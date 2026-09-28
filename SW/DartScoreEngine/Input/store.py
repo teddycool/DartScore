@@ -72,21 +72,18 @@ class DurableSession:
                 "SELECT sequence, payload, result FROM actions ORDER BY sequence"):
             try:
                 action = json.loads(payload)
+                if type(action) is not dict:
+                    raise ValueError("committed action must be an object")
                 expected = action.get("expected_revision")
                 if expected is not None and expected != game.snapshot().revision:
                     raise ValueError("committed revision precondition differs")
                 old_result = json.loads(stored_result)
-                legacy_ignored = (old_result.get("outcome") == "ignored" and
-                                  old_result.get("reason") == "pending_review" and
-                                  action.get("type") in ("hit", "uncertain"))
-                result = apply_action(game, inputs, action,
-                                      legacy_pending_ignored=legacy_ignored,
-                                      replay_old_resolution=(action.get("type") in
-                                                             ("confirm", "correct", "reject") and
-                                                             "following_scores" not in old_result))
+                if type(old_result) is not dict:
+                    raise ValueError("committed result must be an object")
+                result = apply_action(game, inputs, action)
                 if _json(result) != stored_result:
                     raise ValueError("replayed result differs from committed result")
-            except (ValueError, TypeError, RuntimeError) as exc:
+            except (ValueError, TypeError, RuntimeError, AttributeError) as exc:
                 raise StorageCorruptionError(f"cannot replay action {sequence}: {exc}") from exc
         self.game, self.inputs = game, inputs
 
@@ -122,7 +119,7 @@ class DurableSession:
     def state(self) -> dict:
         with self._mutex:
             pending = {}
-            for throw_id, candidate in self.inputs.pending.items():
+            for throw_id, candidate in self.inputs.ordered_pending():
                 record = asdict(candidate)
                 record["captured_at"] = candidate.captured_at.isoformat()
                 pending[throw_id] = record

@@ -2,7 +2,8 @@
 
 import sys
 import unittest
-from datetime import datetime, timezone
+from dataclasses import replace
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -82,6 +83,35 @@ class BoardHitInputTests(unittest.TestCase):
         self.assertEqual(self.game.snapshot().current_turn, (20, 15, 25))
         self.assertEqual(self.inputs.pending, {})
         self.assertEqual(self.inputs.submit(hit("third", 25)).outcome, "scored")
+
+    def test_pending_order_uses_capture_time_and_stable_arrival_ties(self):
+        candidates = [
+            replace(hit("late", 30, "uncertain"), captured_at=NOW + timedelta(seconds=30)),
+            replace(hit("early", 10, "uncertain"), captured_at=NOW + timedelta(seconds=10)),
+            replace(hit("middle", 20, "uncertain"), captured_at=NOW + timedelta(seconds=20)),
+        ]
+        for candidate in candidates:
+            self.inputs.submit(candidate)
+        self.assertEqual([key for key, _ in self.inputs.ordered_pending()],
+                         ["early", "middle", "late"])
+        with self.assertRaisesRegex(ValueError, "dart order"):
+            self.inputs.resolve("late", "confirm")
+        for throw_id in ("early", "middle", "late"):
+            self.inputs.resolve(throw_id, "confirm")
+        self.assertEqual(self.game.snapshot().current_turn, (10, 20, 30))
+
+        next_game = GameService()
+        next_game.start_game()
+        inputs = InputCoordinator(next_game)
+        inputs.submit(hit("tie-first", 5, "uncertain"))
+        inputs.submit(hit("tie-second", 10, "uncertain"))
+        self.assertEqual([key for key, _ in inputs.ordered_pending()], ["tie-first", "tie-second"])
+
+    def test_late_detection_cannot_precede_an_already_scored_dart(self):
+        self.inputs.submit(replace(hit("scored", 20), captured_at=NOW + timedelta(seconds=20)))
+        with self.assertRaisesRegex(ValueError, "predates"):
+            self.inputs.submit(replace(hit("too-late", 5, "uncertain"),
+                                       captured_at=NOW + timedelta(seconds=10)))
 
     def test_pause_ignores_throw_id_permanently_and_health_is_separate(self):
         self.game.pause()
