@@ -97,7 +97,7 @@ with a new request ID.
 
 ## Rehearse a full round in the browser
 
-Use the separate `runtime/manual-test.sqlite3` database above so existing game
+Use a fresh database file for each rehearsal (for example, change `runtime/manual-test.sqlite3` in the engine command above) so existing game data is untouched.
 data is untouched. Run the engine and presentation on your development computer
 as shown at the top of this page. Open the scoreboard at
 <http://127.0.0.1:8080>, click **Start game**, then run these commands in a
