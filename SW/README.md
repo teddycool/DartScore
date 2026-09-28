@@ -1,23 +1,23 @@
-= Legacy software layout
+# Legacy software layout
 
-This document describes the original single-camera Pygame implementation. It is useful for understanding the code being refactored, but is not the deployment plan for the two-Pi system. See link:../Docs/two-pi-architecture.md[the target architecture], link:../Docs/engine-presentation-api-v1.md[API contract], and link:../Docs/web-ui-first-release.md[web UI design].
+This document describes the original single-camera Pygame implementation. It is useful for understanding the code being refactored, but is not the deployment plan for the two-Pi system. See [the target architecture](../Docs/two-pi-architecture.md), [API contract](../Docs/engine-presentation-api-v1.md), and [web UI design](../Docs/web-ui-first-release.md).
 
-= Dartscore software...
+## Original software layout
 
 This readme file describes the DartScore software like DartScoreEngine, FrontEnd, PiSetup...
 
 
-== Design:
+## Design:
 DartScore is coded like a game-loop.
 All items in the project (allmost) has at least 3 public methods: initialize, update, draw.
 These are called for all objects in the project in a certain sequence.
 
-== The states:
+## The states:
 A summary of the states in dartscore. The Load and shutdown states as the IO handling is not yet implemented.
 
-image:../Docs/DartScoreStates.png[The play states]
+![The play states](../Docs/DartScoreStates.png)
 
-== Root-directory:
+## Root-directory:
 *Cam*
 A module creating the image-stream. Right now two different types are supported;
 
@@ -47,7 +47,7 @@ Store calibration- and game-data etc. Only used for calibration right now.
 **PiSetup:**
 Manage the IO like buttons, fan, light etc
 
-== Modules/sub-directories:
+## Modules/sub-directories:
 There are alot of modules and classes to separate things and get a design that is easy to modify.
 
 **if __name__ == "__main__"**
@@ -82,4 +82,3 @@ Classes for Pi io such as archade-buttons, temp-monitors, fan-control etc
 
 *Testdata*:
 Directory for images, files etc used for test...
-

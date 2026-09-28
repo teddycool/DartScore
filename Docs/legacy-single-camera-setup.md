@@ -1,10 +1,10 @@
-= Legacy single-camera setup (2020)
+# Legacy single-camera setup (2020)
 
 This is the historical README from the Python 3 MVP. It describes the original Raspbian Buster, OpenCV 3.4, network-camera and Pygame setup. The commands and package names below are not verified for current Raspberry Pi OS or the planned two-Pi deployment. See the repository root README for the current status and roadmap.
 
-= DartScore, branch: DartScorePython3
+# DartScore, branch: DartScorePython3
 
-== Counting scores in dart with image recognition
+## Counting scores in dart with image recognition
 
 This branch is forked from DartScoreEngine branch and it is ported to Python3.
 It is also simplified a lot when it comes to modules and setups. This is the current 'master'- branch
@@ -25,9 +25,9 @@ right now.
 
 But it works (sort of...) !
 
-image:Docs/20200105_185252.jpg[DartScore installation]
+![DartScore installation](20200105_185252.jpg)
 
-== Improvements that will come in future updates (and the current priority):
+## Improvements that will come in future updates (and the current priority):
 This is the current plan for this project. The aim is to be able to distribute a project that can be used by others
 as soon as possible (the MVP) and then continue with the development of features from there.
 
@@ -43,13 +43,12 @@ as soon as possible (the MVP) and then continue with the development of features
 * ... more to come...
 
 
-**Prerequisites:**
-------------------
+## **Prerequisites:**
 * Python 3.x, PyGame and OpenCv 3.4.x
 * Headunit: Raspberry Pi 4 2GB, Rasbian Buster full (includes Python3 and Python-game)
 * Network cam, i.e. Raspberry Pi 2 or 3 with a raspicam and motioneyeos configured as a fast networked cam
 
-== Install open cv and dependencies:
+## Install open cv and dependencies:
 These where the packages I had to install to get opencv to work:
 
 - pip3 install opencv-python
@@ -59,9 +58,9 @@ These where the packages I had to install to get opencv to work:
 - sudo apt-get install python3-pyqt5
 - sudo apt install libqt4-test
 
-image:Docs/20191217_154805.jpg[DartScore screen]
+![DartScore screen](20191217_154805.jpg)
 
-== How to use it:
+## How to use it:
 
 * First you need to install all the prerequisites and have a dartboard available :-)
 The dartboard need a good and even lighting, preferable a 'light-box'.
@@ -84,4 +83,3 @@ game starts for real.
 
 (The procedure will be simplified in the future but since I do not have any IO at this point the mount and cal
 states needs to be run manually for the first time)
-
