@@ -1,4 +1,4 @@
-= Recorded-video baseline
+# Recorded-video baseline
 
 This is a diagnostic entry point for the old single-camera detector. It runs on a
 development computer without GPIO, Pygame, a network camera, or the fixed

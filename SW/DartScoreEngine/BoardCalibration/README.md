@@ -1,4 +1,4 @@
-= The calibration pipe line...
+# The calibration pipe line...
 
 It is extremely important to mount the board correctly, i.e. with the middle 20 sector pointing exacly
 upwards.
@@ -11,7 +11,7 @@ settings for opencv tresholds etc.
 Start with lighting for the board. It has to be even and strong enough. I use a led strip
 that are mounted on the inside of the dart 'box'. This works very good.
 
-image:../../../Docs/dartboardlightbox.jpg[lightingbox]
+![lightingbox](../../../Docs/dartboardlightbox.jpg)
 
 Next is the camera settings. I use a setting where the contrast is high, very little sharpening and
 also no auto exposure. By setting the exposure to off/manual and have the same lighting, the
@@ -19,53 +19,38 @@ conditions for image detection is better in my opinion (or at least more predict
 
 Mounting is also important. My camera is mounted to look down from the right on the board.
 
-image:../../../Docs/cameramounting.jpg[cam mounting]
+![cam mounting](../../../Docs/cameramounting.jpg)
 
 
-1: Find bulls-eye
------------------
+## 1: Find bulls-eye
 First find all lines in the picture using HoughLinesP. Aproximate straight lines and
 where they cross.  Cut out the board part of the images and move the image to fit the
 coordinates of the bulls eye in the perfect board (250, 250).
 
 
-2: Find Sectors
----------------
+## 2: Find Sectors
 Finding contours of sectors by using filters for area and shape.
 Filter out the sector with the largest and smallest area.
 These are the one closest to the camera and its opposite, on the other side of the board.
 
-3: Match sectors to perfect board geometry
-------------------------------------------
+## 3: Match sectors to perfect board geometry
 Find 4 points for the sectors that are far from each other and match this to these to the same
 points in the perfect board. Create a transform matrix and save it.
 
-The perfect board geometry
---------------------------
-image:perfectboard.jpg[The perfect board]
+## The perfect board geometry
+![The perfect board](perfectboard.jpg)
 
-Found sectors before the max/min filtering
-------------------------------------------
-image:cv1.jpg[OpenCv detected sectors]
+## Found sectors before the max/min filtering
+![OpenCv detected sectors](cv1.jpg)
 
-Found calibration points
--------------------------
-image:cv5.jpg[OpenCv detected calibration points]
+## Found calibration points
+![OpenCv detected calibration points](cv5.jpg)
 
-Transformed and calibrated board
---------------------------------
-image:cal1.jpg[OpenCv transformed board]
+## Transformed and calibrated board
+![OpenCv transformed board](cal1.jpg)
 
 A transform matrix:
 
 [[ 1.76274946e+00 -1.16369884e-01 -4.76117449e+02]
  [ 2.12653255e-01  1.01558048e+00 -3.51720972e+01]
  [ 1.25220623e-03 -1.77188819e-04  1.00000000e+00]]
-
-
-
-
-
-
-
-
