@@ -11,7 +11,8 @@ let retryTimer = null;
 function render() {
   const ready = online && state !== null;
   const pending = state?.pending_throw;
-  const pendingCount = state?.pending_throws?.length ?? (pending ? 1 : 0);
+  const pendingDarts = state?.pending_throws ?? (pending ? [pending] : []);
+  const pendingCount = pendingDarts.length;
   byId("connection").textContent = ready ? "Engine connected" : "Engine disconnected · score may be stale";
   byId("connection").classList.toggle("online", ready);
   byId("score").textContent = state?.players?.[0]?.total ?? "—";
@@ -22,23 +23,34 @@ function render() {
   const complete = darts.length === 3;
   byId("turn").replaceChildren(...Array.from({length: 3}, (_, index) => {
     const item = document.createElement("li");
-    item.textContent = darts[index] ?? "—";
-    item.classList.toggle("empty", index >= darts.length);
-    item.setAttribute("aria-label", `Dart ${index + 1}: ${index < darts.length ? `${darts[index]} points` : "not thrown"}`);
+    const queued = pendingDarts[index - darts.length];
+    const label = index < darts.length ? `${darts[index]} points` :
+      queued?.status === "uncertain" ? "needs review" :
+      queued?.status === "confirmed" ? `${queued.points} points, confirmed waiting` : "not thrown";
+    item.textContent = `#${index + 1}  ${index < darts.length ? darts[index] :
+      queued?.status === "uncertain" ? "?" : queued?.status === "confirmed" ? `${queued.points}?` : "—"}`;
+    item.classList.toggle("empty", !queued && index >= darts.length);
+    item.classList.toggle("needs-review", queued?.status === "uncertain");
+    item.classList.toggle("confirmed-waiting", queued?.status === "confirmed");
+    item.setAttribute("aria-label", `Dart ${index + 1}: ${label}`);
     return item;
   }));
-  const reviews = (state?.pending_throws ?? []).filter((item) => item.status === "uncertain").length;
+  const reviews = pendingDarts.filter((item) => item.status === "uncertain").length;
   const queued = pendingCount - reviews;
-  byId("round-status").textContent = complete ? "Round complete · remove the darts to continue" :
-    `${darts.length} scored · ${reviews} to review${queued ? ` · ${queued} confirmed waiting` : ""} · ${3 - darts.length - pendingCount} remaining`;
+  byId("round-status").textContent = pending?.status === "uncertain" ?
+    `Dart #${darts.length + 1} needs your attention${reviews > 1 ? ` · ${reviews} to review` : ""}${queued ? ` · ${queued} confirmed waiting` : ""}` :
+    pending ? `Dart #${darts.length + 1} is confirmed and waiting` :
+    complete ? "Round complete · remove the darts to continue" :
+    `${darts.length} of 3 darts scored this round`;
   const cameras = state?.cameras ?? [];
   byId("camera-status").textContent = cameras.length ? cameras.map((c) => `${c.camera_id}: ${c.state}`).join(" · ") : "Cameras: not connected";
   byId("attention").hidden = !pending;
   if (pending) {
-    byId("attention-title").textContent = pending.status === "confirmed" ? "Confirmed dart waiting" : "Uncertain throw";
+    byId("attention-title").textContent = pending.status === "confirmed" ?
+      `Confirmed dart waiting · Dart #${darts.length + 1}` : `Uncertain throw · Dart #${darts.length + 1}`;
     byId("candidate").textContent = pending.status === "confirmed" ?
-      `Dart ${pending.throw_id} was detected as ${pending.points} points. Apply this saved score to finish the round.` :
-      `${reviews} throw${reviews === 1 ? "" : "s"} to review. Next dart (${pending.throw_id}): proposed ${pending.points ?? "unknown"} points. Confirmed darts behind it will score automatically after review.`;
+      `Detected as ${pending.points} points. Apply this saved score to continue.` :
+      `Proposed score: ${pending.points ?? "unknown"} points. Confirm, correct, or reject this detection.${queued ? ` ${queued} confirmed dart${queued === 1 ? "" : "s"} will score after review.` : ""}`;
     byId("confirm").textContent = pending.status === "confirmed" ? "Apply confirmed score" : "Confirm proposed score";
     byId("evidence").textContent = pending.evidence_refs?.length ? `Evidence references: ${pending.evidence_refs.join(", ")}` : "No images available yet.";
   }

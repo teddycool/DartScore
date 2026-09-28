@@ -37,7 +37,7 @@ While paused, camera monitoring may continue for health, but throw detection is 
 
 ## Uncertain-hit review
 
-An uncertain throw creates a pending item with a unique `throw_id`. Up to three candidates can be pending together; the player's total changes as uncertain darts are resolved and following confirmed darts score. The attention panel shows the number needing review, the number of confirmed darts waiting behind them, and the next dart in order, with its proposed points and optional still-image references.
+An uncertain throw creates a pending item with a unique `throw_id`. Up to three candidates can be pending together; the player's total changes as uncertain darts are resolved and following confirmed darts score. The three numbered dart boxes distinguish scored darts, the highlighted `?` for the next uncertain dart, and a dashed proposed score for a confirmed dart waiting behind it. The attention panel names the dart number and its proposed points. Technical throw IDs remain in the engine state rather than distracting the player on the scoreboard.
 
 The operator has three mutually exclusive actions:
 
