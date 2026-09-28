@@ -38,6 +38,12 @@ def apply_action(game: GameService, inputs: InputCoordinator, action: dict) -> d
         if kind == "clear_board":
             inputs.clear_board()
             return {"outcome": "board_cleared"}
+        if kind == "next_round":
+            state = game.snapshot()
+            if state.phase != "playing" or len(state.current_turn) != 3:
+                raise ValueError("finish three darts and resume play before starting the next round")
+            inputs.clear_board()
+            return {"outcome": "round_started"}
         if kind == "camera":
             inputs.set_camera_health(action["camera_id"], action["state"])
             return {"outcome": "camera_status_changed"}

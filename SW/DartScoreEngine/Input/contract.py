@@ -5,7 +5,7 @@ reviews and camera health are in memory until persistence is implemented.
 """
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 
 from DartScoreEngine.Game import GameService, ScoreEvent
 from DartScoreEngine.Game.service import VALID_DART_POINTS
@@ -41,13 +41,14 @@ class InputResult:
     throw_id: str
     score_event: ScoreEvent | None = None
     reason: str | None = None
+    following_scores: tuple[ScoreEvent, ...] = ()
 
 
 class InputCoordinator:
     """Accept at most one resolution for each throw ID.
 
-    While an uncertain hit is pending, new throw IDs are ignored so a later
-    correction cannot be applied out of order. Ignored IDs remain remembered.
+    Reserve up to three slots for scored and pending throws together. Pending
+    throws are ordered by capture time, with arrival order breaking ties.
     """
 
     def __init__(self, game: GameService):
@@ -57,6 +58,16 @@ class InputCoordinator:
         self._candidates: dict[str, BoardHitCandidate] = {}
         self._results: dict[str, InputResult] = {}
         self._resolutions: dict[str, tuple[str, int | None]] = {}
+        self._last_scored_at: datetime | None = None
+
+    def ordered_pending(self) -> list[tuple[str, BoardHitCandidate]]:
+        pending = list(self.pending.items())
+        return sorted(pending, key=lambda item: item[1].captured_at.astimezone(timezone.utc))
+
+    def _remember_score_time(self, candidate: BoardHitCandidate) -> None:
+        captured = candidate.captured_at.astimezone(timezone.utc)
+        if self._last_scored_at is None or captured > self._last_scored_at:
+            self._last_scored_at = captured
 
     def submit(self, candidate: BoardHitCandidate) -> InputResult:
         previous = self._candidates.get(candidate.throw_id)
@@ -68,17 +79,23 @@ class InputCoordinator:
         state = self.game.snapshot()
         if state.phase != "playing":
             result = InputResult("ignored", candidate.throw_id, reason="game_not_playing")
-        elif self.pending:
-            result = InputResult("ignored", candidate.throw_id, reason="pending_review")
-        elif len(state.current_turn) == 3:
+        elif len(state.current_turn) + len(self.pending) == 3:
             result = InputResult("ignored", candidate.throw_id, reason="turn_complete")
-        elif candidate.status == "uncertain":
-            self.pending[candidate.throw_id] = candidate
-            result = InputResult("pending", candidate.throw_id)
         else:
-            event = self.game.record_hit(candidate.throw_id, candidate.points)
-            result = InputResult("scored", candidate.throw_id, event) if event else InputResult(
-                "ignored", candidate.throw_id, reason="game_rejected")
+            if (self._last_scored_at is not None and
+                    candidate.captured_at.astimezone(timezone.utc) < self._last_scored_at):
+                raise ValueError("candidate predates an already scored dart; cannot reorder committed scores")
+            if candidate.status == "uncertain" or self.pending:
+                # A confirmed hit behind an unresolved candidate must wait as well;
+                # committing it now would put scores in the wrong dart order.
+                self.pending[candidate.throw_id] = candidate
+                result = InputResult("pending", candidate.throw_id)
+            else:
+                event = self.game.record_hit(candidate.throw_id, candidate.points)
+                if event:
+                    self._remember_score_time(candidate)
+                result = InputResult("scored", candidate.throw_id, event) if event else InputResult(
+                    "ignored", candidate.throw_id, reason="game_rejected")
 
         self._candidates[candidate.throw_id] = candidate
         self._results[candidate.throw_id] = result
@@ -96,6 +113,8 @@ class InputCoordinator:
         candidate = self.pending.get(throw_id)
         if candidate is None:
             raise ValueError("no pending throw with this ID")
+        if throw_id != self.ordered_pending()[0][0]:
+            raise ValueError("resolve pending throws in dart order")
         if self.game.snapshot().phase != "playing":
             raise ValueError("resume the game before resolving a pending throw")
         if decision == "correct":
@@ -111,14 +130,28 @@ class InputCoordinator:
                 raise ValueError("reject does not accept points")
             accepted_points = None
 
-        if decision == "reject":
-            result = InputResult("rejected", throw_id)
-        else:
+        if decision != "reject":
             event = self.game.record_hit(throw_id, accepted_points)
             if event is None:
                 raise RuntimeError("pending throw could not be committed")
-            result = InputResult("scored", throw_id, event)
+            self._remember_score_time(candidate)
         del self.pending[throw_id]
+        following = []
+        while self.pending:
+            next_id, next_candidate = self.ordered_pending()[0]
+            if next_candidate.status != "confirmed":
+                break
+            scored = self.game.record_hit(next_id, next_candidate.points)
+            if scored is None:
+                raise RuntimeError("queued confirmed throw could not be committed")
+            self._remember_score_time(next_candidate)
+            following.append(scored)
+            del self.pending[next_id]
+            self._results[next_id] = InputResult("scored", next_id, scored)
+            self._resolutions[next_id] = ("confirm", None)
+        result = InputResult("rejected" if decision == "reject" else "scored", throw_id,
+                             None if decision == "reject" else event,
+                             following_scores=tuple(following))
         self._results[throw_id] = result
         self._resolutions[throw_id] = signature
         return result

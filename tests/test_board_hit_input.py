@@ -2,7 +2,8 @@
 
 import sys
 import unittest
-from datetime import datetime, timezone
+from dataclasses import replace
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,22 +40,78 @@ class BoardHitInputTests(unittest.TestCase):
     def test_uncertain_correction_and_rejection_are_distinct_from_miss(self):
         self.assertEqual(self.inputs.submit(hit("uncertain", 5, "uncertain")).outcome, "pending")
         self.assertEqual(self.game.snapshot().total, 0)
-        blocked = self.inputs.submit(hit("later", 20))
-        self.assertEqual((blocked.outcome, blocked.reason), ("ignored", "pending_review"))
+        queued = self.inputs.submit(hit("later", 20))
+        self.assertEqual(queued.outcome, "pending")
+        self.assertEqual(list(self.inputs.pending), ["uncertain", "later"])
         with self.assertRaises(ValueError):
             self.inputs.resolve("uncertain", "correct", 23)
         self.assertIn("uncertain", self.inputs.pending)
         corrected = self.inputs.resolve("uncertain", "correct", 20)
         self.assertEqual(corrected.score_event.total, 20)
+        self.assertEqual([event.throw_id for event in corrected.following_scores], ["later"])
         self.assertEqual(self.inputs.resolve("uncertain", "correct", 20), corrected)
         with self.assertRaises(ValueError):
             self.inputs.resolve("uncertain", "reject")
 
+        self.assertEqual(self.inputs.resolve("later", "confirm").score_event.total, 40)
+
         self.inputs.submit(hit("false", None, "uncertain"))
         self.assertEqual(self.inputs.resolve("false", "reject").outcome, "rejected")
-        self.assertEqual(self.game.snapshot().total, 20)
+        self.assertEqual(self.game.snapshot().total, 40)
         self.inputs.submit(hit("miss", 0))
-        self.assertEqual(self.game.snapshot().current_turn, (20, 0))
+        self.assertEqual(self.game.snapshot().current_turn, (20, 20, 0))
+
+    def test_three_uncertain_darts_can_all_be_corrected_after_capture(self):
+        for index in range(3):
+            self.assertEqual(self.inputs.submit(hit(f"dart-{index}", 5, "uncertain")).outcome, "pending")
+        self.assertEqual(self.inputs.submit(hit("fourth", 20)).reason, "turn_complete")
+        self.assertEqual(self.game.snapshot().current_turn, ())
+        with self.assertRaisesRegex(ValueError, "dart order"):
+            self.inputs.resolve("dart-2", "correct", 25)
+        for index, score in enumerate((20, 0, 25)):
+            self.assertEqual(self.inputs.resolve(f"dart-{index}", "correct", score).outcome, "scored")
+        self.assertEqual(self.game.snapshot().current_turn, (20, 0, 25))
+        self.assertEqual(self.game.snapshot().total, 45)
+
+    def test_confirmed_third_dart_scores_when_second_review_is_resolved(self):
+        self.inputs.submit(hit("first", 20))
+        self.inputs.submit(hit("second", 15, "uncertain"))
+        self.assertEqual(self.inputs.submit(hit("third", 25)).outcome, "pending")
+        self.assertEqual(list(self.inputs.pending), ["second", "third"])
+        result = self.inputs.resolve("second", "confirm")
+        self.assertEqual([event.points for event in result.following_scores], [25])
+        self.assertEqual(self.game.snapshot().current_turn, (20, 15, 25))
+        self.assertEqual(self.inputs.pending, {})
+        self.assertEqual(self.inputs.submit(hit("third", 25)).outcome, "scored")
+
+    def test_pending_order_uses_capture_time_and_stable_arrival_ties(self):
+        candidates = [
+            replace(hit("late", 30, "uncertain"), captured_at=NOW + timedelta(seconds=30)),
+            replace(hit("early", 10, "uncertain"), captured_at=NOW + timedelta(seconds=10)),
+            replace(hit("middle", 20, "uncertain"), captured_at=NOW + timedelta(seconds=20)),
+        ]
+        for candidate in candidates:
+            self.inputs.submit(candidate)
+        self.assertEqual([key for key, _ in self.inputs.ordered_pending()],
+                         ["early", "middle", "late"])
+        with self.assertRaisesRegex(ValueError, "dart order"):
+            self.inputs.resolve("late", "confirm")
+        for throw_id in ("early", "middle", "late"):
+            self.inputs.resolve(throw_id, "confirm")
+        self.assertEqual(self.game.snapshot().current_turn, (10, 20, 30))
+
+        next_game = GameService()
+        next_game.start_game()
+        inputs = InputCoordinator(next_game)
+        inputs.submit(hit("tie-first", 5, "uncertain"))
+        inputs.submit(hit("tie-second", 10, "uncertain"))
+        self.assertEqual([key for key, _ in inputs.ordered_pending()], ["tie-first", "tie-second"])
+
+    def test_late_detection_cannot_precede_an_already_scored_dart(self):
+        self.inputs.submit(replace(hit("scored", 20), captured_at=NOW + timedelta(seconds=20)))
+        with self.assertRaisesRegex(ValueError, "predates"):
+            self.inputs.submit(replace(hit("too-late", 5, "uncertain"),
+                                       captured_at=NOW + timedelta(seconds=10)))
 
     def test_pause_ignores_throw_id_permanently_and_health_is_separate(self):
         self.game.pause()

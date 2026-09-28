@@ -71,6 +71,9 @@ trusted-LAN address and use `--host 0.0.0.0` to serve its screen/browser.
 See link:Docs/web-ui-first-release.md[web UI scope and setup]. The page
 supports one-player simple score, Start, Pause/Resume, and pending-hit review;
 it does not yet display stored evidence images.
+For hands-on testing without cameras, use `python3 scripts/send_test_throw.py`
+to submit one random dart (30% uncertain) and see
+link:Docs/manual-api-testing.md[the manual API command guide].
 
 == Replay the legacy detector
 

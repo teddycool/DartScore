@@ -14,7 +14,13 @@ h1 { font-size: clamp(2rem, 5vw, 3.4rem); margin-bottom: 0; }
 .score-heading { font-size: clamp(1.2rem, 3vw, 2rem); }
 .badge { padding: .4rem .9rem; border-radius: 2rem; background: #315662; font-size: 1rem; text-transform: capitalize; }
 output { display: block; font-size: clamp(7rem, 27vw, 19rem); font-weight: 800; line-height: 1; text-align: center; letter-spacing: -.07em; font-variant-numeric: tabular-nums; }
-#turn { font-size: clamp(1.2rem, 3vw, 2rem); margin-bottom: 0; }
+.round { margin-top: 1rem; }
+#round-status { font-size: 1.15rem; color: #d2e2e3; }
+#turn { list-style: none; display: flex; gap: .8rem; padding: 0; margin: .7rem 0 0; }
+#turn li { border: 1px solid #53717a; border-radius: .6rem; min-width: 3.2em; text-align: center; padding: .35rem .7rem; font-size: clamp(1.4rem, 4vw, 2.5rem); font-variant-numeric: tabular-nums; }
+#turn li.empty { color: #8fa4ab; }
+#turn li.needs-review { border: 3px solid #f3b85b; background: #51402c; color: #fff2da; font-weight: 800; }
+#turn li.confirmed-waiting { border-style: dashed; color: #a5e2d4; }
 .attention { border: 3px solid #f3b85b; background: #342b25; }
 .attention h2 { font-size: 2rem; }
 .actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; }
@@ -24,7 +30,7 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px 
 button:disabled { opacity: .48; cursor: not-allowed; }
 form { display: grid; gap: .4rem; }
 input { width: 6rem; font: inherit; padding: .7rem; border-radius: .5rem; border: 2px solid #a5e2d4; }
-.controls { display: flex; gap: 1rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 1rem; }
 [hidden] { display: none !important; }
 #notice { min-height: 1.5em; color: #ffce82; font-weight: 650; }
 details { color: #d2e2e3; }

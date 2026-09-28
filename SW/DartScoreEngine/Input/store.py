@@ -72,13 +72,18 @@ class DurableSession:
                 "SELECT sequence, payload, result FROM actions ORDER BY sequence"):
             try:
                 action = json.loads(payload)
+                if type(action) is not dict:
+                    raise ValueError("committed action must be an object")
                 expected = action.get("expected_revision")
                 if expected is not None and expected != game.snapshot().revision:
                     raise ValueError("committed revision precondition differs")
+                old_result = json.loads(stored_result)
+                if type(old_result) is not dict:
+                    raise ValueError("committed result must be an object")
                 result = apply_action(game, inputs, action)
                 if _json(result) != stored_result:
                     raise ValueError("replayed result differs from committed result")
-            except (ValueError, TypeError, RuntimeError) as exc:
+            except (ValueError, TypeError, RuntimeError, AttributeError) as exc:
                 raise StorageCorruptionError(f"cannot replay action {sequence}: {exc}") from exc
         self.game, self.inputs = game, inputs
 
@@ -114,7 +119,7 @@ class DurableSession:
     def state(self) -> dict:
         with self._mutex:
             pending = {}
-            for throw_id, candidate in self.inputs.pending.items():
+            for throw_id, candidate in self.inputs.ordered_pending():
                 record = asdict(candidate)
                 record["captured_at"] = candidate.captured_at.isoformat()
                 pending[throw_id] = record
@@ -129,13 +134,13 @@ class DurableSession:
             seen = set()
             for (record,) in results:
                 result = json.loads(record)
-                event = result.get("score_event")
-                if result.get("outcome") != "scored" or event is None:
-                    continue
-                key = (event["throw_id"], event["revision"])
-                if key not in seen:
-                    accepted.append(event)
-                    seen.add(key)
+                events = ([result["score_event"]] if result.get("score_event") is not None else [])
+                events.extend(result.get("following_scores", ()))
+                for event in events:
+                    key = (event["throw_id"], event["revision"])
+                    if key not in seen:
+                        accepted.append(event)
+                        seen.add(key)
             return accepted
 
     def close(self):

@@ -13,7 +13,7 @@ The Raspberry Pi 4B (2 GB) runs a lightweight web server/proxy and a fullscreen 
 
 The first playable integration should support the existing simple accumulating-score mode and one player. The layout is designed for multiple players and 301/501, but those choices are shown only when the corresponding GameService rules exist. A disabled future game type must never appear to start a playable game.
 
-The current slice displays the total, current turn, phase, camera states and pending points-only candidate. It has Start, Pause/Resume and Confirm/Correct/Reject controls. The API does not yet expose a latest-throw summary, player-name configuration or evidence images; the page shows evidence references as text. It does not calculate game rules locally.
+The current slice displays the total, three scored dart slots, pending review count, phase, camera states and the next points-only candidate. It has Start, Pause/Resume, Confirm/Correct/Reject and Remove darts / Next round controls. Up to three detections can wait while the player finishes throwing; the operator resolves uncertain darts in order after going to the board. A confirmed dart behind an uncertain one scores automatically when the earlier review is resolved. The round button becomes available after three accepted darts and a resolved review; while paused it remains disabled. The API does not yet expose a latest-throw summary, player-name configuration or evidence images; the page shows evidence references as text. It does not calculate game rules locally.
 
 ## Main screen
 
@@ -37,7 +37,7 @@ While paused, camera monitoring may continue for health, but throw detection is 
 
 ## Uncertain-hit review
 
-An uncertain throw creates a pending item with a unique `throw_id`. The player's game total does not change. The attention panel remains visible until resolved and shows the proposed board hit, reason and optional still-image references from both cameras.
+An uncertain throw creates a pending item with a unique `throw_id`. Up to three candidates can be pending together; the player's total changes as uncertain darts are resolved and following confirmed darts score. The three numbered dart boxes distinguish scored darts, the highlighted `?` for the next uncertain dart, and a dashed proposed score for a confirmed dart waiting behind it. The attention panel names the dart number and its proposed points. Technical throw IDs remain in the engine state rather than distracting the player on the scoreboard.
 
 The operator has three mutually exclusive actions:
 

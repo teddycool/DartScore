@@ -69,6 +69,23 @@ class DurableSessionTests(unittest.TestCase):
             self.assertEqual(again["outcome"], "ignored")
             self.assertEqual(store.state()["game"]["total"], 0)
 
+    def test_three_pending_darts_survive_restart_and_rejection_frees_slot(self):
+        with DurableSession(self.db) as store:
+            store.apply("start", {"type": "start"})
+            for index in range(3):
+                self.assertEqual(store.apply(f"candidate-{index}", hit(f"dart-{index}", 5, True))["outcome"],
+                                 "pending")
+            self.assertEqual(store.apply("fourth", hit("dart-fourth", 20))["reason"], "turn_complete")
+        with DurableSession(self.db) as store:
+            self.assertEqual(list(store.state()["pending"]), ["dart-0", "dart-1", "dart-2"])
+            store.apply("reject-first", {"type": "reject", "throw_id": "dart-0"})
+            self.assertEqual(store.apply("replacement", hit("replacement", 20))["outcome"], "pending")
+            for index in (1, 2):
+                store.apply(f"correct-{index}", {"type": "correct", "throw_id": f"dart-{index}",
+                                                 "points": 25})
+            store.apply("confirm-replacement", {"type": "confirm", "throw_id": "replacement"})
+            self.assertEqual(store.state()["game"]["current_turn"], (25, 25, 20))
+
     def test_failed_write_restores_memory_and_allows_retry(self):
         with DurableSession(self.db) as store:
             store.apply("start", {"type": "start"})
@@ -92,6 +109,27 @@ class DurableSessionTests(unittest.TestCase):
                          (json.dumps({"outcome": "wrong"}),))
         with self.assertRaises(StorageCorruptionError):
             DurableSession(self.db)
+
+    def test_non_object_journal_result_reports_storage_corruption(self):
+        with DurableSession(self.db) as store:
+            store.apply("start", {"type": "start"})
+        with sqlite3.connect(self.db) as conn:
+            conn.execute("UPDATE actions SET result='[]' WHERE request_id='start'")
+        with self.assertRaisesRegex(StorageCorruptionError, "result must be an object"):
+            DurableSession(self.db)
+
+    def test_pending_state_follows_capture_time_after_restart(self):
+        with DurableSession(self.db) as store:
+            store.apply("start", {"type": "start"})
+            for name, second in (("late", 30), ("early", 10), ("middle", 20)):
+                action = hit(name, 5, uncertain=True)
+                action["captured_at"] = f"2026-09-26T10:00:{second:02d}+00:00"
+                store.apply(name, action)
+            self.assertEqual(list(store.state()["pending"]), ["early", "middle", "late"])
+        with DurableSession(self.db) as store:
+            self.assertEqual(list(store.state()["pending"]), ["early", "middle", "late"])
+            store.apply("resolve-early", {"type": "confirm", "throw_id": "early"})
+            self.assertEqual(list(store.state()["pending"]), ["middle", "late"])
 
     def test_simulator_script_can_reopen_database(self):
         script = ROOT / "Testdata/Simulations/basic_game.jsonl"
