@@ -73,5 +73,31 @@ vm.runInNewContext(code, context);
   assert.deepEqual(Array.from(document.getElementById("turn").children, (item) => item.textContent),
     ["#1  20", "#2  0", "#3  25"]);
   assert.equal(document.getElementById("next-round").hidden, false);
+  darts = [];
+  pendingDarts = [
+    {throw_id: "one", status: "uncertain", points: 15},
+    {throw_id: "two", status: "uncertain", points: 20},
+    {throw_id: "three", status: "uncertain", points: 25}
+  ];
+  streams[1].onopen();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(Array.from(document.getElementById("turn").children, (item) => item.textContent),
+    ["#1  ?", "#2  ?", "#3  ?"]);
+  assert.equal(document.getElementById("round-status").textContent,
+    "Dart #1 needs your attention · 3 to review");
+  assert.equal(document.getElementById("attention-title").textContent, "Uncertain throw · Dart #1");
+  assert.equal(document.getElementById("next-round").hidden, true);
+  darts = [20];
+  pendingDarts.shift();
+  streams[1].onopen();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(document.getElementById("attention-title").textContent, "Uncertain throw · Dart #2");
+  darts = [20, 0];
+  pendingDarts = [];
+  streams[1].onopen();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(Array.from(document.getElementById("turn").children, (item) => item.textContent),
+    ["#1  20", "#2  0", "#3  —"]);
+  assert.equal(document.getElementById("next-round").hidden, true);
   console.log("web reconnect OK");
 })().catch((error) => {console.error(error); process.exitCode = 1;});
