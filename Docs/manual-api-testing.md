@@ -94,3 +94,40 @@ game. It clears the three slots while preserving the total. During pause,
 submitted throws are ignored. Run commands one at a time; a concurrent browser
 action can cause a revision conflict, in which case reload `/state` and retry
 with a new request ID.
+
+## Rehearse a full round in the browser
+
+Use the separate `runtime/manual-test.sqlite3` database above so existing game
+data is untouched. Run the engine and presentation on your development computer
+as shown at the top of this page. Open the scoreboard at
+<http://127.0.0.1:8080>, click **Start game**, then run these commands in a
+terminal with `test_dart` defined:
+
+```sh
+test_dart uncertain 15
+test_dart uncertain 20
+test_dart uncertain 25
+```
+
+Check that darts #1–#3 need review and the total has not changed. At the board,
+correct dart #1 to 20 in the browser, reject dart #2 as a false detection, and
+correct dart #3 to 0 (an accepted miss). The page should now show `[20, 0, —]`
+and a total of 20. The rejected detection freed one slot, so send a replacement:
+
+```sh
+test_dart hit 25
+```
+
+The page should show `[20, 0, 25]`, total 45, and **Remove darts / Next round**.
+Click it only after collecting the darts. The round clears but the total stays
+45. Send `test_dart hit 50` and check that dart #1 of the new round scores 50,
+for a total of 95. Reload the page between steps if you want to verify that
+the display always reconstructs its state from the engine. The Pi 4B proxy
+cannot submit simulated hits; the developer input must be sent directly to a
+loopback engine running with `--dev-input`.
+
+For a repeatable automated check of the same engine-to-presentation HTTP path,
+run `python3 -m unittest discover -s tests -p test_round_workflow.py -v` from
+the repo root. It starts both servers on temporary loopback ports, uses a fresh
+temporary SQLite database, and checks review order, correction, rejection,
+accepted zero, queued confirmed hits, pause, round advance, and proxy isolation.
