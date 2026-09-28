@@ -47,4 +47,9 @@ status LEDs, and browser kiosk startup remain separate implementation work.
 
 The editable PNG source is `Docs/diagrams/render_current.py`. From the repo
 root, run `python3 Docs/diagrams/render_current.py` to regenerate all three
-images. It requires Pillow only for documentation work, not on the Pis.
+images. This documentation-only command requires Pillow and the DejaVu Sans
+font files (`DejaVuSans.ttf` and `DejaVuSans-Bold.ttf`). On Debian/Ubuntu,
+install `python3-pil` and `fonts-dejavu-core`, or install Pillow in a virtual
+environment. The renderer defaults to `/usr/share/fonts/truetype/dejavu`;
+on another OS, set `DARTSCORE_DIAGRAM_FONT_DIR` to the directory containing
+both font files before running it. These dependencies are not needed on the Pis.

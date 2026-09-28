@@ -1,6 +1,7 @@
 """Render the three current-implementation diagrams with Pillow."""
 
 from math import atan2, cos, sin
+import os
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -8,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 OUT = Path(__file__).resolve().parents[1] / "images"
 OUT.mkdir(parents=True, exist_ok=True)
-FONT_DIR = Path("/usr/share/fonts/truetype/dejavu")
+FONT_DIR = Path(os.environ.get("DARTSCORE_DIAGRAM_FONT_DIR", "/usr/share/fonts/truetype/dejavu"))
 INK = "#173044"
 MUTED = "#476476"
 BG = "#f7fafc"
@@ -25,7 +26,14 @@ LINE = "#89a2b2"
 
 def font(size, bold=False):
     name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
-    return ImageFont.truetype(str(FONT_DIR / name), size)
+    path = FONT_DIR / name
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"Missing {path}. Install the DejaVu Sans fonts, or set "
+            "DARTSCORE_DIAGRAM_FONT_DIR to a directory containing "
+            "DejaVuSans.ttf and DejaVuSans-Bold.ttf."
+        )
+    return ImageFont.truetype(str(path), size)
 
 
 def canvas(size, title, subtitle):
