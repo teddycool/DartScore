@@ -22,9 +22,10 @@ For the initial web UI, the agreed controls are Start Game, Pause/Resume, and re
 
 Read the design documents:
 
-* [Two-Pi architecture and component migration](Docs/two-pi-architecture.md)
-* [Engine/presentation API contract](Docs/engine-presentation-api-v1.md)
-* [First web UI and uncertain-hit review](Docs/web-ui-first-release.md)
+- [Current two-Pi implementation and round diagrams](Docs/current-implementation.md)
+- [Two-Pi architecture and component migration](Docs/two-pi-architecture.md)
+- [Engine/presentation API contract](Docs/engine-presentation-api-v1.md)
+- [First web UI and uncertain-hit review](Docs/web-ui-first-release.md)
 
 The architecture documents distinguish running components from planned camera and LED work.
 
@@ -92,8 +93,6 @@ The JSON report contains frame numbers, timestamps, candidate points and legacy 
 2. Integrate Pi 5 hardware status, two-camera capture and independent calibration.
 3. Validate 301/501 rules and detection accuracy before treating scores as reliable.
 
-Historical prototype setup instructions are retained in [Legacy single-camera setup (2020)](Docs/legacy-single-camera-setup.md). The original code layout is described in [the software notes](SW/README.md).
-The [legacy asset inventory](Docs/asset-inventory.md) lists unreferenced images
-and other historical files for a later archive/removal decision.
+Historical prototype setup instructions are retained in [Legacy single-camera setup (2020)](Docs/legacy-single-camera-setup.md). The original code layout is described in [the software notes](SW/README.md). The archived email `Docs/Re_ Method to Identify and Score Darts....eml` is kept for reference.
 
 Licensed under [GNU GPLv3](LICENSE).
